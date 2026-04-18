@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Funparks Social Media Agent</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:#f8f7ff;color:#1a1a2e;min-height:100vh}
+  .header{background:linear-gradient(135deg,#1a1a2e,#2d1b69);padding:24px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:white}
+  .logo span{background:linear-gradient(135deg,#FF6B2B,#f43f5e,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .badge{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600}
+  .main{max-width:1100px;margin:0 auto;padding:32px 24px}
+  .controls{background:white;border-radius:20px;padding:24px;margin-bottom:28px;border:2px solid #f0eeff;box-shadow:0 4px 24px rgba(168,85,247,0.06)}
+  .controls h2{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#1a1a2e;margin-bottom:16px}
+  .controls-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+  label{font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px}
+  select,input{border:2px solid #e5e7eb;border-radius:12px;padding:10px 14px;font-size:14px;font-family:inherit;color:#1a1a2e;background:white;outline:none;transition:border-color 0.2s}
+  select:focus,input:focus{border-color:#a855f7}
+  .date-input{min-width:160px}
+  .topic-select{min-width:220px}
+  .btn-generate{background:linear-gradient(135deg,#FF6B2B,#f43f5e,#a855f7);color:white;border:none;border-radius:12px;padding:12px 28px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s;box-shadow:0 4px 16px rgba(168,85,247,0.3)}
+  .btn-generate:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(168,85,247,0.4)}
+  .btn-generate:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+  .posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(480px,1fr));gap:20px}
+  .post-card{background:white;border-radius:20px;padding:24px;border:2px solid #f0eeff;box-shadow:0 4px 20px rgba(168,85,247,0.05);transition:all 0.2s}
+  .post-card:hover{border-color:#d8b4fe;box-shadow:0 8px 32px rgba(168,85,247,0.12)}
+  .platform-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .platform-info{display:flex;align-items:center;gap:10px}
+  .platform-icon{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-size:16px;flex-shrink:0}
+  .platform-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#1a1a2e}
+  .char-count{font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;background:#f3f4f6;color:#6b7280}
+  .char-count.warning{background:#fff7ed;color:#ea580c}
+  .char-count.over{background:#fef2f2;color:#dc2626}
+  .post-text{width:100%;border:2px solid #f0eeff;border-radius:14px;padding:14px;font-size:14px;font-family:inherit;color:#1a1a2e;resize:vertical;min-height:140px;line-height:1.6;outline:none;transition:border-color 0.2s}
+  .post-text:focus{border-color:#a855f7}
+  .post-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .btn-copy{background:#f8f7ff;border:2px solid #e0d9ff;color:#7c3aed;border-radius:10px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s}
+  .btn-copy:hover{background:#ede9fe;border-color:#a855f7}
+  .btn-copy.copied{background:#d1fae5;border-color:#34d399;color:#059669}
+  .btn-regen{background:#fff7f5;border:2px solid #fde0d0;color:#ea580c;border-radius:10px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s}
+  .btn-regen:hover{background:#fff1eb;border-color:#FB923C}
+  .hashtags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .tag{font-size:11px;font-weight:700;color:#7c3aed;background:#f3f0ff;padding:4px 10px;border-radius:20px}
+  .loading{text-align:center;padding:60px 24px;color:#6b7280}
+  .spinner{width:40px;height:40px;border:3px solid #f0eeff;border-top-color:#a855f7;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .empty{text-align:center;padding:80px 24px;color:#9ca3af}
+  .empty-icon{font-size:64px;margin-bottom:16px}
+  .topic-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#fff7f5,#fdf4ff);border:1px solid #e9d5ff;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;color:#7c3aed;margin-bottom:16px}
+  .history{background:white;border-radius:20px;padding:20px 24px;margin-top:24px;border:2px solid #f0eeff}
+  .history h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#1a1a2e;margin-bottom:12px}
+  .history-item{display:flex;align-items:center;justify-between;gap:12px;padding:8px 12px;border-radius:10px;cursor:pointer;transition:background 0.15s;font-size:13px;color:#6b7280}
+  .history-item:hover{background:#f8f7ff}
+  .history-date{font-weight:700;color:#a855f7;min-width:80px}
+  .history-topic{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .tips{background:linear-gradient(135deg,#fdf4ff,#f0fdff);border-radius:16px;padding:16px 20px;margin-top:20px;border:1px solid #e9d5ff}
+  .tips h4{font-size:12px;font-weight:800;color:#7c3aed;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px}
+  .tips ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+  .tips li{font-size:12px;color:#6b7280;font-weight:500}
+  .tips li::before{content:'💡 '}
+  @media(max-width:600px){.posts-grid{grid-template-columns:1fr}.controls-row{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">fun<span>parks</span> Social Agent 🎢</div>
+  <div class="badge">AI-Powered · Daily Posts</div>
+</div>
+
+<div class="main">
+  <div class="controls">
+    <h2>Generate Today's Posts ✨</h2>
+    <div class="controls-row">
+      <div>
+        <label>Date</label>
+        <input type="date" class="date-input" id="dateInput" />
+      </div>
+      <div>
+        <label>Topic Focus</label>
+        <select class="topic-select" id="topicSelect">
+          <option value="auto">🎲 Auto (AI chooses)</option>
+          <optgroup label="Park News">
+            <option value="new_opening">🆕 New Park Opening</option>
+            <option value="after_winter">🌸 Reopening After Winter</option>
+            <option value="construction">🏗️ New Ride Under Construction</option>
+            <option value="record_breaker">🏆 Record-Breaking Attraction</option>
+          </optgroup>
+          <optgroup label="Comparisons">
+            <option value="ride_vs_ride">⚔️ Ride vs Ride</option>
+            <option value="park_vs_park">🏟️ Park vs Park</option>
+            <option value="disney_vs_universal">🐭 Disney vs Universal</option>
+            <option value="best_food">🍔 Best Park Food</option>
+          </optgroup>
+          <optgroup label="Guides & Tips">
+            <option value="pro_tips">💡 Pro Visitor Tips</option>
+            <option value="hidden_gems">💎 Hidden Gem Attractions</option>
+            <option value="best_hotels">🏨 Best On-Site Hotels</option>
+            <option value="skip_the_line">⚡ Skip the Queue Strategies</option>
+          </optgroup>
+          <optgroup label="Fun Content">
+            <option value="did_you_know">🤔 Did You Know?</option>
+            <option value="scariest_rides">😱 Scariest Rides in the World</option>
+            <option value="best_roller_coasters">🎢 Best Roller Coasters</option>
+            <option value="theme_park_fails">😂 Theme Park Moments</option>
+            <option value="bucket_list">✈️ Theme Park Bucket List</option>
+          </optgroup>
+        </select>
+      </div>
+      <div>
+        <label>Tone</label>
+        <select id="toneSelect" style="min-width:140px">
+          <option value="fun">🎉 Fun & Energetic</option>
+          <option value="informative">📚 Informative</option>
+          <option value="inspiring">✨ Inspiring</option>
+          <option value="debate">🔥 Debate Starter</option>
+        </select>
+      </div>
+      <div>
+        <label>&nbsp;</label>
+        <button class="btn-generate" id="generateBtn" onclick="generatePosts()">
+          ✨ Generate Posts
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="output">
+    <div class="empty">
+      <div class="empty-icon">🎡</div>
+      <p style="font-size:18px;font-weight:700;color:#374151;margin-bottom:8px">Ready to generate!</p>
+      <p style="font-size:14px">Choose a topic and click Generate Posts to create<br/>tailored content for all 4 platforms at once.</p>
+    </div>
+  </div>
+
+  <div class="tips">
+    <h4>Posting Schedule Tips</h4>
+    <ul>
+      <li>Instagram & TikTok: Best engagement between 6–9pm local time</li>
+      <li>YouTube: Post Shorts Tuesday–Thursday, long-form Sunday morning</li>
+      <li>Facebook: Best reach Tuesday–Friday 1–4pm</li>
+      <li>Use trending park hashtags — check what's hot on each platform weekly</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+const PLATFORMS = [
+  { id:'instagram', name:'Instagram', icon:'📸', color:'#E1306C', bg:'linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)', maxChars:2200, note:'Best with emojis · Add to Stories too' },
+  { id:'tiktok', name:'TikTok', icon:'🎵', color:'#010101', bg:'linear-gradient(135deg,#010101,#69C9D0)', maxChars:2200, note:'Hook in first line · Add trending sounds' },
+  { id:'youtube', name:'YouTube', icon:'▶️', color:'#FF0000', bg:'linear-gradient(135deg,#FF0000,#cc0000)', maxChars:500, note:'Short caption for Shorts · Add full description separately' },
+  { id:'facebook', name:'Facebook', icon:'👥', color:'#1877F2', bg:'linear-gradient(135deg,#1877F2,#0d5bba)', maxChars:63206, note:'Longer posts perform well · Add a question to boost comments' },
+];
+
+function today() {
+  return new Date().toISOString().split('T')[0];
+}
+
+window.onload = () => {
+  document.getElementById('dateInput').value = today();
+};
+
+function updateCharCount(textareaId, countId, max) {
+  const ta = document.getElementById(textareaId);
+  const ct = document.getElementById(countId);
+  if (!ta || !ct) return;
+  const len = ta.value.length;
+  ct.textContent = max < 9999 ? `${len}/${max}` : `${len} chars`;
+  ct.className = 'char-count' + (len > max ? ' over' : len > max * 0.9 ? ' warning' : '');
+}
+
+async function generatePosts() {
+  const btn = document.getElementById('generateBtn');
+  const topic = document.getElementById('topicSelect').value;
+  const tone = document.getElementById('toneSelect').value;
+  const date = document.getElementById('dateInput').value;
+  const topicLabel = document.getElementById('topicSelect').options[document.getElementById('topicSelect').selectedIndex].text;
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Generating...';
+
+  document.getElementById('output').innerHTML = `
+    <div class="loading">
+      <div class="spinner"></div>
+      <p style="font-weight:700;font-size:15px;color:#374151">Generating posts for ${topicLabel}...</p>
+      <p style="font-size:13px;margin-top:6px">Claude is crafting content for all 4 platforms</p>
+    </div>`;
+
+  const toneDesc = {
+    fun: 'fun, energetic, use emojis freely, upbeat and exciting',
+    informative: 'informative and educational, include specific facts and numbers',
+    inspiring: 'inspiring and aspirational, make people want to visit',
+    debate: 'debate-starting, ask a bold question, take a strong stance to provoke comments'
+  }[tone];
+
+  const topicDesc = topic === 'auto'
+    ? `Choose a compelling theme park topic for ${date}. Pick from: new attractions opening, ride comparisons, hidden gems, pro tips, bucket list parks, scariest rides, or behind-the-scenes facts.`
+    : `Topic: ${topicLabel}`;
+
+  const prompt = `You are a social media manager for Funparks, a theme park app covering 57 parks worldwide including Disney, Universal, Six Flags, Cedar Point, Europa-Park, Tokyo Disney, Ferrari World and more.
+
+${topicDesc}
+
+Tone: ${toneDesc}
+
+Generate one post for EACH of these 4 platforms. Each post must be completely different in style and format but on the same topic.
+
+Return ONLY a JSON object with this exact structure, no markdown, no explanation:
+{
+  "topic": "brief topic title",
+  "instagram": "full Instagram caption with emojis and hashtags",
+  "tiktok": "TikTok caption with strong hook in first line and hashtags",
+  "youtube": "YouTube Shorts description, punchy and short",
+  "facebook": "Facebook post, more conversational, ends with a question to boost comments",
+  "hashtags": ["tag1", "tag2", "tag3", "tag4", "tag5", "tag6", "tag7", "tag8"]
+}
+
+Rules:
+- Instagram: 150-300 words, lots of emojis, 10-15 hashtags at end
+- TikTok: Start with a HOOK like "POV: You're at..." or "Wait until you see..." or "Nobody talks about...", 100-200 words, 5-8 hashtags
+- YouTube: 50-100 words max, punchy, ends with subscribe CTA
+- Facebook: 100-200 words, conversational, end with a question
+- All hashtags should include #funparks #themeparks and relevant ones
+- Make the content specific and interesting, not generic
+- Reference real parks, real attractions, real experiences`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await res.json();
+    const text = data.content?.map(b => b.text || '').join('');
+    const clean = text.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(clean);
+    renderPosts(parsed, topicLabel, date);
+  } catch(e) {
+    document.getElementById('output').innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">⚠️</div>
+        <p style="font-size:16px;font-weight:700;color:#dc2626;margin-bottom:8px">Generation failed</p>
+        <p style="font-size:13px;color:#6b7280">${e.message}</p>
+      </div>`;
+  }
+
+  btn.disabled = false;
+  btn.textContent = '✨ Generate Posts';
+}
+
+function renderPosts(data, topicLabel, date) {
+  const html = `
+    <div class="topic-badge">🎯 ${data.topic || topicLabel} · ${date}</div>
+    <div class="posts-grid">
+      ${PLATFORMS.map(p => {
+        const content = data[p.id] || '';
+        const tid = `text_${p.id}`;
+        const cid = `count_${p.id}`;
+        return `
+          <div class="post-card">
+            <div class="platform-header">
+              <div class="platform-info">
+                <div class="platform-icon" style="background:${p.bg}">${p.icon}</div>
+                <div>
+                  <div class="platform-name">${p.name}</div>
+                  <div style="font-size:11px;color:#9ca3af;font-weight:500">${p.note}</div>
+                </div>
+              </div>
+              <span class="char-count" id="${cid}">${content.length} chars</span>
+            </div>
+            <textarea class="post-text" id="${tid}" oninput="updateCharCount('${tid}','${cid}',${p.maxChars})">${content}</textarea>
+            <div class="post-actions">
+              <button class="btn-copy" id="copy_${p.id}" onclick="copyPost('${p.id}')">📋 Copy</button>
+              <button class="btn-regen" onclick="regenOne('${p.id}')">🔄 Regenerate</button>
+            </div>
+          </div>`;
+      }).join('')}
+    </div>
+    ${data.hashtags && data.hashtags.length ? `
+      <div style="background:white;border-radius:16px;padding:16px 20px;margin-top:16px;border:2px solid #f0eeff">
+        <p style="font-size:11px;font-weight:800;color:#7c3aed;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px">Suggested Hashtags</p>
+        <div class="hashtags">${data.hashtags.map(t=>`<span class="tag">#${t.replace('#','')}</span>`).join('')}</div>
+      </div>` : ''}`;
+  document.getElementById('output').innerHTML = html;
+}
+
+async function copyPost(platformId) {
+  const ta = document.getElementById(`text_${platformId}`);
+  const btn = document.getElementById(`copy_${platformId}`);
+  if (!ta) return;
+  try {
+    await navigator.clipboard.writeText(ta.value);
+    btn.textContent = '✅ Copied!';
+    btn.className = 'btn-copy copied';
+    setTimeout(() => { btn.textContent = '📋 Copy'; btn.className = 'btn-copy'; }, 2000);
+  } catch(e) {
+    ta.select();
+    document.execCommand('copy');
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => { btn.textContent = '📋 Copy'; btn.className = 'btn-copy'; }, 2000);
+  }
+}
+
+async function regenOne(platformId) {
+  const ta = document.getElementById(`text_${platformId}`);
+  const cid = `count_${platformId}`;
+  const platform = PLATFORMS.find(p => p.id === platformId);
+  const topic = document.getElementById('topicSelect').options[document.getElementById('topicSelect').selectedIndex].text;
+  const tone = document.getElementById('toneSelect').value;
+  if (!ta) return;
+
+  ta.value = '⏳ Regenerating...';
+  ta.disabled = true;
+
+  const toneDesc = {
+    fun: 'fun, energetic, use emojis',
+    informative: 'informative, include specific facts',
+    inspiring: 'inspiring, aspirational',
+    debate: 'debate-starting, ask a bold question'
+  }[tone];
+
+  const platformInstructions = {
+    instagram: 'Instagram caption with emojis and 10-15 hashtags, 150-300 words',
+    tiktok: 'TikTok caption starting with a hook like "POV:" or "Nobody talks about...", 100-200 words, 5-8 hashtags',
+    youtube: 'YouTube Shorts description, 50-100 words max, punchy with subscribe CTA',
+    facebook: 'Facebook post, conversational, 100-200 words, ends with a question'
+  }[platformId];
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{
+          role: 'user',
+          content: `Write a single ${platform.name} post for Funparks theme park app about: ${topic}. Tone: ${toneDesc}. Format: ${platformInstructions}. Include #funparks. Return ONLY the post text, nothing else.`
+        }]
+      })
+    });
+    const data = await res.json();
+    ta.value = data.content?.map(b => b.text || '').join('').trim() || 'Error generating post';
+  } catch(e) {
+    ta.value = 'Error: ' + e.message;
+  }
+
+  ta.disabled = false;
+  updateCharCount(`text_${platformId}`, cid, platform.maxChars);
+}
+</script>
+</body>
+</html>

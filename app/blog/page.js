@@ -1,42 +1,72 @@
-export const metadata={title:'Blog — Funparks'};
-const posts=[
-  {title:'How to Beat the Queue at Steel Vengeance',excerpt:"Steel Vengeance regularly hits 2-hour waits by 10am. Here's the strategy to ride it multiple times.",cat:'Park Guide',date:'April 10, 2026',read:'5 min',emoji:'🎢',accent:'#FF6B2B'},
-  {title:'Tokyo Disneyland vs DisneySea — Which to Visit?',excerpt:'Two extraordinary parks, one trip to Japan. We break down everything to help you choose.',cat:'Comparison',date:'March 28, 2026',read:'8 min',emoji:'🇯🇵',accent:'#00D4C8'},
-  {title:'10 Questions to Ask the Funparks AI Assistant',excerpt:"The in-app AI can do a lot more than you think. Here's how to use it like a pro.",cat:'App Tips',date:'March 14, 2026',read:'4 min',emoji:'🤖',accent:'#FF6B2B'},
-  {title:'The Best Theme Parks in South America',excerpt:'From Beto Carrero World in Brazil to Parque de la Costa in Argentina.',cat:'Destination',date:'Feb 25, 2026',read:'7 min',emoji:'🌎',accent:'#00D4C8'},
-  {title:'Six Flags Magic Mountain: Complete Visitor Guide',excerpt:'20 roller coasters, one day. The ultimate itinerary for the Thrill Capital of the World.',cat:'Park Guide',date:'Feb 10, 2026',read:'9 min',emoji:'⚡',accent:'#FF6B2B'},
-];
-export default function BlogPage(){
-  return(
-    <div className="min-h-screen pt-32 pb-24">
+export const metadata = { title: 'Blog — Funparks', description: 'Theme park guides, tips, ride reviews and app updates.' };
+
+async function getPosts() {
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    const file = path.join(process.cwd(), 'public', 'blog-posts.json');
+    const data = fs.readFileSync(file, 'utf8');
+    return JSON.parse(data);
+  } catch(e) { return []; }
+}
+
+export default async function BlogPage() {
+  const posts = await getPosts();
+  const accents = ['#FF6B2B','#f43f5e','#a855f7','#06b6d4','#10b981','#f59e0b'];
+  return (
+    <div className="min-h-screen pt-32 pb-24" style={{background:'#f8f7ff'}}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-14">
-          <p className="text-[#FF6B2B] text-sm font-semibold uppercase tracking-widest mb-4">Blog</p>
-          <h1 className="text-5xl lg:text-6xl font-black text-white mb-4" style={{fontFamily:'Syne,sans-serif'}}>Park guides,<br/><span className="gradient-text">tips & stories</span></h1>
-          <p className="text-white/50 text-lg max-w-lg">Insider guides, ride reviews, park tips and app updates.</p>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm border border-purple-100 text-purple-600 text-sm font-bold mb-6">✍️ Blog</div>
+          <h1 className="text-5xl lg:text-6xl font-black text-gray-900 mb-4" style={{fontFamily:'Syne,sans-serif'}}>
+            Park guides,<br/><span style={{background:'linear-gradient(135deg,#FF6B2B,#f43f5e,#a855f7)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>tips & stories</span>
+          </h1>
+          <p className="text-gray-500 text-lg max-w-lg">Insider guides, ride reviews, park tips and app updates from the Funparks team.</p>
         </div>
-        <div className="glass-card rounded-3xl p-8 mb-8 hover:border-[#FF6B2B]/20 transition-all cursor-pointer group">
-          <div className="flex flex-col md:flex-row md:items-center gap-6">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#FF6B2B]/20 to-[#00D4C8]/10 flex items-center justify-center text-3xl flex-shrink-0">{posts[0].emoji}</div>
-            <div>
-              <span className="text-xs font-semibold text-[#FF6B2B] bg-[#FF6B2B]/10 px-3 py-1 rounded-full mb-3 inline-block">{posts[0].cat}</span>
-              <h2 className="text-white font-bold text-2xl mb-2 group-hover:text-[#FF6B2B] transition-colors" style={{fontFamily:'Syne,sans-serif'}}>{posts[0].title}</h2>
-              <p className="text-white/50 text-sm mb-3 max-w-2xl">{posts[0].excerpt}</p>
-              <div className="flex gap-4 text-white/30 text-xs"><span>{posts[0].date}</span><span>·</span><span>{posts[0].read} read</span></div>
-            </div>
+
+        {posts.length === 0 ? (
+          <div className="text-center py-20 text-gray-400">
+            <div className="text-6xl mb-4">📝</div>
+            <p className="text-lg font-semibold">No posts yet — check back soon!</p>
           </div>
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {posts.slice(1).map((p,i)=>(
-            <div key={i} className="glass-card rounded-2xl p-6 hover:border-[#FF6B2B]/20 transition-all hover:scale-[1.01] cursor-pointer group">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#FF6B2B]/10 to-[#00D4C8]/10 flex items-center justify-center text-2xl mb-4">{p.emoji}</div>
-              <span className="text-xs font-semibold px-3 py-1 rounded-full mb-3 inline-block" style={{backgroundColor:p.accent+'15',color:p.accent}}>{p.cat}</span>
-              <h2 className="text-white font-bold text-base mb-2 group-hover:text-[#FF6B2B] transition-colors" style={{fontFamily:'Syne,sans-serif'}}>{p.title}</h2>
-              <p className="text-white/50 text-xs leading-relaxed mb-4">{p.excerpt}</p>
-              <div className="flex gap-3 text-white/30 text-xs"><span>{p.date}</span><span>·</span><span>{p.read} read</span></div>
+        ) : (
+          <>
+            {/* Featured post */}
+            <a href={'/blog/'+posts[0].slug} className="block bg-white rounded-3xl p-8 mb-8 border-2 border-gray-100 hover:border-purple-200 hover:shadow-xl transition-all duration-300 cursor-pointer group">
+              <div className="flex flex-col md:flex-row md:items-center gap-6">
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0 shadow-lg" style={{background:'linear-gradient(135deg,#fff7f5,#fdf4ff)'}}>{posts[0].emoji}</div>
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-xs font-bold px-3 py-1 rounded-full" style={{background:'#FF6B2B'+'15',color:'#FF6B2B'}}>{posts[0].category}</span>
+                    <span className="text-gray-400 text-xs font-medium">Featured</span>
+                  </div>
+                  <h2 className="text-gray-900 font-black text-2xl mb-2 group-hover:text-purple-600 transition-colors" style={{fontFamily:'Syne,sans-serif'}}>{posts[0].title}</h2>
+                  <p className="text-gray-500 text-sm mb-4 max-w-2xl leading-relaxed">{posts[0].excerpt}</p>
+                  <div className="flex items-center gap-4 text-gray-400 text-xs font-medium">
+                    <span>{new Date(posts[0].date).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</span>
+                    <span>·</span><span>{posts[0].readTime} read</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            {/* Post grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {posts.slice(1).map((p,i)=>(
+                <a key={p.slug} href={'/blog/'+p.slug} className="block bg-white rounded-2xl p-6 border-2 border-gray-100 hover:border-purple-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer group">
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl mb-4 shadow-sm" style={{background:'linear-gradient(135deg,#fff7f5,#fdf4ff)'}}>{p.emoji}</div>
+                  <span className="text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block" style={{background:accents[i%accents.length]+'15',color:accents[i%accents.length]}}>{p.category}</span>
+                  <h2 className="text-gray-900 font-black text-base mb-2 group-hover:text-purple-600 transition-colors" style={{fontFamily:'Syne,sans-serif'}}>{p.title}</h2>
+                  <p className="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2">{p.excerpt}</p>
+                  <div className="flex gap-3 text-gray-400 text-xs font-medium">
+                    <span>{new Date(p.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</span>
+                    <span>·</span><span>{p.readTime} read</span>
+                  </div>
+                </a>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

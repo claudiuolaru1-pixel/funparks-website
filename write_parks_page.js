@@ -1,4 +1,5 @@
-export const metadata={title:'Parks - Funparks',description:'All 64 theme parks in the Funparks app across 6 continents.'};
+﻿const fs=require('fs');
+const page=`export const metadata={title:'Parks - Funparks',description:'All 64 theme parks in the Funparks app across 6 continents.'};
 
 const parks=[
   {name:'Magic Kingdom',location:'Orlando, USA',continent:'Americas',emoji:'🏰'},
@@ -114,3 +115,6 @@ export default function ParksPage(){
     </div>
   );
 }
+`;
+fs.writeFileSync('app/parks/page.js',page,'utf8');
+console.log('Parks page updated with all 64 parks');

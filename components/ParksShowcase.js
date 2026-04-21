@@ -16,7 +16,7 @@ export default function ParksShowcase() {
         <div className='flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-12'>
           <div>
             <div className='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm border border-purple-100 text-purple-600 text-sm font-bold mb-4'>🌍 Parks</div>
-            <h2 className='text-4xl lg:text-5xl font-black text-gray-900' style={{fontFamily:'Syne,sans-serif'}}>57 parks,<br /><span className='gradient-text-2'>6 continents</span></h2>
+            <h2 className='text-4xl lg:text-5xl font-black text-gray-900' style={{fontFamily:'Syne,sans-serif'}}>64 parks,<br /><span className='gradient-text-2'>6 continents</span></h2>
           </div>
           <Link href='/parks' className='inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white shadow-md border border-purple-100 text-gray-700 font-bold hover:shadow-lg transition-all'>View all parks →</Link>
         </div>

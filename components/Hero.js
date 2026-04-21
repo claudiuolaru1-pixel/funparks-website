@@ -17,7 +17,7 @@ export default function Hero() {
         <div>
           <div className='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-md border border-purple-100 text-sm font-semibold text-purple-600 mb-8'>
             <span className='w-2 h-2 rounded-full bg-green-500 animate-pulse' />
-            57 parks across 6 continents
+            64 parks across 6 continents
           </div>
           <h1 className='text-5xl lg:text-7xl font-black leading-none mb-6 tracking-tight text-gray-900' style={{fontFamily:'Syne,sans-serif'}}>
             Every<br /><span className='gradient-text'>Theme Park.</span><br />One App.

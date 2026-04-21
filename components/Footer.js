@@ -18,7 +18,7 @@ export default function Footer(){
               </div>
               <span className='font-black text-xl text-white' style={{fontFamily:'Syne,sans-serif'}}>fun<span className='gradient-text'>parks</span></span>
             </div>
-            <p className='text-white/50 text-sm leading-relaxed max-w-xs mb-6 font-medium'>The world's theme parks in your pocket. 57+ parks across 6 continents — free forever.</p>
+            <p className='text-white/50 text-sm leading-relaxed max-w-xs mb-6 font-medium'>The world's theme parks in your pocket. 64+ parks across 6 continents — free forever.</p>
             <div className='flex items-center gap-3'>
               {socials.map(s => (
                 <a key={s.label} href={s.href} target='_blank' rel='noopener noreferrer' aria-label={s.label}

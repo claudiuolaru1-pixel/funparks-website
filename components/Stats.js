@@ -1,6 +1,6 @@
 export default function Stats() {
   const s=[
-    {v:'57+',l:'Theme Parks',sub:'Across 6 continents',emoji:'🌍',color:'#FF6B2B'},
+    {v:'64+',l:'Theme Parks',sub:'Across 6 continents',emoji:'🌍',color:'#FF6B2B'},
     {v:'1,000+',l:'Attractions',sub:'With live wait times',emoji:'🎢',color:'#f43f5e'},
     {v:'10',l:'Languages',sub:'Fully translated',emoji:'🌐',color:'#a855f7'},
     {v:'AI',l:'Park Assistant',sub:'Built-in smart guide',emoji:'🤖',color:'#06b6d4'},

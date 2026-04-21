@@ -33,7 +33,7 @@ export default function ParksPage(){
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-12">
           <p className="text-[#FF6B2B] text-sm font-semibold uppercase tracking-widest mb-4">Parks</p>
-          <h1 className="text-5xl lg:text-6xl font-black text-white mb-4" style={{fontFamily:'Syne,sans-serif'}}>57 Parks.<br/><span className="gradient-text">6 Continents.</span></h1>
+          <h1 className="text-5xl lg:text-6xl font-black text-white mb-4" style={{fontFamily:'Syne,sans-serif'}}>64 Parks.<br/><span className="gradient-text">6 Continents.</span></h1>
           <p className="text-white/50 text-lg max-w-lg">Every park in the Funparks app — detailed guides, attraction lists, food and hotels.</p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">

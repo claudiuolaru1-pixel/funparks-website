@@ -24,7 +24,7 @@ export default function DownloadSection(){
           <div>
             <div className='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-white/70 text-sm font-bold mb-6'>📱 Download</div>
             <h2 className='text-4xl lg:text-5xl font-black text-white mb-5 leading-tight' style={{fontFamily:'Syne,sans-serif'}}>Get Funparks.<br/><span className='gradient-text'>It is free.</span></h2>
-            <p className='text-white/60 text-lg leading-relaxed mb-10 max-w-md'>57 theme parks worldwide. Free forever — no subscription, no paywalls.</p>
+            <p className='text-white/60 text-lg leading-relaxed mb-10 max-w-md'>64 theme parks worldwide. Free forever — no subscription, no paywalls.</p>
             <div className='flex flex-col sm:flex-row gap-4 mb-8'>
               <a href={PLAY} target='_blank' rel='noopener noreferrer' className='flex items-center gap-4 px-6 py-4 rounded-2xl bg-white text-gray-900 font-bold hover:bg-gray-50 transition-all shadow-xl'>
                 <div><div className='text-xs text-gray-400 uppercase tracking-wider mb-0.5'>Get it on</div><div className='font-black text-sm'>Google Play 🤖</div></div>
@@ -34,7 +34,7 @@ export default function DownloadSection(){
               </a>
             </div>
             <ul className='space-y-2'>
-              {['Free forever','57 parks worldwide and growing','AI assistant included','Works on Android and iOS'].map(x => (
+              {['Free forever','64 parks worldwide and growing','AI assistant included','Works on Android and iOS'].map(x => (
                 <li key={x} className='flex items-center gap-3 text-white/60 text-sm font-medium'>
                   <div className='w-5 h-5 rounded-full bg-gradient-to-br from-green-400 to-teal-400 flex items-center justify-center flex-shrink-0 text-white text-xs font-black'>✓</div>{x}
                 </li>

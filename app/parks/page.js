@@ -22,8 +22,8 @@ const continentMap={
   'Malaysia':'Asia','Philippines':'Asia',
   'Germany':'Europe','France':'Europe','Netherlands':'Europe','Belgium':'Europe',
   'Spain':'Europe','Italy':'Europe','United Kingdom':'Europe','Sweden':'Europe',
-  'Denmark':'Europe','Poland':'Europe',
-  'UAE':'Middle East',
+  'Denmark':'Europe','Poland':'Europe','Portugal':'Europe',
+  'UAE':'Middle East','United Arab Emirates':'Middle East',
   'Australia':'Oceania','New Zealand':'Oceania',
   'South Africa':'Africa',
 };

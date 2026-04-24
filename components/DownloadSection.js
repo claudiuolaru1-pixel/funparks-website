@@ -47,7 +47,7 @@ export default function DownloadSection(){
               <p className='text-white/40 text-sm text-center mb-6 font-medium'>Point your camera at the QR code</p>
               <div className='flex rounded-xl bg-white/10 p-1 mb-6'>
                 {['android','ios'].map(t => (
-                  <button key={t} onClick={() => setTab(t)} className={'flex-1 py-2.5 rounded-lg text-sm font-bold transition-all ' + (tab===t ? 'btn-gradient text-white shadow-lg' : 'text-white/50 hover:text-white/80')}>
+                  <button key={t} className={'flex-1 py-2.5 rounded-lg text-sm font-bold transition-all ' + (tab===t ? 'btn-gradient text-white shadow-lg' : 'text-white/50 hover:text-white/80')}>
                     {t==='android' ? '🤖 Android' : '🍎 iOS'}
                   </button>
                 ))}

@@ -83,7 +83,7 @@ export default async function BlogPostPage({ params }) {
                   className="px-4 py-2 rounded-xl text-white text-sm font-bold transition-all hover:opacity-90"
                   style={{background:s.color}}>{s.name}</a>
               ) : (
-                <button key={s.name} onClick={"navigator.clipboard.writeText('"+shareUrl+"').then(()=>alert('Link copied!'))"}
+                <button key={s.name}
                   className="px-4 py-2 rounded-xl text-white text-sm font-bold"
                   style={{background:s.color}}>{s.name} 🔗</button>
               )

@@ -154,7 +154,7 @@ export default function ParkPage({params}){
           <div style={{fontSize:'48px',marginBottom:'16px'}}>🎢</div>
           <h2 style={{fontFamily:'Syne,sans-serif',fontSize:'28px',fontWeight:900,color:'white',margin:'0 0 12px'}}>Explore {park.name} in the App</h2>
           <p style={{color:'rgba(255,255,255,0.6)',fontSize:'16px',margin:'0 0 28px',maxWidth:'480px',marginLeft:'auto',marginRight:'auto'}}>Live wait times, AI park assistant, attraction guides, food and hotel recommendations</p>
-          <a href="#" onClick={(e)=>e.preventDefault()} target="_blank" rel="noopener noreferrer"
+          <a href="#" target="_blank" rel="noopener noreferrer"
             style={{display:'inline-flex',alignItems:'center',gap:'10px',padding:'16px 32px',borderRadius:'14px',background:`linear-gradient(135deg,${accent},#f43f5e)`,color:'white',textDecoration:'none',fontWeight:800,fontSize:'16px',boxShadow:`0 6px 24px ${accent}40`}}>
             Coming Soon on Android
           </a>

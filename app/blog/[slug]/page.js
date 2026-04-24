@@ -96,7 +96,7 @@ export default async function BlogPostPage({ params }) {
         <div className="mt-8 rounded-3xl p-8 text-white text-center" style={{background:'linear-gradient(135deg,#1a1a2e,#2d1b69)'}}>
           <p className="text-2xl font-black mb-2" style={{fontFamily:'Syne,sans-serif'}}>Get the Funparks app 🎢</p>
           <p className="text-white/60 mb-6 text-sm">Real-time wait times, AI assistant, 57 parks worldwide. Free forever.</p>
-          <a href="#" onClick={(e)=>e.preventDefault()} target="_blank" rel="noopener noreferrer"
+          <a href="#" target="_blank" rel="noopener noreferrer"
             className="inline-block px-8 py-3 rounded-xl font-bold text-sm shadow-xl"
             style={{background:'linear-gradient(135deg,#FF6B2B,#f43f5e,#a855f7)'}}>
             Coming Soon →

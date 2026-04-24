@@ -36,11 +36,11 @@ export default function Footer(){
           <div>
             <h4 className='text-white font-black text-sm mb-5 uppercase tracking-wider' style={{fontFamily:'Syne,sans-serif'}}>Get the App</h4>
             <div className='flex flex-col gap-3'>
-              <a href='https://play.google.com/store/apps/details?id=com.funparks.app' target='_blank' rel='noopener noreferrer' className='flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 transition-all'>
-                <div><div className='text-xs text-white/40 uppercase tracking-wider'>Get it on</div><div className='text-white text-sm font-bold'>Google Play 🤖</div></div>
+              <a href='#' onClick={(e)=>e.preventDefault()} target='_blank' rel='noopener noreferrer' className='flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 transition-all'>
+                <div><div className='text-xs text-white/40 uppercase tracking-wider'>Get it on</div><div className='text-white text-sm font-bold'>Google Play — Soon 🤖</div></div>
               </a>
               <a href='#' className='flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 transition-all'>
-                <div><div className='text-xs text-white/40 uppercase tracking-wider'>Download on the</div><div className='text-white text-sm font-bold'>App Store 🍎</div></div>
+                <div><div className='text-xs text-white/40 uppercase tracking-wider'>Download on the</div><div className='text-white text-sm font-bold'>App Store — Soon 🍎</div></div>
               </a>
             </div>
           </div>

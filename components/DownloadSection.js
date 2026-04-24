@@ -27,10 +27,10 @@ export default function DownloadSection(){
             <p className='text-white/60 text-lg leading-relaxed mb-10 max-w-md'>64 theme parks worldwide. Free forever — no subscription, no paywalls.</p>
             <div className='flex flex-col sm:flex-row gap-4 mb-8'>
               <a href={PLAY} target='_blank' rel='noopener noreferrer' className='flex items-center gap-4 px-6 py-4 rounded-2xl bg-white text-gray-900 font-bold hover:bg-gray-50 transition-all shadow-xl'>
-                <div><div className='text-xs text-gray-400 uppercase tracking-wider mb-0.5'>Get it on</div><div className='font-black text-sm'>Google Play 🤖</div></div>
+                <div><div className='text-xs text-gray-400 uppercase tracking-wider mb-0.5'>Get it on</div><div className='font-black text-sm'>Google Play — Soon 🤖</div></div>
               </a>
               <a href={IOS} target='_blank' rel='noopener noreferrer' className='flex items-center gap-4 px-6 py-4 rounded-2xl bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-all'>
-                <div><div className='text-xs text-white/40 uppercase tracking-wider mb-0.5'>Download on the</div><div className='font-black text-sm'>App Store 🍎</div></div>
+                <div><div className='text-xs text-white/40 uppercase tracking-wider mb-0.5'>Download on the</div><div className='font-black text-sm'>App Store — Soon 🍎</div></div>
               </a>
             </div>
             <ul className='space-y-2'>
@@ -53,7 +53,7 @@ export default function DownloadSection(){
                 ))}
               </div>
               <div className='flex justify-center'>
-                {tab==='android' ? <QR url={PLAY} label='Google Play'/> : <QR url={IOS} label='App Store'/>}
+                {tab==='android' ? <QR url={PLAY} label='Google Play — Soon'/> : <QR url={IOS} label='App Store — Soon'/>}
               </div>
               <p className='text-white/20 text-xs text-center mt-5 font-medium'>Available on Android 6.0+ and iOS 14+</p>
             </div>

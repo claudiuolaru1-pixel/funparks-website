@@ -27,7 +27,7 @@ export default function Hero() {
           </p>
           <div className='flex flex-col sm:flex-row gap-4 mb-10'>
             <Link href='/#download' className='inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl btn-gradient text-white font-bold text-base shadow-xl'>
-              Download Free 🎢
+              Coming Soon 🎢
             </Link>
             <Link href='/parks' className='inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-white border-2 border-purple-200 text-gray-700 font-bold text-base hover:border-purple-400 transition-all shadow-md'>
               Explore Parks 🗺️

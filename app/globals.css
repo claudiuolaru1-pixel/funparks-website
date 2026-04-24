@@ -23,3 +23,46 @@ body { background: #f8f7ff; color: #1a1a2e; font-family: "Plus Jakarta Sans", sa
 .animate-blob2 { animation: blob2 10s ease-in-out infinite; }
 .animate-float { animation: float 6s ease-in-out infinite; }
 .animate-glow-pulse { animation: glowPulse 3s ease-in-out infinite; }
+/* -- Scroll animations ------------------------------- */
+.aos-init { opacity: 0; }
+.aos-fadeUp { transform: translateY(32px); }
+.aos-fadeDown { transform: translateY(-32px); }
+.aos-fadeLeft { transform: translateX(-32px); }
+.aos-fadeRight { transform: translateX(32px); }
+.aos-zoomIn { transform: scale(0.92); }
+.aos-animate {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+}
+/* Stagger helpers */
+.delay-100 { animation-delay: 100ms; transition-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; transition-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; transition-delay: 300ms; }
+/* Hover lift */
+.hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.hover-lift:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.12) !important; }
+/* Card pulse on hover */
+.hover-glow:hover { box-shadow: 0 0 0 2px #FF6B2B40, 0 8px 24px rgba(255,107,43,0.15) !important; }
+
+/* -- Scroll animations ------------------------------- */
+.aos-init { opacity: 0; }
+.aos-fadeUp { transform: translateY(32px); }
+.aos-fadeDown { transform: translateY(-32px); }
+.aos-fadeLeft { transform: translateX(-32px); }
+.aos-fadeRight { transform: translateX(32px); }
+.aos-zoomIn { transform: scale(0.92); }
+.aos-animate {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+}
+/* Stagger helpers */
+.delay-100 { animation-delay: 100ms; transition-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; transition-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; transition-delay: 300ms; }
+/* Hover lift */
+.hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.hover-lift:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.12) !important; }
+/* Card pulse on hover */
+.hover-glow:hover { box-shadow: 0 0 0 2px #FF6B2B40, 0 8px 24px rgba(255,107,43,0.15) !important; }

@@ -28,27 +28,12 @@ function getI18n(id){
 }
 
 function getAffiliateUrls(country,city,name){
-  const c=(country||'').toLowerCase();
-  const isAsia=['japan','china','korea','hong kong','singapore','thailand','taiwan','indonesia','malaysia','philippines'].some(x=>c.includes(x));
-  const isAmericas=['usa','united states','canada','australia','mexico'].some(x=>c.includes(x));
-  const skipQ=encodeURIComponent(`${city||''} ${name} fast track tickets`.trim());
-  const toursQ=encodeURIComponent(`${city||''} ${name} guided tours experiences`.trim());
-  if(isAsia){
-    return{
-      skipUrl:`https://affiliate.klook.com/redirect?aid=119449&aff_adid=&k_site=https%3A%2F%2Fwww.klook.com%2Fsearch%2F%3Fquery%3D${skipQ}`,
-      toursUrl:`https://affiliate.klook.com/redirect?aid=119449&aff_adid=&k_site=https%3A%2F%2Fwww.klook.com%2Fsearch%2F%3Fquery%3D${toursQ}`
-    };
-  } else if(isAmericas){
-    return{
-      skipUrl:`https://www.viator.com/search/${encodeURIComponent(`${city} ${name} skip line`)}?pid=P00298240&mcid=42383&medium=link`,
-      toursUrl:`https://www.viator.com/search/${encodeURIComponent(`${city} ${name} tours`)}?pid=P00298240&mcid=42383&medium=link`
-    };
-  } else {
-    return{
-      skipUrl:`https://www.getyourguide.com/s/?q=${encodeURIComponent(`${city} ${name} skip the line`)}&partner_id=GVNQTTL`,
-      toursUrl:`https://www.getyourguide.com/s/?q=${encodeURIComponent(`${city} ${name} tours`)}&partner_id=GVNQTTL`
-    };
-  }
+  const skipQ=encodeURIComponent(`${city||''} ${name}`.trim());
+  const toursQ=encodeURIComponent(`${city||''} ${name} tours`.trim());
+  return{
+    skipUrl:`https://www.getyourguide.com/s/?q=${skipQ}&filters=activity_type%3ASkip+the+Line&partner_id=GVNQTTL`,
+    toursUrl:`https://www.viator.com/search/${toursQ}?pid=P00298240&mcid=42383&medium=link`
+  };
 }
 
 export async function generateStaticParams(){

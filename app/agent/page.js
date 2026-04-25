@@ -1,5 +1,5 @@
 'use client';
-import ImageCard from '../components/ImageCard';
+import ImageCard from '../../components/ImageCard';
 import { useState } from 'react';
 
 const PLATFORMS = [

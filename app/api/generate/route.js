@@ -19,5 +19,10 @@ export async function POST(req) {
   });
 
   const data = await res.json();
+  // Log for debugging
+  if(data.error){
+    console.error('Claude API error:',JSON.stringify(data));
+    return NextResponse.json({error:'Claude API error: '+data.error.message,details:data},{status:500});
+  }
   return NextResponse.json(data);
 }

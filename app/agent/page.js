@@ -505,10 +505,10 @@ Return ONLY a valid JSON object (no markdown, no backticks):
         {/* PUBLISH TAB */}
         {tab==='publish' && (
           <div>
-            <div style={{background:'white',borderRadius:'20px',padding:'22px',border:'2px solid #f0eeff',marginBottom:'20px'}}}>
+            <div style={{background:'white',borderRadius:'20px',padding:'22px',border:'2px solid #f0eeff',marginBottom:'20px'}}>
               <h2 style={{fontFamily:'Syne,sans-serif',fontSize:'17px',fontWeight:'800',marginBottom:'8px'}}>🚀 Publish to funparks.app</h2>
               {!blog && (
-                <div style={{textAlign:'center',padding:'40px',color:'#9ca3af'}}}>
+                <div style={{textAlign:'center',padding:'40px',color:'#9ca3af'}}>
                   <p style={{fontWeight:'700',color:'#374151'}}>Generate content first</p>
                   <button style={{...btnStyle('orange'),marginTop:'16px',padding:'10px 20px',fontSize:'13px'}} onClick={()=>setTab('schedule')}>Browse Topics</button>
                 </div>

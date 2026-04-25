@@ -72,7 +72,7 @@ export default function ParksPage(){
                   const imgUrl=toFirebaseUrl(p.thumbnail);
                   return(
                     <a key={p.id} href={`/parks/${p.id}`}
-                      style={{display:'block',background:'white',borderRadius:'16px',overflow:'hidden',border:'2px solid #f0f0f8',textDecoration:'none',boxShadow:'0 2px 8px rgba(0,0,0,0.04)',transition:'transform 0.2s ease, box-shadow 0.2s ease'}}>
+                      className='park-card' className='park-card' style={{display:'block',background:'white',borderRadius:'16px',overflow:'hidden',border:'2px solid #f0f0f8',textDecoration:'none',boxShadow:'0 2px 8px rgba(0,0,0,0.04)'}}>
                       <div style={{height:'140px',overflow:'hidden',background:'#f0f0f8',position:'relative'}}>
                         {imgUrl&&<img src={imgUrl} alt={p.name} style={{width:'100%',height:'100%',objectFit:'cover'}}/>}
                         <div style={{position:'absolute',top:'10px',right:'10px',padding:'4px 10px',borderRadius:'999px',background:'rgba(0,0,0,0.5)',color:'white',fontSize:'11px',fontWeight:700}}>{p.country}</div>

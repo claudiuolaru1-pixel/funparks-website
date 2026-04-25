@@ -66,3 +66,19 @@ body { background: #f8f7ff; color: #1a1a2e; font-family: "Plus Jakarta Sans", sa
 .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.12) !important; }
 /* Card pulse on hover */
 .hover-glow:hover { box-shadow: 0 0 0 2px #FF6B2B40, 0 8px 24px rgba(255,107,43,0.15) !important; }
+
+/* Pure CSS scroll animations */
+@keyframes fadeInUp {
+  from { opacity:0; transform:translateY(24px); }
+  to { opacity:1; transform:translateY(0); }
+}
+.fade-in-up { animation: fadeInUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+.fade-in-up-1 { animation: fadeInUp 0.6s 0.1s cubic-bezier(0.16,1,0.3,1) both; }
+.fade-in-up-2 { animation: fadeInUp 0.6s 0.2s cubic-bezier(0.16,1,0.3,1) both; }
+.fade-in-up-3 { animation: fadeInUp 0.6s 0.3s cubic-bezier(0.16,1,0.3,1) both; }
+/* Park card hover */
+.park-card { transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+.park-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.10) !important; border-color: #c4b5fd !important; }
+/* Blog card hover */
+.blog-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.blog-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08) !important; }

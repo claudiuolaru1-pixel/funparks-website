@@ -1,4 +1,3 @@
-import AnimateOnScroll from './AnimateOnScroll';
 import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
@@ -16,9 +15,9 @@ export default function LatestBlog(){
   if(!posts.length)return null;
   const [featured,...rest]=posts;
   return(
-    <section style={{background:'#f8f7ff',padding:'80px 0'}}>
+    <section style={{background:'white',padding:'80px 0',borderTop:'1px solid #f0f0f8'}}>
       <div style={{maxWidth:'1280px',margin:'0 auto',padding:'0 24px'}}>
-        <AnimateOnScroll animation="fadeUp"><div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'40px',flexWrap:'wrap',gap:'12px'}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'40px',flexWrap:'wrap',gap:'12px'}}>
           <div>
             <div style={{display:'inline-flex',alignItems:'center',gap:'8px',padding:'6px 14px',borderRadius:'999px',background:'white',border:'1px solid #e5e7eb',color:'#7c3aed',fontSize:'12px',fontWeight:700,marginBottom:'12px'}}>
               Latest from the Blog
@@ -31,13 +30,13 @@ export default function LatestBlog(){
             View All Posts
           </Link>
         </div>
-        </AnimateOnScroll>
+        
 
         <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',gap:'20px'}}>
           {/* Featured post - larger */}
-          <AnimateOnScroll animation="fadeUp" delay={100}>
+          
           <Link href={'/blog/'+featured.slug} style={{textDecoration:'none',gridColumn:'span 2',minWidth:0}}
-            className="featured-post hover-lift">
+            className="blog-card">
             <div style={{background:'white',borderRadius:'20px',overflow:'hidden',border:'2px solid #f0f0f8',boxShadow:'0 4px 20px rgba(0,0,0,0.06)',height:'100%',display:'flex',flexDirection:'column'}}>
               <div style={{background:'linear-gradient(135deg,#1a1a2e,#2d1b69)',padding:'40px 36px',flex:1,display:'flex',flexDirection:'column',justifyContent:'space-between',minHeight:'220px'}}>
                 <div style={{display:'flex',alignItems:'center',gap:'10px',marginBottom:'16px'}}>
@@ -53,7 +52,7 @@ export default function LatestBlog(){
               </div>
             </div>
           </Link>
-          </AnimateOnScroll>
+          
 
           {/* Smaller posts */}
           {rest.map(post=>(

@@ -515,19 +515,19 @@ Return ONLY a valid JSON object (no markdown, no backticks):
               )}
               {blog && (
                 <div>
-                  <div style={{background:'#f0fdf4',border:'2px solid #86efac',borderRadius:'14px',padding:'16px 20px',marginBottom:'16px'}}}>
+                  <div style={{background:'#f0fdf4',border:'2px solid #86efac',borderRadius:'14px',padding:'16px 20px',marginBottom:'16px'}}>
                     <p style={{fontWeight:'800',color:'#166534',fontSize:'13px',margin:'0 0 4px'}}>Ready to publish</p>
                     <p style={{fontSize:'13px',color:'#15803d',margin:0}}>{blog.title}</p>
                   </div>
                   {published && (
-                    <div style={{background:'#d1fae5',border:'2px solid #34d399',borderRadius:'14px',padding:'16px 20px',marginBottom:'16px'}}}>
+                    <div style={{background:'#d1fae5',border:'2px solid #34d399',borderRadius:'14px',padding:'16px 20px',marginBottom:'16px'}}>
                       <p style={{fontWeight:'800',color:'#065f46',margin:'0 0 4px'}}>✅ Published!</p>
                       <a href={'https://funparks.app/blog/'+slug} target='_blank' rel='noopener noreferrer' style={{color:'#059669',fontSize:'13px',fontWeight:700}}>funparks.app/blog/{slug} →</a>
                       <p style={{fontSize:'12px',color:'#047857',margin:'8px 0 0'}}>Live in ~30 seconds</p>
                     </div>
                   )}
                   {publishError && (
-                    <div style={{background:'#fef2f2',border:'2px solid #fca5a5',borderRadius:'14px',padding:'16px 20px',marginBottom:'16px'}}}>
+                    <div style={{background:'#fef2f2',border:'2px solid #fca5a5',borderRadius:'14px',padding:'16px 20px',marginBottom:'16px'}}>
                       <p style={{fontWeight:'800',color:'#991b1b',margin:'0 0 4px'}}>❌ Error: {publishError}</p>
                     </div>
                   )}

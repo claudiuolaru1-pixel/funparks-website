@@ -1,27 +1,27 @@
-﻿'use client';
+ÿ'use client';
 import { useState } from 'react';
 
 const PLATFORMS = [
-  {id:'instagram',name:'Instagram',icon:'ðŸ“¸',bg:'linear-gradient(135deg,#f09433,#dc2743,#bc1888)',maxChars:2200,note:'Add to Stories + Reels'},
-  {id:'tiktok',name:'TikTok',icon:'ðŸŽµ',bg:'linear-gradient(135deg,#010101,#69C9D0)',maxChars:2200,note:'Hook in first line'},
-  {id:'youtube',name:'YouTube',icon:'â–¶ï¸',bg:'linear-gradient(135deg,#FF0000,#cc0000)',maxChars:500,note:'Shorts caption'},
-  {id:'facebook',name:'Facebook',icon:'ðŸ‘¥',bg:'linear-gradient(135deg,#1877F2,#0d5bba)',maxChars:63206,note:'End with a question'},
+  {id:'instagram',name:'Instagram',icon:'𸜸',bg:'linear-gradient(135deg,#f09433,#dc2743,#bc1888)',maxChars:2200,note:'Add to Stories + Reels'},
+  {id:'tiktok',name:'TikTok',icon:'𸽵',bg:'linear-gradient(135deg,#010101,#69C9D0)',maxChars:2200,note:'Hook in first line'},
+  {id:'youtube',name:'YouTube',icon:'⓶️',bg:'linear-gradient(135deg,#FF0000,#cc0000)',maxChars:500,note:'Shorts caption'},
+  {id:'facebook',name:'Facebook',icon:'𸘥',bg:'linear-gradient(135deg,#1877F2,#0d5bba)',maxChars:63206,note:'End with a question'},
 ];
 
 const WEEKLY_SCHEDULE = [
   {
-    day:'Monday', continent:'Europe', color:'#06b6d4', emoji:'ðŸ‡ªðŸ‡º',
+    day:'Monday', continent:'Europe', color:'#06b6d4', emoji:'𸡪𸡺',
     topics:[
       {title:'Europa-Park vs Phantasialand: Which is Germany\'s best?', category:'Comparison', tone:'debate'},
       {title:'Hidden secrets at Efteling most visitors never discover', category:'Hidden Gems', tone:'inspiring'},
       {title:'How to skip the queues at Alton Towers (and save money)', category:'Tips', tone:'fun'},
-      {title:'Best value theme parks in Europe 2025 â€” ranked by price', category:'Comparison', tone:'informative'},
+      {title:'Best value theme parks in Europe 2025 ⬝ ranked by price', category:'Comparison', tone:'informative'},
       {title:'10 European roller coasters that beat anything in the USA', category:'Top Lists', tone:'debate'},
       {title:'Did you know? Shocking facts about European theme parks', category:'Tips', tone:'fun'},
     ]
   },
   {
-    day:'Tuesday', continent:'Asia', color:'#a855f7', emoji:'ðŸŒ',
+    day:'Tuesday', continent:'Asia', color:'#a855f7', emoji:'𸒏',
     topics:[
       {title:'Tokyo Disneyland vs Tokyo DisneySea: Which should you visit first?', category:'Comparison', tone:'debate'},
       {title:'Universal Studios Japan hidden gems even locals don\'t know', category:'Hidden Gems', tone:'inspiring'},
@@ -32,7 +32,7 @@ const WEEKLY_SCHEDULE = [
     ]
   },
   {
-    day:'Wednesday', continent:'USA', color:'#FF6B2B', emoji:'ðŸ‡ºðŸ‡¸',
+    day:'Wednesday', continent:'USA', color:'#FF6B2B', emoji:'𸡺𸡸',
     topics:[
       {title:'Magic Kingdom vs EPCOT: Which Disney park is worth it in 2025?', category:'Comparison', tone:'debate'},
       {title:'Cedar Point vs Six Flags Magic Mountain: Coaster capital showdown', category:'Comparison', tone:'debate'},
@@ -43,9 +43,9 @@ const WEEKLY_SCHEDULE = [
     ]
   },
   {
-    day:'Thursday', continent:'Tips & Guides', color:'#f59e0b', emoji:'ðŸ’¡',
+    day:'Thursday', continent:'Tips & Guides', color:'#f59e0b', emoji:'𸙡',
     topics:[
-      {title:'Skip the line at any theme park â€” the complete 2025 guide', category:'Tips', tone:'informative'},
+      {title:'Skip the line at any theme park ⬝ the complete 2025 guide', category:'Tips', tone:'informative'},
       {title:'Best theme park apps you need before your next visit', category:'Tips', tone:'fun'},
       {title:'How to visit 3 theme parks in one trip on a budget', category:'Tips', tone:'inspiring'},
       {title:'Priority passes compared: GetYourGuide vs Viator vs Klook', category:'Comparison', tone:'informative'},
@@ -54,18 +54,18 @@ const WEEKLY_SCHEDULE = [
     ]
   },
   {
-    day:'Friday', continent:'Weekend Inspiration', color:'#f43f5e', emoji:'âœˆï¸',
+    day:'Friday', continent:'Weekend Inspiration', color:'#f43f5e', emoji:'Ⓠ️',
     topics:[
       {title:'Best theme park weekend breaks from major European cities', category:'Destination', tone:'inspiring'},
       {title:'The ultimate theme park bucket list for 2025', category:'Top Lists', tone:'inspiring'},
       {title:'Why theme parks are the perfect family weekend destination', category:'Destination', tone:'inspiring'},
       {title:'Last-minute theme park deals: How to find them in 2025', category:'Tips', tone:'fun'},
       {title:'Best theme parks within 2 hours of London, Paris and Amsterdam', category:'Destination', tone:'informative'},
-      {title:'How to plan the perfect theme park trip for under â‚¬200', category:'Tips', tone:'informative'},
+      {title:'How to plan the perfect theme park trip for under ⚬200', category:'Tips', tone:'informative'},
     ]
   },
   {
-    day:'Saturday', continent:'Americas + Middle East + Africa', color:'#10b981', emoji:'ðŸŒ',
+    day:'Saturday', continent:'Americas + Middle East + Africa', color:'#10b981', emoji:'𸒍',
     topics:[
       {title:'Ferrari World Abu Dhabi: Is the world\'s fastest coaster worth it?', category:'Park Guide', tone:'debate'},
       {title:'Parque Warner Madrid vs PortAventura: Spain\'s theme park battle', category:'Comparison', tone:'debate'},
@@ -76,7 +76,7 @@ const WEEKLY_SCHEDULE = [
     ]
   },
   {
-    day:'Sunday', continent:'Oceania + Global News', color:'#06b6d4', emoji:'ðŸŒŠ',
+    day:'Sunday', continent:'Oceania + Global News', color:'#06b6d4', emoji:'𸒠',
     topics:[
       {title:'Dreamworld Gold Coast: Australia\'s most thrilling theme park', category:'Park Guide', tone:'fun'},
       {title:'Warner Bros. Movie World vs Dreamworld: Queensland showdown', category:'Comparison', tone:'debate'},
@@ -127,8 +127,8 @@ export default function AgentPage() {
   const publishToSite = async () => {
     if (!blog) return;
     setPublishing(true); setPublished(false); setPublishError('');
-    const emojis = {'Park Guide':'ðŸ—ºï¸','Comparison':'âš”ï¸','News':'ðŸ“°','Tips':'ðŸ’¡','Hidden Gems':'ðŸ’Ž','Top Lists':'ðŸ†','Destination':'âœˆï¸','App Updates':'ðŸ“±'};
-    const post = {slug,title:blog.title||'',excerpt:blog.excerpt||'',category,emoji:emojis[category]||'ðŸŽ¢',date:new Date().toISOString().split('T')[0],readTime:blog.readTime||'5 min',content:blog.content||''};
+    const emojis = {'Park Guide':'𸔺️','Comparison':'⡝️','News':'𸜰','Tips':'𸙡','Hidden Gems':'𸙽','Top Lists':'𸏠','Destination':'Ⓠ️','App Updates':'𸜱'};
+    const post = {slug,title:blog.title||'',excerpt:blog.excerpt||'',category,emoji:emojis[category]||'𸽢',date:new Date().toISOString().split('T')[0],readTime:blog.readTime||'5 min',content:blog.content||''};
     try {
       const res=await fetch('/api/publish',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({post})});
       const data=await res.json();
@@ -208,8 +208,8 @@ Return ONLY a valid JSON object (no markdown, no backticks):
   };
 
   const generateScript = (b, s, cat) => {
-    const emojis = {'Park Guide':'ðŸ—ºï¸','Comparison':'âš”ï¸','News':'ðŸ“°','Tips':'ðŸ’¡','Hidden Gems':'ðŸ’Ž','Top Lists':'ðŸ†','Destination':'âœˆï¸','App Updates':'ðŸ“±'};
-    const emoji = emojis[cat]||'ðŸŽ¢';
+    const emojis = {'Park Guide':'𸔺️','Comparison':'⡝️','News':'𸜰','Tips':'𸙡','Hidden Gems':'𸙽','Top Lists':'𸏠','Destination':'Ⓠ️','App Updates':'𸜱'};
+    const emoji = emojis[cat]||'𸽢';
     const today = new Date().toISOString().split('T')[0];
     const postObj = JSON.stringify({
       slug: s,
@@ -270,17 +270,17 @@ if(!posts.find(p=>p.slug===newPost.slug)){
       <div style={{background:'linear-gradient(135deg,#1a1a2e,#2d1b69)',padding:'20px 32px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
         <div style={{fontFamily:'Syne,sans-serif',fontSize:'20px',fontWeight:'800',color:'white'}}>
           fun<span style={{background:'linear-gradient(135deg,#FF6B2B,#f43f5e,#a855f7)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>parks</span>
-          <span style={{color:'rgba(255,255,255,0.6)',fontSize:'14px',fontWeight:'600',marginLeft:'12px'}}>Content Pipeline ðŸŽ¢</span>
+          <span style={{color:'rgba(255,255,255,0.6)',fontSize:'14px',fontWeight:'600',marginLeft:'12px'}}>Content Pipeline 𸽢</span>
         </div>
         <div style={{display:'flex',gap:'8px',alignItems:'center'}}>
-          <div style={{background:'rgba(255,255,255,0.1)',border:'1px solid rgba(255,255,255,0.2)',color:'rgba(255,255,255,0.7)',padding:'5px 12px',borderRadius:'20px',fontSize:'11px',fontWeight:'700'}}>64 PARKS â€¢ 6 CONTINENTS</div>
+          <div style={{background:'rgba(255,255,255,0.1)',border:'1px solid rgba(255,255,255,0.2)',color:'rgba(255,255,255,0.7)',padding:'5px 12px',borderRadius:'20px',fontSize:'11px',fontWeight:'700'}}>64 PARKS ⬢ 6 CONTINENTS</div>
         </div>
       </div>
 
       <div style={{maxWidth:'1100px',margin:'0 auto',padding:'28px 20px'}}>
         {/* Tabs */}
         <div style={{display:'flex',gap:'4px',background:'white',borderRadius:'16px',padding:'5px',border:'2px solid #f0eeff',marginBottom:'24px',width:'fit-content',boxShadow:'0 2px 12px rgba(168,85,247,0.08)'}}>
-          {[['schedule','ðŸ“… Weekly Schedule'],['generate','âœ¨ Generate'],['review','ðŸ“ Review & Edit'],['publish','ðŸš€ Publish']].map(([id,label])=>(
+          {[['schedule','𸜦 Weekly Schedule'],['generate','ⓨ Generate'],['review','𸜝 Review & Edit'],['publish','𸡬 Publish']].map(([id,label])=>(
             <button key={id} style={tabStyle(tab===id)} onClick={()=>setTab(id)}>{label}</button>
           ))}
         </div>
@@ -289,7 +289,7 @@ if(!posts.find(p=>p.slug===newPost.slug)){
         {tab==='schedule' && (
           <div>
             <div style={{marginBottom:'20px'}}>
-              <h2 style={{fontFamily:'Syne,sans-serif',fontSize:'18px',fontWeight:'900',color:'#1a1a2e',marginBottom:'6px'}}>ðŸ“… Weekly Content Calendar</h2>
+              <h2 style={{fontFamily:'Syne,sans-serif',fontSize:'18px',fontWeight:'900',color:'#1a1a2e',marginBottom:'6px'}}>𸜦 Weekly Content Calendar</h2>
               <p style={{color:'#6b7280',fontSize:'14px'}}>Each day targets a different continent. Click any topic to pre-fill and generate.</p>
             </div>
 
@@ -314,7 +314,7 @@ if(!posts.find(p=>p.slug===newPost.slug)){
               <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'20px'}}>
                 <span style={{fontSize:'32px'}}>{schedule.emoji}</span>
                 <div>
-                  <h3 style={{fontFamily:'Syne,sans-serif',fontSize:'18px',fontWeight:'900',color:'#1a1a2e',margin:0}}>{schedule.day} â€” {schedule.continent}</h3>
+                  <h3 style={{fontFamily:'Syne,sans-serif',fontSize:'18px',fontWeight:'900',color:'#1a1a2e',margin:0}}>{schedule.day} ⬝ {schedule.continent}</h3>
                   <p style={{color:'#9ca3af',fontSize:'13px',margin:'4px 0 0'}}>6 ready-to-use topic ideas</p>
                 </div>
               </div>
@@ -327,12 +327,12 @@ if(!posts.find(p=>p.slug===newPost.slug)){
                       <div style={{display:'flex',gap:'8px'}}>
                         <span style={{fontSize:'11px',fontWeight:'700',padding:'2px 8px',borderRadius:'999px',background:schedule.color+'20',color:schedule.color}}>{t.category}</span>
                         <span style={{fontSize:'11px',fontWeight:'600',color:'#9ca3af',padding:'2px 8px',borderRadius:'999px',background:'#f3f4f6'}}>
-                          {{fun:'ðŸŽ‰ Fun',informative:'ðŸ“š Info',inspiring:'âœ¨ Inspiring',debate:'ðŸ”¥ Debate'}[t.tone]}
+                          {{fun:'𸽰 Fun',informative:'𸜡 Info',inspiring:'ⓨ Inspiring',debate:'𸝥 Debate'}[t.tone]}
                         </span>
                       </div>
                     </div>
                     <div style={{marginLeft:'16px',padding:'8px 16px',borderRadius:'10px',background:schedule.color,color:'white',fontSize:'12px',fontWeight:'700',whiteSpace:'nowrap'}}>
-                      Use This â†’
+                      Use This ⠙
                     </div>
                   </div>
                 ))}
@@ -341,10 +341,10 @@ if(!posts.find(p=>p.slug===newPost.slug)){
 
             {/* Affiliate reference */}
             <div style={{marginTop:'20px',background:'white',borderRadius:'16px',padding:'20px',border:'2px solid #f0eeff'}}>
-              <p style={{fontFamily:'Syne,sans-serif',fontSize:'13px',fontWeight:'800',color:'#1a1a2e',marginBottom:'12px'}}>ðŸ’° Affiliate Links (auto-included in all content)</p>
+              <p style={{fontFamily:'Syne,sans-serif',fontSize:'13px',fontWeight:'800',color:'#1a1a2e',marginBottom:'12px'}}>𸙰 Affiliate Links (auto-included in all content)</p>
               <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(220px,1fr))',gap:'10px'}}>
                 {[
-                  {name:'GetYourGuide',desc:'Skip the Line â€” Europe',color:'#ff5533',id:'GVNQTTL'},
+                  {name:'GetYourGuide',desc:'Skip the Line ⬝ Europe',color:'#ff5533',id:'GVNQTTL'},
                   {name:'Viator',desc:'Tours & Experiences',color:'#1a73e8',id:'P00298240'},
                   {name:'Klook',desc:'Asia parks',color:'#ff6600',id:'119449'},
                   {name:'Booking.com',desc:'Hotels near parks',color:'#003580',id:'4347407'},
@@ -364,7 +364,7 @@ if(!posts.find(p=>p.slug===newPost.slug)){
         {tab==='generate' && (
           <div>
             <div style={{background:'white',borderRadius:'20px',padding:'24px',marginBottom:'22px',border:'2px solid #f0eeff',boxShadow:'0 4px 20px rgba(168,85,247,0.06)'}}>
-              <h2 style={{fontFamily:'Syne,sans-serif',fontSize:'17px',fontWeight:'800',marginBottom:'16px'}}>âœ¨ Generate Blog Post + Social Media Content</h2>
+              <h2 style={{fontFamily:'Syne,sans-serif',fontSize:'17px',fontWeight:'800',marginBottom:'16px'}}>ⓨ Generate Blog Post + Social Media Content</h2>
               <div style={{display:'flex',gap:'12px',flexWrap:'wrap',alignItems:'flex-end'}}>
                 <div style={{flex:1,minWidth:'280px'}}>
                   <div style={{fontSize:'11px',fontWeight:'800',color:'#9ca3af',textTransform:'uppercase',letterSpacing:'0.05em',marginBottom:'5px'}}>Topic / Idea</div>
@@ -383,26 +383,26 @@ if(!posts.find(p=>p.slug===newPost.slug)){
                   <div style={{fontSize:'11px',fontWeight:'800',color:'#9ca3af',textTransform:'uppercase',letterSpacing:'0.05em',marginBottom:'5px'}}>Tone</div>
                   <select value={tone} onChange={e=>setTone(e.target.value)}
                     style={{border:'2px solid #e5e7eb',borderRadius:'10px',padding:'9px 13px',fontSize:'13px',fontFamily:'inherit',color:'#1a1a2e',outline:'none'}}>
-                    <option value="fun">ðŸŽ‰ Fun & Energetic</option>
-                    <option value="informative">ðŸ“š Informative</option>
-                    <option value="inspiring">âœ¨ Inspiring</option>
-                    <option value="debate">ðŸ”¥ Debate Starter</option>
+                    <option value="fun">𸽰 Fun & Energetic</option>
+                    <option value="informative">𸜡 Informative</option>
+                    <option value="inspiring">ⓨ Inspiring</option>
+                    <option value="debate">𸝥 Debate Starter</option>
                   </select>
                 </div>
                 <button onClick={generate} disabled={loading}
                   style={{...btnStyle('orange'),padding:'11px 24px',fontSize:'13px',opacity:loading?0.6:1,cursor:loading?'not-allowed':'pointer'}}>
-                  {loading ? 'â³ Generating...' : 'âœ¨ Generate'}
+                  {loading ? '⏳ Generating...' : 'ⓨ Generate'}
                 </button>
               </div>
             </div>
 
             {!blog && !loading && (
               <div style={{textAlign:'center',padding:'60px 24px',color:'#9ca3af'}}>
-                <div style={{fontSize:'56px',marginBottom:'12px'}}>ðŸŽ¡</div>
+                <div style={{fontSize:'56px',marginBottom:'12px'}}>𸽡</div>
                 <p style={{fontSize:'17px',fontWeight:'700',color:'#374151',marginBottom:'8px'}}>Ready to create content!</p>
                 <p style={{fontSize:'13px'}}>Pick a topic from the Weekly Schedule or enter your own.<br/>Claude writes a blog post + all 4 social posts with affiliate CTAs.</p>
                 <button style={{...btnStyle('purple'),marginTop:'16px',padding:'10px 20px',fontSize:'13px'}} onClick={()=>setTab('schedule')}>
-                  ðŸ“… Browse Weekly Schedule
+                  𸜦 Browse Weekly Schedule
                 </button>
               </div>
             )}
@@ -417,10 +417,10 @@ if(!posts.find(p=>p.slug===newPost.slug)){
             {blog && !loading && (
               <div style={{background:'#d1fae5',border:'2px solid #34d399',borderRadius:'16px',padding:'16px 20px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
                 <div>
-                  <p style={{fontWeight:'800',color:'#065f46'}}>âœ… Content generated!</p>
+                  <p style={{fontWeight:'800',color:'#065f46'}}>ⓦ Content generated!</p>
                   <p style={{fontSize:'13px',color:'#047857',marginTop:'2px'}}>{blog.title}</p>
                 </div>
-                <button style={btnStyle('green')} onClick={()=>setTab('review')}>Review & Edit â†’</button>
+                <button style={btnStyle('green')} onClick={()=>setTab('review')}>Review & Edit ⠙</button>
               </div>
             )}
           </div>
@@ -431,7 +431,7 @@ if(!posts.find(p=>p.slug===newPost.slug)){
           <div>
             <div style={{background:'white',borderRadius:'20px',border:'2px solid #f0eeff',overflow:'hidden',marginBottom:'22px'}}>
               <div style={{padding:'14px 22px',background:'linear-gradient(135deg,#fff7f5,#fdf4ff)',borderBottom:'2px solid #f0eeff',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-                <span style={{fontFamily:'Syne,sans-serif',fontSize:'14px',fontWeight:'800'}}>ðŸ“ Blog Post â€” funparks.app/blog/{slug}</span>
+                <span style={{fontFamily:'Syne,sans-serif',fontSize:'14px',fontWeight:'800'}}>𸜝 Blog Post ⬝ funparks.app/blog/{slug}</span>
                 <div style={{display:'flex',gap:'8px'}}>
                   <span style={{fontSize:'11px',background:'#FF6B2B15',color:'#FF6B2B',padding:'3px 10px',borderRadius:'20px',fontWeight:'700'}}>{category}</span>
                   <span style={{fontSize:'11px',background:'#f0eeff',color:'#7c3aed',padding:'3px 10px',borderRadius:'20px',fontWeight:'700'}}>{blog.readTime||'5 min'} read</span>
@@ -447,7 +447,7 @@ if(!posts.find(p=>p.slug===newPost.slug)){
               </div>
             </div>
 
-            <p style={{fontWeight:'800',fontSize:'14px',marginBottom:'12px',color:'#1a1a2e'}}>ðŸ“± Social Media Posts</p>
+            <p style={{fontWeight:'800',fontSize:'14px',marginBottom:'12px',color:'#1a1a2e'}}>𸜱 Social Media Posts</p>
             <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(460px,1fr))',gap:'16px',marginBottom:'20px'}}>
               {PLATFORMS.map(p=>{
                 const cc = charCount(posts[p.id]||'', p.maxChars);
@@ -467,7 +467,7 @@ if(!posts.find(p=>p.slug===newPost.slug)){
                       style={{width:'100%',border:'2px solid #f0eeff',borderRadius:'12px',padding:'12px',fontSize:'13px',fontFamily:'inherit',color:'#1a1a2e',resize:'vertical',outline:'none',lineHeight:'1.6'}} />
                     <div style={{display:'flex',gap:'7px',marginTop:'10px'}}>
                       <button style={{...btnStyle(),fontSize:'12px'}} onClick={()=>copyText(posts[p.id]||'','post_'+p.id)}>
-                        {copied['post_'+p.id] ? 'âœ… Copied!' : 'ðŸ“‹ Copy'}
+                        {copied['post_'+p.id] ? 'ⓦ Copied!' : '𸜹 Copy'}
                       </button>
                     </div>
                   </div>
@@ -485,17 +485,17 @@ if(!posts.find(p=>p.slug===newPost.slug)){
             )}
 
             <button style={{...btnStyle('orange'),padding:'12px 28px',fontSize:'14px'}} onClick={()=>setTab('publish')}>
-              ðŸš€ Go to Publish â†’
+              𸡬 Go to Publish ⠙
             </button>
           </div>
         )}
 
         {tab==='review' && !blog && (
           <div style={{textAlign:'center',padding:'60px 24px',color:'#9ca3af'}}>
-            <div style={{fontSize:'48px',marginBottom:'12px'}}>ðŸ“</div>
+            <div style={{fontSize:'48px',marginBottom:'12px'}}>𸜝</div>
             <p style={{fontWeight:'700',color:'#374151'}}>Generate content first</p>
             <button style={{...btnStyle('orange'),marginTop:'16px',padding:'10px 20px',fontSize:'13px'}} onClick={()=>setTab('schedule')}>
-              ðŸ“… Browse Topics
+              𸜦 Browse Topics
             </button>
           </div>
         )}
@@ -504,9 +504,9 @@ if(!posts.find(p=>p.slug===newPost.slug)){
         {tab==='publish' && (
           <div>
             <div style={{background:'white',borderRadius:'20px',padding:'22px',border:'2px solid #f0eeff',marginBottom:'20px'}}>
-              <h2 style={{fontFamily:'Syne,sans-serif',fontSize:'17px',fontWeight:'800',marginBottom:'8px'}}>ðŸš€ Publish to funparks.app</h2>
+              <h2 style={{fontFamily:'Syne,sans-serif',fontSize:'17px',fontWeight:'800',marginBottom:'8px'}}>𸡬 Publish to funparks.app</h2>
               <p style={{fontSize:'13px',color:'#6b7280',lineHeight:'1.6',marginBottom:'16px'}}>
-                Copy the script â†’ save as <code style={{background:'#f0eeff',padding:'2px 6px',borderRadius:'5px',fontSize:'12px'}}>add_post.js</code> in your funparks-website folder â†’ run it â†’ push to GitHub.
+                Copy the script ⠙ save as <code style={{background:'#f0eeff',padding:'2px 6px',borderRadius:'5px',fontSize:'12px'}}>add_post.js</code> in your funparks-website folder ⠙ run it ⠙ push to GitHub.
               </p>
               {published && <div style={{background:'#d1fae5',border:'2px solid #34d399',borderRadius:'12px',padding:'12px 16px',marginBottom:'12px'}}><p style={{fontWeight:'800',color:'#065f46',margin:0}}>Published! Live at funparks.app/blog/{slug}</p></div>}
               {publishError && <div style={{background:'#fef2f2',border:'2px solid #fca5a5',borderRadius:'12px',padding:'12px 16px',marginBottom:'12px'}}><p style={{fontWeight:'800',color:'#991b1b',margin:0}}>Error: {publishError}</p></div>}
@@ -517,7 +517,7 @@ if(!posts.find(p=>p.slug===newPost.slug)){
                     <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'10px'}}>
                       <span style={{color:'rgba(255,255,255,0.5)',fontSize:'12px',fontWeight:'600'}}>add_post.js</span>
                       <button style={{...btnStyle('green'),fontSize:'12px'}} onClick={()=>copyText(script,'script')}>
-                        {copied.script ? 'âœ… Copied!' : 'ðŸ“‹ Copy Script'}
+                        {copied.script ? 'ⓦ Copied!' : '𸜹 Copy Script'}
                       </button>
                     </div>
                     <pre style={{color:'#a5f3fc',fontSize:'11px',whiteSpace:'pre-wrap',fontFamily:'Courier New,monospace',lineHeight:'1.6',margin:0}}>{script}</pre>
@@ -534,7 +534,7 @@ if(!posts.find(p=>p.slug===newPost.slug)){
                 <div style={{textAlign:'center',padding:'40px',color:'#9ca3af'}}>
                   <p style={{fontWeight:'700',color:'#374151'}}>Generate content first</p>
                   <button style={{...btnStyle('orange'),marginTop:'16px',padding:'10px 20px',fontSize:'13px'}} onClick={()=>setTab('schedule')}>
-                    ðŸ“… Browse Topics
+                    𸜦 Browse Topics
                   </button>
                 </div>
               )}

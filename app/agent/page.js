@@ -1,4 +1,4 @@
-ÿ'use client';
+'use client';
 import { useState } from 'react';
 
 const PLATFORMS = [

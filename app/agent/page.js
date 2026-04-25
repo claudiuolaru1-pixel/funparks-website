@@ -1,4 +1,5 @@
 'use client';
+import ImageCard from '../components/ImageCard';
 import { useState } from 'react';
 
 const PLATFORMS = [
@@ -475,6 +476,7 @@ if(!posts.find(p=>p.slug===newPost.slug)){
               })}
             </div>
 
+            <ImageCard post={blog} category={category} />
             {hashtags.length>0 && (
               <div style={{background:'white',borderRadius:'14px',padding:'14px 18px',border:'2px solid #f0eeff',marginBottom:'20px'}}>
                 <p style={{fontSize:'11px',fontWeight:'800',color:'#7c3aed',textTransform:'uppercase',letterSpacing:'0.05em',marginBottom:'8px'}}>Suggested Hashtags</p>

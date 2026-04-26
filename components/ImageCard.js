@@ -206,6 +206,40 @@ export default function ImageCard({ post, category }) {
     setTimeout(()=>setCopied(false),2000);
   };
 
+
+  const generateSRT = () => {
+    if (!post) return '';
+    const content = post.content || '';
+    const title = post.title || '';
+    const paragraphs = content.split('\n\n').filter(p => p.trim());
+    const slides = [{ duration: 3, text: title }];
+    let slideNum = 2;
+    paragraphs.forEach(p => {
+      const clean = p.replace(/\*\*/g, '').trim();
+      if (!clean || clean.length < 15 || slideNum > 9) return;
+      const words = clean.split(' ');
+      slides.push({ duration: p.startsWith('**') ? 2 : 4, text: words.slice(0,12).join(' ')+(words.length>12?'...':'') });
+      slideNum++;
+    });
+    slides.push({ duration: 3, text: 'Read more at funparks.app/blog' });
+    let srt = '', time = 0;
+    slides.forEach((s, i) => {
+      const fmt = t => { const h=Math.floor(t/3600).toString().padStart(2,'0'),m=Math.floor((t%3600)/60).toString().padStart(2,'0'),s2=Math.floor(t%60).toString().padStart(2,'0'); return h+':'+m+':'+s2+',000'; };
+      srt += (i+1)+'\n'+fmt(time)+' --> '+fmt(time+s.duration)+'\n'+s.text+'\n\n';
+      time += s.duration;
+    });
+    return srt;
+  };
+
+  const downloadSRT = () => {
+    const srt = generateSRT();
+    const blob = new Blob([srt], {type:'text/plain'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'funparks-'+(post?.slug||'post').substring(0,20)+'.srt';
+    a.click(); URL.revokeObjectURL(url);
+  };
+
   if (!post) return null;
 
   return (
@@ -234,7 +268,9 @@ export default function ImageCard({ post, category }) {
             style={{width:'100%',marginTop:'10px',padding:'10px',borderRadius:'10px',border:'none',fontFamily:'inherit',fontSize:'13px',fontWeight:'700',cursor:'pointer',background:copied?'#059669':'linear-gradient(135deg,#a855f7,#06b6d4)',color:'white'}}>
             {copied ? '\u2705 Copied!' : '\uD83D\uDCCB Copy CapCut Script'}
           </button>
-          <p style={{fontSize:'11px',color:'#9ca3af',marginTop:'6px',textAlign:'center'}}>Open CapCut \u2192 New Project \u2192 follow the slide instructions above</p>
+          <button onClick={downloadSRT} style={{width:'100%',marginTop:'8px',padding:'10px',borderRadius:'10px',border:'2px solid #a855f7',fontFamily:'inherit',fontSize:'13px',fontWeight:'700',cursor:'pointer',background:'white',color:'#a855f7'}}>\u2B07\uFE0F Download SRT (CapCut import)</button>
+          <p style={{fontSize:'11px',color:'#9ca3af',marginTop:'4px',textAlign:'center'}}>CapCut: Text \u2192 Auto Captions \u2192 Import .srt</p>
+          <p style={{fontSize:'11px',color:'#9ca3af',display:'none'}}>Open CapCut \u2192 New Project \u2192 follow the slide instructions above</p>
         </div>
       </div>
     </div>

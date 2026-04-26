@@ -1,4 +1,4 @@
-ÿ'use client';
+'use client';
 import ImageCard from '../../components/ImageCard';
 import { useState } from 'react';
 

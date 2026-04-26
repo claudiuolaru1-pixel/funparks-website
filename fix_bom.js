@@ -1,9 +1,15 @@
-﻿const fs=require('fs');
-let c=fs.readFileSync('app/agent/page.js','utf8');
-// Remove BOM if present
-if(c.charCodeAt(0)===0xFEFF)c=c.slice(1);
-// Also remove any other leading garbage before 'use client'
-const idx=c.indexOf("'use client'");
-if(idx>0){c=c.slice(idx);console.log('Removed',idx,'chars before use client');}
-fs.writeFileSync('app/agent/page.js',c,'utf8');
-console.log('Fixed. Starts with:',JSON.stringify(c.substring(0,20)));
+const fs=require('fs');
+let buf=fs.readFileSync('app/agent/page.js');
+console.log('First bytes:',buf.slice(0,4).toString('hex'));
+let str=buf.toString('utf8');
+const marker='use client';
+const idx=str.indexOf(marker);
+const realStart=str.lastIndexOf("'",idx);
+if(realStart>0){
+  str=str.slice(realStart);
+  console.log('Removed',realStart,'chars');
+  fs.writeFileSync('app/agent/page.js',str,'utf8');
+  console.log('Now starts with:',str.substring(0,20));
+} else {
+  console.log('Already clean, starts with:',str.substring(0,20));
+}

@@ -101,13 +101,13 @@ const dayIndex = TODAY_DAY === 0 ? 6 : TODAY_DAY - 1; // Map to our 0=Mon schedu
 
 export default function AgentPage() {
   const [topic, setTopic] = useState('');
-  const [category, setCategory] = useState('Park Guide');
+  const [category, setCategory] = useState(()=>{try{return sessionStorage.getItem('fp_category')||'Park Guide';}catch{return 'Park Guide';}});
   const [tone, setTone] = useState('fun');
   const [loading, setLoading] = useState(false);
-  const [blog, setBlog] = useState(null);
-  const [posts, setPosts] = useState({});
-  const [hashtags, setHashtags] = useState([]);
-  const [slug, setSlug] = useState('');
+  const [blog, setBlog] = useState(()=>{try{const s=sessionStorage.getItem('fp_blog');return s?JSON.parse(s):null;}catch{return null;}});
+  const [posts, setPosts] = useState(()=>{try{const s=sessionStorage.getItem('fp_posts');return s?JSON.parse(s):{};}catch{return {};}});
+  const [hashtags, setHashtags] = useState(()=>{try{const s=sessionStorage.getItem('fp_hashtags');return s?JSON.parse(s):[];}catch{return [];}});
+  const [slug, setSlug] = useState(()=>{try{return sessionStorage.getItem('fp_slug')||'';}catch{return '';}});
   const [script, setScript] = useState('');
   const [copied, setCopied] = useState({});
   const [publishing, setPublishing] = useState(false);
@@ -157,10 +157,10 @@ Tone: ${toneDesc}
 
 IMPORTANT MONETIZATION RULES:
 - Include at least 2 natural affiliate CTAs in the blog post body
-- For skip-the-line / fast track content: link to GetYourGuide (partner_id=GVNQTTL)
-- For tours and experiences: link to Viator (pid=P00298240)  
-- For Asian parks: link to Klook (aid=119449)
-- For hotel recommendations: link to Booking.com (aid=4347407)
+- For skip-the-line tickets: use URL https://www.getyourguide.com/s/?q=PARKNAME+skip+the+line&partner_id=GVNQTTL replacing PARKNAME with actual park name
+- For tours: use URL https://www.viator.com/search/PARKNAME+tours?pid=P00298240&mcid=42383&medium=link replacing PARKNAME
+- For Asian parks: use URL https://affiliate.klook.com/redirect?aid=119449&k_site=https://www.klook.com/search/?query=PARKNAME replacing PARKNAME
+- For hotels: use URL https://www.booking.com/searchresults.html?aid=4347407&ss=CITY+PARKNAME replacing CITY and PARKNAME
 - CTAs should feel natural, not salesy. Example: "You can book skip-the-line tickets on GetYourGuide here"
 - End blog post with a clear CTA section with 2-3 affiliate links
 - Mention the Funparks app (free on Android at funparks.app) as the best way to plan visits
@@ -197,6 +197,7 @@ Return ONLY a valid JSON object (no markdown, no backticks):
       setBlog(parsed.blog);
       setPosts({instagram:parsed.instagram,tiktok:parsed.tiktok,youtube:parsed.youtube,facebook:parsed.facebook});
       setHashtags(parsed.hashtags||[]);
+      try{sessionStorage.setItem('fp_blog',JSON.stringify(parsed.blog));sessionStorage.setItem('fp_posts',JSON.stringify({instagram:parsed.instagram,tiktok:parsed.tiktok,youtube:parsed.youtube,facebook:parsed.facebook}));sessionStorage.setItem('fp_hashtags',JSON.stringify(parsed.hashtags||[]));sessionStorage.setItem('fp_slug',newSlug);sessionStorage.setItem('fp_category',category);}catch(e){}
       setSlug(newSlug);
 
       const addScript = generateScript(parsed.blog, newSlug, category);

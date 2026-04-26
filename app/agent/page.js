@@ -192,7 +192,7 @@ Return ONLY a valid JSON object (no markdown, no backticks):
       const newSlug = slugify(parsed.blog.title || topic);
       // parsed already extracted server-side
       // removed - parsing done server-side
-      const newSlug = slugify(parsed.blog.title || topic);
+      // newSlug already defined above
 
       setBlog(parsed.blog);
       setPosts({instagram:parsed.instagram,tiktok:parsed.tiktok,youtube:parsed.youtube,facebook:parsed.facebook});

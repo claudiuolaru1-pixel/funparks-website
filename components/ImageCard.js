@@ -5,6 +5,7 @@ export default function ImageCard({ post, category }) {
   const canvasRef = useRef(null);
   const [dataUrl, setDataUrl] = useState('');
   const [capcut, setCapcut] = useState('');
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (!post) return;
@@ -28,222 +29,181 @@ export default function ImageCard({ post, category }) {
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, W, H);
 
-    // Decorative circles
+    // Glow circles
     ctx.save();
-    ctx.globalAlpha = 0.08;
+    ctx.globalAlpha = 0.10;
     ctx.fillStyle = '#FF6B2B';
-    ctx.beginPath();
-    ctx.arc(W * 0.85, H * 0.15, 280, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.beginPath(); ctx.arc(W*0.85, H*0.12, 300, 0, Math.PI*2); ctx.fill();
     ctx.fillStyle = '#a855f7';
-    ctx.beginPath();
-    ctx.arc(W * 0.1, H * 0.85, 220, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.beginPath(); ctx.arc(W*0.12, H*0.88, 240, 0, Math.PI*2); ctx.fill();
     ctx.restore();
 
     // Top accent line
-    const lineGrad = ctx.createLinearGradient(60, 0, W - 60, 0);
-    lineGrad.addColorStop(0, '#FF6B2B');
-    lineGrad.addColorStop(0.5, '#f43f5e');
-    lineGrad.addColorStop(1, '#a855f7');
-    ctx.strokeStyle = lineGrad;
-    ctx.lineWidth = 4;
-    ctx.beginPath();
-    ctx.moveTo(60, 80);
-    ctx.lineTo(W - 60, 80);
-    ctx.stroke();
+    const lg = ctx.createLinearGradient(60,0,W-60,0);
+    lg.addColorStop(0,'#FF6B2B'); lg.addColorStop(0.5,'#f43f5e'); lg.addColorStop(1,'#a855f7');
+    ctx.strokeStyle=lg; ctx.lineWidth=4;
+    ctx.beginPath(); ctx.moveTo(60,72); ctx.lineTo(W-60,72); ctx.stroke();
 
-    // Logo / branding
-    ctx.fillStyle = 'white';
-    ctx.font = 'bold 42px Arial';
-    ctx.fillText('fun', 60, 140);
-    ctx.fillStyle = '#FF6B2B';
-    ctx.fillText('parks', 60 + ctx.measureText('fun').width, 140);
+    // Logo
+    ctx.font='bold 40px Arial';
+    ctx.fillStyle='white'; ctx.fillText('fun',60,130);
+    const fw=ctx.measureText('fun').width;
+    ctx.fillStyle='#FF6B2B'; ctx.fillText('parks',60+fw,130);
 
     // Category badge
-    const cat = category || 'Park Guide';
-    ctx.fillStyle = 'rgba(255,107,43,0.2)';
-    const badgeW = ctx.measureText(cat.toUpperCase()).width + 40;
-    roundRect(ctx, W - 60 - badgeW, 108, badgeW, 38, 19);
-    ctx.fillStyle = '#FF6B2B';
-    ctx.font = 'bold 18px Arial';
-    ctx.textAlign = 'right';
-    ctx.fillText(cat.toUpperCase(), W - 60 - 20, 133);
-    ctx.textAlign = 'left';
+    const cat=(category||'Park Guide').toUpperCase();
+    ctx.font='bold 17px Arial';
+    const bw=ctx.measureText(cat).width+36;
+    ctx.fillStyle='rgba(255,107,43,0.2)';
+    ctx.beginPath();
+    ctx.roundRect(W-60-bw,100,bw,34,17);
+    ctx.fill();
+    ctx.fillStyle='#FF6B2B';
+    ctx.textAlign='right';
+    ctx.fillText(cat,W-60-18,122);
+    ctx.textAlign='left';
 
-    // Title
-    ctx.fillStyle = 'white';
-    ctx.font = 'bold 62px Arial';
-    const title = post.title || '';
-    wrapText(ctx, title, 60, 260, W - 120, 76);
+    // Title - large, centered feel
+    ctx.fillStyle='white';
+    ctx.font='bold 58px Arial';
+    const title=post.title||'';
+    const titleLines=wrapText(ctx,title,60,220,W-120,72,3);
 
     // Divider
-    ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    const titleLines = getWrappedLines(ctx, title, W - 120, 'bold 62px Arial');
-    const titleBottom = 260 + titleLines.length * 76 + 20;
-    ctx.moveTo(60, titleBottom);
-    ctx.lineTo(W - 60, titleBottom);
-    ctx.stroke();
+    const divY=220+titleLines*72+24;
+    ctx.strokeStyle='rgba(255,255,255,0.12)'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(60,divY); ctx.lineTo(W-60,divY); ctx.stroke();
 
-    // Excerpt / key points
-    ctx.fillStyle = 'rgba(255,255,255,0.7)';
-    ctx.font = '32px Arial';
-    const excerpt = post.excerpt || '';
-    wrapText(ctx, excerpt, 60, titleBottom + 50, W - 120, 46, 3);
+    // Excerpt - 2 lines max
+    ctx.fillStyle='rgba(255,255,255,0.65)';
+    ctx.font='28px Arial';
+    wrapText(ctx,post.excerpt||'',60,divY+46,W-120,40,2);
 
-    // Key highlights from content
-    const content = post.content || '';
-    const boldMatches = content.match(/\*\*([^*]+)\*\*/g) || [];
-    const highlights = boldMatches.slice(0, 3).map(m => m.replace(/\*\*/g, ''));
+    // Extract up to 4 bold headings as key points
+    const content=post.content||'';
+    const bold=content.match(/\*\*([^*]{3,50})\*\*/g)||[];
+    const points=bold.slice(0,4).map(m=>m.replace(/\*\*/g,''));
 
-    if (highlights.length > 0) {
-      let yPos = titleBottom + 50 + 46 * 3 + 40;
-      highlights.forEach(h => {
-        // Bullet dot
-        const dotGrad = ctx.createRadialGradient(72, yPos - 8, 0, 72, yPos - 8, 8);
-        dotGrad.addColorStop(0, '#FF6B2B');
-        dotGrad.addColorStop(1, '#f43f5e');
-        ctx.fillStyle = dotGrad;
-        ctx.beginPath();
-        ctx.arc(72, yPos - 8, 8, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = 'rgba(255,255,255,0.85)';
-        ctx.font = 'bold 28px Arial';
-        const shortH = h.length > 45 ? h.substring(0, 45) + '...' : h;
-        ctx.fillText(shortH, 96, yPos);
-        yPos += 52;
+    if(points.length>0){
+      let py=divY+46+40*2+48;
+      ctx.font='bold 20px Arial';
+      ctx.fillStyle='rgba(255,255,255,0.4)';
+      ctx.fillText('KEY HIGHLIGHTS',60,py-10);
+      points.forEach((p,idx)=>{
+        // Dot
+        const dg=ctx.createRadialGradient(72,py+22,0,72,py+22,7);
+        dg.addColorStop(0,'#FF6B2B'); dg.addColorStop(1,'#f43f5e');
+        ctx.fillStyle=dg;
+        ctx.beginPath(); ctx.arc(72,py+22,7,0,Math.PI*2); ctx.fill();
+        // Text
+        ctx.fillStyle='rgba(255,255,255,0.88)';
+        ctx.font='bold 26px Arial';
+        const short=p.length>52?p.substring(0,52)+'...':p;
+        ctx.fillText(short,92,py+30);
+        py+=52;
       });
     }
 
     // Bottom bar
-    const barGrad = ctx.createLinearGradient(0, H - 100, W, H - 100);
-    barGrad.addColorStop(0, '#FF6B2B');
-    barGrad.addColorStop(0.5, '#f43f5e');
-    barGrad.addColorStop(1, '#a855f7');
-    ctx.fillStyle = barGrad;
-    ctx.fillRect(0, H - 100, W, 100);
+    const bg=ctx.createLinearGradient(0,H-90,W,H-90);
+    bg.addColorStop(0,'#FF6B2B'); bg.addColorStop(0.5,'#f43f5e'); bg.addColorStop(1,'#a855f7');
+    ctx.fillStyle=bg; ctx.fillRect(0,H-90,W,90);
+    ctx.fillStyle='white';
+    ctx.font='bold 30px Arial'; ctx.textAlign='center';
+    ctx.fillText('funparks.app',W/2,H-48);
+    ctx.font='20px Arial'; ctx.fillStyle='rgba(255,255,255,0.7)';
+    ctx.fillText('Free theme park app  |  64 parks worldwide',W/2,H-18);
+    ctx.textAlign='left';
 
-    ctx.fillStyle = 'white';
-    ctx.font = 'bold 32px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText('funparks.app', W / 2, H - 52);
-    ctx.font = '22px Arial';
-    ctx.fillStyle = 'rgba(255,255,255,0.7)';
-    ctx.fillText('Free theme park app • 64 parks worldwide', W / 2, H - 22);
-    ctx.textAlign = 'left';
-
-    setDataUrl(canvas.toDataURL('image/jpeg', 0.95));
+    setDataUrl(canvas.toDataURL('image/jpeg',0.95));
   };
+
+  function wrapText(ctx,text,x,y,maxW,lineH,maxLines=10){
+    const words=text.split(' ');
+    const lines=[];
+    let cur='';
+    words.forEach(w=>{
+      const t=cur?cur+' '+w:w;
+      if(ctx.measureText(t).width>maxW){if(cur)lines.push(cur);cur=w;}
+      else cur=t;
+    });
+    if(cur)lines.push(cur);
+    const show=lines.slice(0,maxLines);
+    show.forEach((l,i)=>ctx.fillText(l,x,y+i*lineH));
+    return show.length;
+  }
 
   const generateCapCut = () => {
     if (!post) return;
     const content = post.content || '';
     const title = post.title || '';
 
-    // Extract sections from bold headings
-    const sections = content.split(/\*\*([^*]+)\*\*/g).filter(s => s.trim());
+    // Parse into slides intelligently
+    const paragraphs = content.split('\n\n').filter(p => p.trim());
+    const slides = [];
 
-    let script = `CAPCUT SCRIPT — ${title}\n`;
-    script += `${'='.repeat(50)}\n\n`;
-    script += `RECOMMENDED SETTINGS:\n`;
-    script += `• Duration: 45-60 seconds\n`;
-    script += `• Music: Chill/Lo-fi (search "theme park chill" in CapCut)\n`;
-    script += `• Background: Dark gradient or theme park photo\n`;
-    script += `• Font: Bold white text, center aligned\n\n`;
-    script += `${'─'.repeat(50)}\n\n`;
-    script += `SLIDE 1 (3 sec) — HOOK\n`;
-    script += `"${title}"\n\n`;
+    // Slide 1: Hook
+    slides.push({ duration: 3, type: 'hook', text: title });
 
-    // Parse content into slides
-    const lines = content.split('\n').filter(l => l.trim());
     let slideNum = 2;
-    let currentSection = '';
+    paragraphs.forEach(p => {
+      const clean = p.replace(/\*\*/g, '').trim();
+      if (!clean || clean.length < 15) return;
+      if (slideNum > 9) return;
 
-    lines.forEach(line => {
-      const clean = line.replace(/\*\*/g, '').trim();
-      if (!clean) return;
-
-      if (line.startsWith('**') && line.endsWith('**')) {
-        // Section header
-        currentSection = clean;
-        script += `SLIDE ${slideNum} (2 sec) — SECTION TITLE\n`;
-        script += `"${clean}"\n\n`;
-        slideNum++;
-      } else if (clean.length > 20 && slideNum <= 8) {
-        // Content slide - max 15 words
+      // Section headers become title slides
+      if (p.startsWith('**') && p.endsWith('**')) {
+        slides.push({ duration: 2, type: 'section', text: clean });
+      } else {
+        // Content - trim to 15 words
         const words = clean.split(' ');
-        const short = words.slice(0, 15).join(' ') + (words.length > 15 ? '...' : '');
-        script += `SLIDE ${slideNum} (4 sec)\n`;
-        script += `"${short}"\n\n`;
-        slideNum++;
+        const text = words.slice(0, 15).join(' ') + (words.length > 15 ? '...' : '');
+        slides.push({ duration: 4, type: 'content', text });
       }
+      slideNum++;
     });
 
-    script += `SLIDE ${slideNum} (3 sec) — CALL TO ACTION\n`;
-    script += `"Read the full guide at funparks.app/blog"\n\n`;
-    script += `${'─'.repeat(50)}\n`;
-    script += `HASHTAGS FOR CAPTION:\n`;
-    script += `#funparks #themeparks #${(post.category||'parkguide').toLowerCase().replace(/\s+/g,'')} #themepark2025 #rollercoaster #travel\n`;
+    // Final CTA
+    slides.push({ duration: 3, type: 'cta', text: 'Read the full guide at funparks.app/blog' });
+
+    let script = `CAPCUT SCRIPT \u2014 ${title}\n`;
+    script += `${'='.repeat(55)}\n\n`;
+    script += `SETUP:\n`;
+    script += `1. Open CapCut \u2192 New Project \u2192 Add background (stock video or photo)\n`;
+    script += `2. Tap Audio \u2192 search "chill lofi travel" \u2192 add music\n`;
+    script += `3. For each slide below: tap Text \u2192 Add Text \u2192 type the text \u2192 set duration\n\n`;
+    script += `${'\u2500'.repeat(55)}\n\n`;
+
+    slides.forEach((s, i) => {
+      const icons = { hook: '\uD83C\uDFAF', section: '\uD83D\uDCCC', content: '\uD83D\uDCAC', cta: '\uD83D\uDCF1' };
+      script += `SLIDE ${i + 1} \u2014 ${s.duration} seconds  ${icons[s.type] || ''}\n`;
+      script += `"${s.text}"\n`;
+      if (s.type === 'hook') script += `TIP: Use large bold white text, center screen\n`;
+      if (s.type === 'cta') script += `TIP: Add Funparks logo or website URL as sticker\n`;
+      script += '\n';
+    });
+
+    script += `${'\u2500'.repeat(55)}\n`;
+    script += `TOTAL: ~${slides.reduce((a, s) => a + s.duration, 0)} seconds\n\n`;
+    script += `EXPORT: 1080x1080 (Instagram) or 1080x1920 (TikTok/Reels)\n\n`;
+    script += `HASHTAGS:\n#funparks #themeparks #${(post.category||'guide').toLowerCase().replace(/\s+/g,'')} `;
+    script += `#themepark2025 #rollercoaster #travel #weekendtrip #parklife\n`;
 
     setCapcut(script);
   };
 
-  // Canvas helper functions
-  function wrapText(ctx, text, x, y, maxW, lineH, maxLines = 10) {
-    const lines = getWrappedLines(ctx, text, maxW, ctx.font);
-    lines.slice(0, maxLines).forEach((line, i) => {
-      ctx.fillText(line, x, y + i * lineH);
-    });
-  }
-
-  function getWrappedLines(ctx, text, maxW, font) {
-    const savedFont = ctx.font;
-    if (font) ctx.font = font;
-    const words = text.split(' ');
-    const lines = [];
-    let current = '';
-    words.forEach(word => {
-      const test = current ? current + ' ' + word : word;
-      if (ctx.measureText(test).width > maxW) {
-        if (current) lines.push(current);
-        current = word;
-      } else {
-        current = test;
-      }
-    });
-    if (current) lines.push(current);
-    ctx.font = savedFont;
-    return lines;
-  }
-
-  function roundRect(ctx, x, y, w, h, r) {
-    ctx.beginPath();
-    ctx.moveTo(x + r, y);
-    ctx.lineTo(x + w - r, y);
-    ctx.arcTo(x + w, y, x + w, y + r, r);
-    ctx.lineTo(x + w, y + h - r);
-    ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
-    ctx.lineTo(x + r, y + h);
-    ctx.arcTo(x, y + h, x, y + h - r, r);
-    ctx.lineTo(x, y + r);
-    ctx.arcTo(x, y, x + r, y, r);
-    ctx.closePath();
-    ctx.fill();
-  }
-
   const download = () => {
     const a = document.createElement('a');
     a.href = dataUrl;
-    a.download = `funparks-${(post?.slug||'post').substring(0,20)}.jpg`;
+    a.download = `funparks-${(post?.slug||'post').substring(0,25)}.jpg`;
     a.click();
   };
 
   const copyCapCut = async () => {
     try { await navigator.clipboard.writeText(capcut); }
     catch(e) { const t=document.createElement('textarea');t.value=capcut;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t); }
-    alert('CapCut script copied!');
+    setCopied(true);
+    setTimeout(()=>setCopied(false),2000);
   };
 
   if (!post) return null;
@@ -251,30 +211,30 @@ export default function ImageCard({ post, category }) {
   return (
     <div style={{background:'white',borderRadius:'20px',border:'2px solid #f0eeff',overflow:'hidden',marginBottom:'22px'}}>
       <div style={{padding:'14px 22px',background:'linear-gradient(135deg,#fff7f5,#fdf4ff)',borderBottom:'2px solid #f0eeff',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-        <span style={{fontFamily:'Syne,sans-serif',fontSize:'14px',fontWeight:'800'}}>🎨 Social Media Assets</span>
-        <span style={{fontSize:'11px',color:'#9ca3af'}}>Instagram 1080×1080 + CapCut Script</span>
+        <span style={{fontFamily:'Syne,sans-serif',fontSize:'14px',fontWeight:'800'}}>\uD83C\uDFA8 Social Media Assets</span>
+        <span style={{fontSize:'11px',color:'#9ca3af'}}>Instagram card + CapCut script</span>
       </div>
       <div style={{padding:'20px',display:'grid',gridTemplateColumns:'1fr 1fr',gap:'20px'}}>
-        {/* Image card */}
         <div>
-          <p style={{fontFamily:'Syne,sans-serif',fontSize:'13px',fontWeight:'800',marginBottom:'10px',color:'#1a1a2e'}}>📸 Image Card (Instagram/Facebook)</p>
+          <p style={{fontFamily:'Syne,sans-serif',fontSize:'13px',fontWeight:'800',marginBottom:'10px',color:'#1a1a2e'}}>\uD83D\uDCF8 Instagram / Facebook Card (1080\u00D71080)</p>
           <canvas ref={canvasRef} style={{width:'100%',borderRadius:'12px',border:'1px solid #f0eeff'}} />
           {dataUrl && (
             <button onClick={download}
               style={{width:'100%',marginTop:'10px',padding:'10px',borderRadius:'10px',border:'none',fontFamily:'inherit',fontSize:'13px',fontWeight:'700',cursor:'pointer',background:'linear-gradient(135deg,#FF6B2B,#f43f5e)',color:'white'}}>
-              ⬇️ Download JPG
+              \u2B07\uFE0F Download JPG
             </button>
           )}
+          <p style={{fontSize:'11px',color:'#9ca3af',marginTop:'6px',textAlign:'center'}}>Save and post directly to Instagram, Facebook or LinkedIn</p>
         </div>
-        {/* CapCut script */}
         <div>
-          <p style={{fontFamily:'Syne,sans-serif',fontSize:'13px',fontWeight:'800',marginBottom:'10px',color:'#1a1a2e'}}>🎬 CapCut Script (TikTok/YouTube/Reels)</p>
-          <textarea value={capcut} readOnly rows={18}
+          <p style={{fontFamily:'Syne,sans-serif',fontSize:'13px',fontWeight:'800',marginBottom:'10px',color:'#1a1a2e'}}>\uD83C\uDFAC CapCut Script (TikTok / YouTube Shorts / Reels)</p>
+          <textarea value={capcut} readOnly rows={20}
             style={{width:'100%',border:'2px solid #f0eeff',borderRadius:'12px',padding:'12px',fontSize:'11px',fontFamily:'Courier New,monospace',color:'#374151',resize:'vertical',outline:'none',lineHeight:'1.5',background:'#fafafa'}} />
           <button onClick={copyCapCut}
-            style={{width:'100%',marginTop:'10px',padding:'10px',borderRadius:'10px',border:'none',fontFamily:'inherit',fontSize:'13px',fontWeight:'700',cursor:'pointer',background:'linear-gradient(135deg,#a855f7,#06b6d4)',color:'white'}}>
-            📋 Copy CapCut Script
+            style={{width:'100%',marginTop:'10px',padding:'10px',borderRadius:'10px',border:'none',fontFamily:'inherit',fontSize:'13px',fontWeight:'700',cursor:'pointer',background:copied?'#059669':'linear-gradient(135deg,#a855f7,#06b6d4)',color:'white'}}>
+            {copied ? '\u2705 Copied!' : '\uD83D\uDCCB Copy CapCut Script'}
           </button>
+          <p style={{fontSize:'11px',color:'#9ca3af',marginTop:'6px',textAlign:'center'}}>Open CapCut \u2192 New Project \u2192 follow the slide instructions above</p>
         </div>
       </div>
     </div>

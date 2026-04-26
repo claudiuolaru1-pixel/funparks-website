@@ -1,10 +1,11 @@
-import { NextResponse } from 'next/server';
+﻿const fs=require('fs');
+const route=`import { NextResponse } from 'next/server';
 
 function extractField(text, fieldName) {
-  const regex = new RegExp('"' + fieldName + '"\\s*:\\s*"((?:[^"\\\\]|\\\\[\\s\\S])*)"', 's');
+  const regex = new RegExp('"' + fieldName + '"\\\\s*:\\\\s*"((?:[^"\\\\\\\\]|\\\\\\\\[\\\\s\\\\S])*)"', 's');
   const match = text.match(regex);
   if (!match) return '';
-  return match[1].replace(/\\n/g,'\n').replace(/\\t/g,'\t').replace(/\\"/g,'"').replace(/\\\\/g,'\\');
+  return match[1].replace(/\\\\n/g,'\\n').replace(/\\\\t/g,'\\t').replace(/\\\\"/g,'"').replace(/\\\\\\\\/g,'\\\\');
 }
 
 export async function POST(req) {
@@ -57,3 +58,6 @@ export async function POST(req) {
     return NextResponse.json({error:'Server error: '+e.message},{status:500});
   }
 }
+`;
+fs.writeFileSync('app/api/generate/route.js',route,'utf8');
+console.log('Written:',fs.readFileSync('app/api/generate/route.js','utf8').length,'bytes');

@@ -1,118 +1,136 @@
+import { readFileSync } from 'fs';
+import { join } from 'path';
 import { notFound } from 'next/navigation';
 
-async function getPost(slug) {
+function getPosts() {
   try {
-    const fs = require('fs');
-    const path = require('path');
-    const file = path.join(process.cwd(), 'public', 'blog-posts.json');
-    const posts = JSON.parse(fs.readFileSync(file, 'utf8'));
-    return posts.find(p => p.slug === slug) || null;
-  } catch(e) { return null; }
-}
-
-async function getAllSlugs() {
-  try {
-    const fs = require('fs');
-    const path = require('path');
-    const file = path.join(process.cwd(), 'public', 'blog-posts.json');
-    const posts = JSON.parse(fs.readFileSync(file, 'utf8'));
-    return posts.map(p => ({ slug: p.slug }));
+    const data = readFileSync(join(process.cwd(), 'public', 'blog-posts.json'), 'utf8');
+    return JSON.parse(data);
   } catch(e) { return []; }
 }
 
-export async function generateStaticParams() {
-  return getAllSlugs();
-}
-
 export async function generateMetadata({ params }) {
-  const post = await getPost(params.slug);
-  if (!post) return { title: 'Post not found' };
-  return { title: post.title + ' — Funparks Blog', description: post.excerpt };
+  const posts = getPosts();
+  const post = posts.find(p => p.slug === params.slug);
+  if (!post) return { title: 'Post Not Found' };
+  const url = `https://funparks.app/blog/${post.slug}`;
+  return {
+    title: post.title,
+    description: post.excerpt,
+    keywords: ['theme park', post.category, 'funparks', 'theme park guide'],
+    openGraph: {
+      type: 'article',
+      url,
+      title: post.title,
+      description: post.excerpt,
+      publishedTime: `${post.date}T00:00:00.000Z`,
+      images: [{ url: '/og-image.png', width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: { card: 'summary_large_image', title: post.title, description: post.excerpt, images: ['/og-image.png'] },
+    alternates: { canonical: url },
+  };
 }
 
-function renderContent(text) {
-  return text.split('\n\n').map((para, i) => {
-    if (para.startsWith('**') && para.endsWith('**')) {
-      return '<h3 style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:#1a1a2e;margin:28px 0 12px">' + para.replace(/\*\*/g,'') + '</h3>';
-    }
-    let formatted = para.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    // Convert markdown links to styled affiliate buttons
-    formatted = formatted.replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g, function(match, label, url) {
-      let bg = '#1a1a2e';
-      let icon = '🔗';
-      if(url.includes('getyourguide')) { bg='#FF6B2B'; icon='⚡'; }
-      else if(url.includes('viator')) { bg='#1a73e8'; icon='🗺️'; }
-      else if(url.includes('booking')) { bg='#003580'; icon='🏨'; }
-      else if(url.includes('klook')) { bg='#FF6600'; icon='🎟️'; }
-      return '<a href="'+url+'" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;background:'+bg+';color:white;text-decoration:none;font-weight:700;font-size:14px;margin:4px 4px 4px 0;vertical-align:middle">'+icon+' '+label+'</a>';
-    });
-    return '<p style="color:#374151;line-height:1.8;margin-bottom:16px;font-size:16px">' + formatted + '</p>';
-  }).join('');
+export async function generateStaticParams() {
+  const posts = getPosts();
+  return posts.map(p => ({ slug: p.slug }));
 }
 
-export default async function BlogPostPage({ params }) {
-  const post = await getPost(params.slug);
+function renderMarkdown(content) {
+  if (!content) return '';
+  return content
+    .replace(/^### (.*$)/gm, '<h3 class="text-xl font-bold text-gray-900 mt-8 mb-3" style="font-family:Syne,sans-serif">$1</h3>')
+    .replace(/^## (.*$)/gm, '<h2 class="text-2xl font-black text-gray-900 mt-10 mb-4" style="font-family:Syne,sans-serif">$1</h2>')
+    .replace(/^# (.*$)/gm, '<h1 class="text-3xl font-black text-gray-900 mt-8 mb-4" style="font-family:Syne,sans-serif">$1</h1>')
+    .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-gray-900">$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-purple-600 hover:text-purple-800 underline font-medium" target="_blank" rel="noopener">$1</a>')
+    .replace(/^- (.*$)/gm, '<li class="ml-4 mb-1 text-gray-600">$1</li>')
+    .replace(/\n\n/g, '</p><p class="mb-4 text-gray-600 leading-relaxed">');
+}
+
+export default function BlogPost({ params }) {
+  const posts = getPosts();
+  const post = posts.find(p => p.slug === params.slug);
   if (!post) notFound();
-  const shareUrl = `https://funparks.app/blog/${post.slug}`;
+
+  const related = posts.filter(p => p.slug !== post.slug).slice(0, 3);
+  const categoryColors = {
+    'Comparison': '#FF6B2B', 'Top Lists': '#a855f7', 'Guide': '#06b6d4',
+    'Tips': '#10b981', 'News': '#f59e0b', 'Review': '#f43f5e',
+  };
+  const accentColor = categoryColors[post.category] || '#FF6B2B';
+  const html = renderMarkdown(post.content);
+
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: `${post.date}T00:00:00.000Z`,
+    dateModified: `${post.date}T00:00:00.000Z`,
+    author: { '@type': 'Organization', name: 'Funparks', url: 'https://funparks.app' },
+    publisher: { '@type': 'Organization', name: 'Funparks', url: 'https://funparks.app' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://funparks.app/blog/${post.slug}` },
+  };
 
   return (
-    <div className="min-h-screen pt-32 pb-24" style={{background:'#f8f7ff'}}>
-      <div className="max-w-3xl mx-auto px-6">
-        {/* Back */}
-        <a href="/blog" className="inline-flex items-center gap-2 text-purple-600 font-bold text-sm mb-8 hover:text-purple-800 transition-colors">
-          ← Back to Blog
-        </a>
-
-        {/* Header */}
-        <div className="mb-8">
-          <span className="text-xs font-bold px-3 py-1 rounded-full inline-block mb-4" style={{background:'#FF6B2B'+'15',color:'#FF6B2B'}}>{post.category}</span>
-          <h1 className="text-4xl lg:text-5xl font-black text-gray-900 mb-4 leading-tight" style={{fontFamily:'Syne,sans-serif'}}>{post.emoji} {post.title}</h1>
-          <p className="text-gray-500 text-lg leading-relaxed mb-4">{post.excerpt}</p>
-          <div className="flex items-center gap-4 text-gray-400 text-sm font-medium pb-6 border-b-2 border-gray-100">
-            <span>📅 {new Date(post.date).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</span>
-            <span>·</span><span>⏱️ {post.readTime} read</span>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <div className="min-h-screen" style={{ background: '#f8f7ff' }}>
+        <div className="pt-32 pb-16 px-6" style={{ background: 'linear-gradient(135deg, #020818 0%, #051d52 50%, #0d4fa0 100%)' }}>
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <span className="text-4xl">{post.emoji}</span>
+              <span className="text-xs font-bold px-3 py-1.5 rounded-full text-white" style={{ background: accentColor + '33', border: `1px solid ${accentColor}66` }}>{post.category}</span>
+            </div>
+            <h1 className="text-3xl lg:text-4xl font-black text-white mb-4 leading-tight" style={{ fontFamily: 'Syne,sans-serif' }}>{post.title}</h1>
+            <p className="text-blue-200 text-lg mb-6 leading-relaxed">{post.excerpt}</p>
+            <div className="flex items-center justify-center gap-4 text-blue-300 text-sm flex-wrap">
+              <span>Funparks Team</span>
+              <span>•</span>
+              <span>{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+              <span>•</span>
+              <span>{post.readTime} read</span>
+            </div>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 mb-8"
-          dangerouslySetInnerHTML={{__html: renderContent(post.content)}} />
+        <div className="max-w-3xl mx-auto px-6 py-12">
+          <article className="bg-white rounded-3xl p-8 lg:p-12 shadow-sm border border-gray-100">
+            <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: `<p class="mb-4 text-gray-600 leading-relaxed">${html}</p>` }} />
+          </article>
 
-        {/* Share */}
-        <div className="bg-white rounded-2xl p-6 border-2 border-purple-100">
-          <p className="font-black text-gray-900 mb-4" style={{fontFamily:'Syne,sans-serif'}}>Share this post 📤</p>
-          <div className="flex flex-wrap gap-3">
-            {[
-              {name:'Instagram',color:'#E1306C',url:'https://www.instagram.com/funparksworld/'},
-              {name:'TikTok',color:'#010101',url:'https://www.tiktok.com/@funparks'},
-              {name:'Facebook',color:'#1877F2',url:`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`},
-              {name:'Copy Link',color:'#a855f7',url:null},
-            ].map(s=>(
-              s.url ? (
-                <a key={s.name} href={s.url} target="_blank" rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-xl text-white text-sm font-bold transition-all hover:opacity-90"
-                  style={{background:s.color}}>{s.name}</a>
-              ) : (
-                <button key={s.name}
-                  className="px-4 py-2 rounded-xl text-white text-sm font-bold"
-                  style={{background:s.color}}>{s.name} 🔗</button>
-              )
-            ))}
+          <div className="mt-10 rounded-3xl p-8 text-center" style={{ background: 'linear-gradient(135deg, #051d52, #0d4fa0)' }}>
+            <div className="text-4xl mb-3">🎢</div>
+            <h3 className="text-2xl font-black text-white mb-2" style={{ fontFamily: 'Syne,sans-serif' }}>Plan smarter with Funparks</h3>
+            <p className="text-blue-200 mb-6">Live wait times, My Day planner, maps and guides for 60+ parks worldwide. Free on iOS and Android.</p>
+            <div className="flex flex-wrap gap-3 justify-center">
+              <a href="https://apps.apple.com/app/funparks/id6744030777" className="px-6 py-3 rounded-2xl font-bold text-sm hover:scale-105 transition-transform" style={{ background: '#fff', color: '#051d52' }}>App Store</a>
+              <a href="https://play.google.com/store/apps/details?id=com.funparks.app" className="px-6 py-3 rounded-2xl font-bold text-sm hover:scale-105 transition-transform" style={{ background: '#FF6B2B', color: '#fff' }}>Google Play</a>
+            </div>
           </div>
-          <p className="text-gray-400 text-xs mt-3 font-medium">🔗 {shareUrl}</p>
-        </div>
 
-        {/* CTA */}
-        <div className="mt-8 rounded-3xl p-8 text-white text-center" style={{background:'linear-gradient(135deg,#1a1a2e,#2d1b69)'}}>
-          <p className="text-2xl font-black mb-2" style={{fontFamily:'Syne,sans-serif'}}>Get the Funparks app 🎢</p>
-          <p className="text-white/60 mb-6 text-sm">Real-time wait times, AI assistant, 57 parks worldwide. Free forever.</p>
-          <a href="#" target="_blank" rel="noopener noreferrer"
-            className="inline-block px-8 py-3 rounded-xl font-bold text-sm shadow-xl"
-            style={{background:'linear-gradient(135deg,#FF6B2B,#f43f5e,#a855f7)'}}>
-            Coming Soon →
-          </a>
+          {related.length > 0 && (
+            <div className="mt-12">
+              <h2 className="text-2xl font-black text-gray-900 mb-6" style={{ fontFamily: 'Syne,sans-serif' }}>More from the blog</h2>
+              <div className="grid md:grid-cols-3 gap-4">
+                {related.map((p, i) => (
+                  <a key={i} href={`/blog/${p.slug}`} className="bg-white rounded-2xl p-5 border-2 border-gray-100 hover:border-purple-200 hover:shadow-lg transition-all duration-200 group">
+                    <div className="text-3xl mb-3">{p.emoji}</div>
+                    <h3 className="font-black text-gray-900 text-sm leading-tight group-hover:text-purple-700 transition-colors" style={{ fontFamily: 'Syne,sans-serif' }}>{p.title}</h3>
+                    <p className="text-gray-500 text-xs mt-2">{p.readTime} read</p>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="mt-8 text-center">
+            <a href="/blog" className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-800 font-semibold transition-colors">Back to all posts</a>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -57,23 +57,19 @@ const features = [
 function PhoneMockup({ screenshot, color, flip }) {
   return (
     <div style={{
-      width: 180, height: 320,
-      background: "#1a1a2e",
-      borderRadius: 32,
-      border: "3px solid rgba(255,255,255,0.12)",
+      width: 200, height: 380,
+      background: "#0d1929",
+      borderRadius: 36,
+      border: "2px solid rgba(255,255,255,0.1)",
       padding: 8,
-      boxShadow: `0 30px 70px rgba(0,0,0,0.4), 0 0 50px ${color}30`,
+      boxShadow: `0 0 0 1px ${color}20, 0 0 50px ${color}30, 0 30px 70px rgba(0,0,0,0.5)`,
       transform: flip ? "rotate(2deg)" : "rotate(-2deg)",
       flexShrink: 0,
       position: "relative",
     }}>
-      <div style={{ position: "absolute", top: 11, left: "50%", transform: "translateX(-50%)", width: 40, height: 6, background: "#000", borderRadius: 3, zIndex: 10 }} />
-      <div style={{ borderRadius: 26, height: "100%", overflow: "hidden", position: "relative" }}>
-        <img
-          src={screenshot}
-          alt="App screenshot"
-          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }}
-        />
+      <div style={{position:"absolute",top:12,left:"50%",transform:"translateX(-50%)",width:50,height:7,background:"#000",borderRadius:4,zIndex:10}} />
+      <div style={{borderRadius:30,overflow:"hidden",height:"100%"}}>
+        <img src={screenshot} alt="App screenshot" style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"top"}} />
       </div>
     </div>
   );
@@ -81,17 +77,19 @@ function PhoneMockup({ screenshot, color, flip }) {
 
 export default function Features() {
   return (
-    <section id="features" className="py-24" style={{ background: "linear-gradient(180deg, #ffffff 0%, #f8f7ff 100%)" }}>
+    <section id="features" className="py-24" style={{background:"linear-gradient(180deg, #050a14 0%, #080f1e 100%)"}}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-50 text-purple-600 text-sm font-bold mb-4">✨ Features</div>
-          <h2 className="text-4xl lg:text-5xl font-black text-gray-900 mb-4" style={{ fontFamily: "Syne,sans-serif" }}>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold mb-4" style={{background:"rgba(168,85,247,0.12)",border:"1px solid rgba(168,85,247,0.25)",color:"#a855f7"}}>
+            ✨ Features
+          </div>
+          <h2 className="text-4xl lg:text-5xl font-black mb-4" style={{fontFamily:"Syne,sans-serif",color:"#f0f4ff"}}>
             Everything for<br />
-            <span style={{ background: "linear-gradient(135deg,#FF6B2B,#f43f5e,#a855f7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+            <span style={{background:"linear-gradient(135deg,#FF6B2B,#f43f5e,#a855f7)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"}}>
               the perfect park day
             </span>
           </h2>
-          <p className="text-gray-500 text-lg max-w-xl mx-auto">Every feature a theme park enthusiast could dream of.</p>
+          <p className="text-lg max-w-xl mx-auto" style={{color:"rgba(255,255,255,0.45)"}}>Every feature a theme park enthusiast could dream of.</p>
         </div>
 
         <div className="space-y-24">
@@ -99,9 +97,9 @@ export default function Features() {
             const flip = i % 2 !== 0;
             return (
               <div key={i} className={`flex flex-col ${flip ? "lg:flex-row-reverse" : "lg:flex-row"} items-center gap-12 lg:gap-20`}>
-                <div className="flex-shrink-0 flex items-center justify-center" style={{ minWidth: 200 }}>
-                  <div style={{ position: "relative" }}>
-                    <div style={{ position: "absolute", inset: -30, background: `radial-gradient(circle, ${feature.color}25 0%, transparent 70%)`, borderRadius: "50%", filter: "blur(20px)" }} />
+                <div className="flex-shrink-0 flex items-center justify-center" style={{minWidth:220}}>
+                  <div style={{position:"relative"}}>
+                    <div style={{position:"absolute",inset:-40,background:`radial-gradient(circle, ${feature.color}20 0%, transparent 70%)`,borderRadius:"50%",filter:"blur(20px)"}} />
                     <PhoneMockup screenshot={feature.screenshot} color={feature.color} flip={flip} />
                   </div>
                 </div>
@@ -109,14 +107,22 @@ export default function Features() {
                   <div className={`inline-flex w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient} items-center justify-center text-2xl mb-5 shadow-lg`}>
                     {feature.icon}
                   </div>
-                  <h3 className="text-3xl font-black text-gray-900 mb-4" style={{ fontFamily: "Syne,sans-serif" }}>{feature.title}</h3>
-                  <p className="text-gray-500 text-lg leading-relaxed max-w-md mx-auto lg:mx-0">{feature.desc}</p>
-                  <div className="mt-6 flex gap-3 justify-center lg:justify-start flex-wrap">
-                    <a href={APP_STORE} target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all hover:scale-105 hover:shadow-lg" style={{ background: feature.color }}>
-                      🍎 App Store
+                  <h3 className="text-3xl font-black mb-4" style={{fontFamily:"Syne,sans-serif",color:"#f0f4ff"}}>{feature.title}</h3>
+                  <p className="text-lg leading-relaxed max-w-md mx-auto lg:mx-0" style={{color:"rgba(255,255,255,0.5)"}}>{feature.desc}</p>
+                  <div className="mt-8 flex gap-3 justify-center lg:justify-start flex-wrap">
+                    <a href={APP_STORE} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl hover:scale-105 transition-transform" style={{background:"#000",border:"1px solid rgba(255,255,255,0.15)",color:"#fff",textDecoration:"none"}}>
+                      <span style={{fontSize:18}}>🍎</span>
+                      <div>
+                        <div style={{fontSize:8,opacity:0.5,letterSpacing:0.5,textTransform:"uppercase"}}>Download on the</div>
+                        <div style={{fontSize:12,fontWeight:800,fontFamily:"Syne,sans-serif"}}>App Store</div>
+                      </div>
                     </a>
-                    <a href={PLAY_STORE} target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all hover:scale-105 hover:shadow-lg" style={{ background: feature.color + "15", color: feature.color, border: `1px solid ${feature.color}40` }}>
-                      ▶ Google Play
+                    <a href={PLAY_STORE} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl hover:scale-105 transition-transform" style={{background:"#000",border:"1px solid rgba(255,255,255,0.15)",color:"#fff",textDecoration:"none"}}>
+                      <span style={{fontSize:18}}>▶️</span>
+                      <div>
+                        <div style={{fontSize:8,opacity:0.5,letterSpacing:0.5,textTransform:"uppercase"}}>Get it on</div>
+                        <div style={{fontSize:12,fontWeight:800,fontFamily:"Syne,sans-serif"}}>Google Play</div>
+                      </div>
                     </a>
                   </div>
                 </div>

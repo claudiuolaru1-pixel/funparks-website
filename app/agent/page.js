@@ -111,6 +111,8 @@ export default function AgentPage() {
   const [script, setScript] = useState('');
   const [copied, setCopied] = useState({});
   const [publishing, setPublishing] = useState(false);
+  const [fbPosting, setFbPosting] = useState(false);
+  const [fbPosted, setFbPosted] = useState(false);
   const [published, setPublished] = useState(false);
   const [publishError, setPublishError] = useState('');
   const [tab, setTab] = useState('schedule');
@@ -137,6 +139,22 @@ export default function AgentPage() {
     } catch(e){setPublishError(e.message);}
     setPublishing(false);
   };
+  const postToFacebook = async () => {
+    if (!posts.facebook) return alert("Generate content first!");
+    setFbPosting(true); setFbPosted(false);
+    try {
+      const res = await fetch("/api/facebook", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({ caption: posts.facebook, link: "https://funparks.app/blog/" + slug })
+      });
+      const data = await res.json();
+      if (data.success) setFbPosted(true);
+      else alert("Error: " + data.error);
+    } catch(e) { alert("Error: " + e.message); }
+    setFbPosting(false);
+  };
+
   const generate = async () => {
     if (!topic.trim()) return alert('Please enter a topic!');
     setLoading(true);
@@ -472,6 +490,11 @@ if(!posts.find(p=>p.slug===newPost.slug)){
                         {copied['post_'+p.id] ? '✦ Copied!' : '𸓹 Copy'}
                       </button>
                     </div>
+                    {p.id==='facebook' && (
+                      <button style={{...btnStyle('orange'),fontSize:'12px',marginTop:'6px',opacity:fbPosting?0.6:1,width:'100%'}} onClick={postToFacebook} disabled={fbPosting||fbPosted}>
+                        {fbPosted ? '✓ Posted to Facebook!' : fbPosting ? 'Posting...' : '📘 Post to Facebook'}
+                      </button>
+                    )}
                   </div>
                 );
               })}

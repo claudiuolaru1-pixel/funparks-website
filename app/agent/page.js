@@ -118,6 +118,53 @@ export default function AgentPage() {
   const [publishError, setPublishError] = useState('');
   const [tab, setTab] = useState('schedule');
   const [selectedDay, setSelectedDay] = useState(dayIndex);
+  const [schedule, setSchedule] = useState(null);
+  const [topicsLoading, setTopicsLoading] = useState(false);
+
+  useEffect(() => {
+    loadTopics();
+  }, []);
+
+  const loadTopics = async () => {
+    setTopicsLoading(true);
+    try {
+      const res = await fetch("/api/topics");
+      const data = await res.json();
+      if (data.topics) {
+        const days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+        setSchedule(days.map(d => data.topics[d]));
+      }
+    } catch(e) { console.error("Failed to load topics:", e); }
+    setTopicsLoading(false);
+  };
+
+  const replaceUsedTopic = async (dayName, topicIndex, usedCategory, usedTone) => {
+    try {
+      const days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+      const dayData = schedule ? schedule[days.indexOf(dayName)] : null;
+      const existingTitles = dayData ? dayData.topics.map(t => t.title) : [];
+      const continent = dayData ? dayData.continent : "";
+
+      const genRes = await fetch("/api/newtopic", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({ category: usedCategory, tone: usedTone, day: dayName, continent, existingTitles })
+      });
+      const genData = await genRes.json();
+      if (!genData.topic) return;
+
+      const updateRes = await fetch("/api/topics", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({ day: dayName, topicIndex, newTopic: genData.topic })
+      });
+      const updateData = await updateRes.json();
+      if (updateData.topics) {
+        const days2 = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+        setSchedule(days2.map(d => updateData.topics[d]));
+      }
+    } catch(e) { console.error("Failed to replace topic:", e); }
+  };
 
   const slugify = t => t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60);
 
@@ -136,7 +183,16 @@ export default function AgentPage() {
     try {
       const res=await fetch('/api/publish',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({post})});
       const data=await res.json();
-      if(data.success){setPublished(true);}else{setPublishError(data.error||'Failed');}
+      if(data.success){
+        setPublished(true);
+        const days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+        const dayName=days[selectedDay];
+        const dayTopics=schedule?schedule[selectedDay]:null;
+        if(dayTopics){
+          const topicIdx=dayTopics.topics.findIndex(t=>t.title===topic);
+          if(topicIdx>=0) replaceUsedTopic(dayName, topicIdx, category, tone);
+        }
+      }else{setPublishError(data.error||"Failed");}
     } catch(e){setPublishError(e.message);}
     setPublishing(false);
   };
@@ -302,7 +358,7 @@ if(!posts.find(p=>p.slug===newPost.slug)){
     color: color==='orange' ? 'white' : color==='green' ? '#059669' : '#7c3aed',
   });
 
-  const schedule = WEEKLY_SCHEDULE[selectedDay];
+  const currentSchedule = schedule ? schedule[selectedDay] : null;
 
   return (
     <div style={{minHeight:'100vh',background:'#f8f7ff',fontFamily:'Plus Jakarta Sans,sans-serif'}}>
@@ -326,7 +382,17 @@ if(!posts.find(p=>p.slug===newPost.slug)){
         </div>
 
         {/* SCHEDULE TAB */}
-        {tab==='schedule' && (
+        {tab==='schedule' && topicsLoading && (
+          <div style={{textAlign:'center',padding:'40px',color:'#9ca3af'}}>
+            <p style={{fontWeight:'700'}}>Loading fresh topics...</p>
+          </div>
+        )}
+        {tab==='schedule' && !topicsLoading && !currentSchedule && (
+          <div style={{textAlign:'center',padding:'40px',color:'#9ca3af'}}>
+            <p style={{fontWeight:'700'}}>Could not load topics. <button onClick={loadTopics} style={{color:'#a855f7',background:'none',border:'none',cursor:'pointer',fontWeight:'700'}}>Retry</button></p>
+          </div>
+        )}
+        {tab==='schedule' && !topicsLoading && currentSchedule && (
           <div>
             <div style={{marginBottom:'20px'}}>
               <h2 style={{fontFamily:'Syne,sans-serif',fontSize:'18px',fontWeight:'900',color:'#1a1a2e',marginBottom:'6px'}}>𸓦 Weekly Content Calendar</h2>
@@ -352,26 +418,26 @@ if(!posts.find(p=>p.slug===newPost.slug)){
             {/* Topics for selected day */}
             <div style={{background:'white',borderRadius:'20px',padding:'24px',border:'2px solid #f0eeff',boxShadow:'0 4px 20px rgba(0,0,0,0.04)'}}>
               <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'20px'}}>
-                <span style={{fontSize:'32px'}}>{schedule.emoji}</span>
+                <span style={{fontSize:'32px'}}>{currentSchedule.emoji}</span>
                 <div>
-                  <h3 style={{fontFamily:'Syne,sans-serif',fontSize:'18px',fontWeight:'900',color:'#1a1a2e',margin:0}}>{schedule.day} ⬝ {schedule.continent}</h3>
+                  <h3 style={{fontFamily:'Syne,sans-serif',fontSize:'18px',fontWeight:'900',color:'#1a1a2e',margin:0}}>{currentSchedule.day} ⬝ {currentSchedule.continent}</h3>
                   <p style={{color:'#9ca3af',fontSize:'13px',margin:'4px 0 0'}}>6 ready-to-use topic ideas</p>
                 </div>
               </div>
               <div style={{display:'grid',gap:'10px'}}>
-                {schedule.topics.map((t,i)=>(
+                {currentSchedule.topics.map((t,i)=>(
                   <div key={i} onClick={()=>pickTopic(t)}
-                    style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 18px',borderRadius:'14px',border:`2px solid ${schedule.color}20`,background:`${schedule.color}08`,cursor:'pointer',transition:'all 0.2s'}}>
+                    style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 18px',borderRadius:'14px',border:`2px solid ${currentSchedule.color}20`,background:`${currentSchedule.color}08`,cursor:'pointer',transition:'all 0.2s'}}>
                     <div style={{flex:1}}>
                       <p style={{fontWeight:'700',color:'#1a1a2e',fontSize:'14px',margin:'0 0 4px'}}>{t.title}</p>
                       <div style={{display:'flex',gap:'8px'}}>
-                        <span style={{fontSize:'11px',fontWeight:'700',padding:'2px 8px',borderRadius:'999px',background:schedule.color+'20',color:schedule.color}}>{t.category}</span>
+                        <span style={{fontSize:'11px',fontWeight:'700',padding:'2px 8px',borderRadius:'999px',background:currentSchedule.color+'20',color:currentSchedule.color}}>{t.category}</span>
                         <span style={{fontSize:'11px',fontWeight:'600',color:'#9ca3af',padding:'2px 8px',borderRadius:'999px',background:'#f3f4f6'}}>
                           {{fun:'𸽰 Fun',informative:'𸓡 Info',inspiring:'✨ Inspiring',debate:'𸝥 Debate'}[t.tone]}
                         </span>
                       </div>
                     </div>
-                    <div style={{marginLeft:'16px',padding:'8px 16px',borderRadius:'10px',background:schedule.color,color:'white',fontSize:'12px',fontWeight:'700',whiteSpace:'nowrap'}}>
+                    <div style={{marginLeft:'16px',padding:'8px 16px',borderRadius:'10px',background:currentSchedule.color,color:'white',fontSize:'12px',fontWeight:'700',whiteSpace:'nowrap'}}>
                       Use This ⠢
                     </div>
                   </div>

@@ -1,0 +1,268 @@
+{
+  "Monday": {
+    "day": "Monday",
+    "continent": "Europe",
+    "color": "#06b6d4",
+    "emoji": "🇪🇺",
+    "topics": [
+      {
+        "title": "Alton Towers vs Thorpe Park: Which UK park wins in 2025?",
+        "category": "Comparison",
+        "tone": "debate"
+      },
+      {
+        "title": "How to skip the queues at Alton Towers and save money",
+        "category": "Tips",
+        "tone": "fun"
+      },
+      {
+        "title": "Best value theme parks in Europe 2025 ranked by price",
+        "category": "Comparison",
+        "tone": "informative"
+      },
+      {
+        "title": "10 European roller coasters that beat anything in the USA",
+        "category": "Top Lists",
+        "tone": "debate"
+      },
+      {
+        "title": "Liseberg Sweden: Scandinavia's most underrated theme park",
+        "category": "Hidden Gems",
+        "tone": "inspiring"
+      },
+      {
+        "title": "Gardaland Italy: Everything you need to know before visiting",
+        "category": "Park Guide",
+        "tone": "informative"
+      }
+    ]
+  },
+  "Tuesday": {
+    "day": "Tuesday",
+    "continent": "Asia",
+    "color": "#a855f7",
+    "emoji": "🌏",
+    "topics": [
+      {
+        "title": "Universal Studios Japan hidden gems even locals don't know",
+        "category": "Hidden Gems",
+        "tone": "inspiring"
+      },
+      {
+        "title": "How to skip queues at Shanghai Disneyland with Klook",
+        "category": "Tips",
+        "tone": "fun"
+      },
+      {
+        "title": "Hong Kong Disneyland vs Shanghai Disneyland: The truth",
+        "category": "Comparison",
+        "tone": "debate"
+      },
+      {
+        "title": "Everland Seoul: South Korea's ultimate theme park guide",
+        "category": "Park Guide",
+        "tone": "informative"
+      },
+      {
+        "title": "Ocean Park Hong Kong: Is it still worth visiting in 2025?",
+        "category": "Park Guide",
+        "tone": "debate"
+      },
+      {
+        "title": "Chimelong Paradise Guangzhou: China's coaster capital explained",
+        "category": "Park Guide",
+        "tone": "informative"
+      }
+    ]
+  },
+  "Wednesday": {
+    "day": "Wednesday",
+    "continent": "USA",
+    "color": "#FF6B2B",
+    "emoji": "🇺🇸",
+    "topics": [
+      {
+        "title": "How to beat the crowds at Universal Orlando this summer",
+        "category": "Tips",
+        "tone": "fun"
+      },
+      {
+        "title": "Hidden secrets at Magic Kingdom Disney doesn't advertise",
+        "category": "Hidden Gems",
+        "tone": "inspiring"
+      },
+      {
+        "title": "USA theme park prices 2025: Which offers best value?",
+        "category": "Comparison",
+        "tone": "informative"
+      },
+      {
+        "title": "Busch Gardens Tampa vs SeaWorld Orlando: Which wins?",
+        "category": "Comparison",
+        "tone": "debate"
+      },
+      {
+        "title": "Kings Island Ohio: The most underrated park in America",
+        "category": "Hidden Gems",
+        "tone": "inspiring"
+      },
+      {
+        "title": "Dollywood Tennessee: Why it beats Disney for many visitors",
+        "category": "Park Guide",
+        "tone": "debate"
+      }
+    ]
+  },
+  "Thursday": {
+    "day": "Thursday",
+    "continent": "Tips & Guides",
+    "color": "#f59e0b",
+    "emoji": "💡",
+    "topics": [
+      {
+        "title": "Best theme park apps you need before your next visit",
+        "category": "Tips",
+        "tone": "fun"
+      },
+      {
+        "title": "How to visit 3 theme parks in one trip on a budget",
+        "category": "Tips",
+        "tone": "inspiring"
+      },
+      {
+        "title": "Priority passes compared: GetYourGuide vs Viator vs Klook",
+        "category": "Comparison",
+        "tone": "informative"
+      },
+      {
+        "title": "What to eat at the world's best theme parks",
+        "category": "Park Guide",
+        "tone": "fun"
+      },
+      {
+        "title": "Theme park photography tips for Instagram-worthy shots",
+        "category": "Tips",
+        "tone": "fun"
+      },
+      {
+        "title": "How to plan a theme park trip with young children",
+        "category": "Tips",
+        "tone": "inspiring"
+      }
+    ]
+  },
+  "Friday": {
+    "day": "Friday",
+    "continent": "Weekend Inspiration",
+    "color": "#f43f5e",
+    "emoji": "✈️",
+    "topics": [
+      {
+        "title": "Best theme park weekend breaks from major European cities",
+        "category": "Destination",
+        "tone": "inspiring"
+      },
+      {
+        "title": "The ultimate theme park bucket list for 2026",
+        "category": "Top Lists",
+        "tone": "inspiring"
+      },
+      {
+        "title": "Why theme parks are the perfect family weekend destination",
+        "category": "Destination",
+        "tone": "inspiring"
+      },
+      {
+        "title": "Last-minute theme park deals: How to find them in 2025",
+        "category": "Tips",
+        "tone": "fun"
+      },
+      {
+        "title": "Best theme parks within 2 hours of London Paris and Amsterdam",
+        "category": "Destination",
+        "tone": "informative"
+      },
+      {
+        "title": "How to plan the perfect theme park trip for under 200 euros",
+        "category": "Tips",
+        "tone": "informative"
+      }
+    ]
+  },
+  "Saturday": {
+    "day": "Saturday",
+    "continent": "Americas + Middle East + Africa",
+    "color": "#10b981",
+    "emoji": "🌍",
+    "topics": [
+      {
+        "title": "Ferrari World Abu Dhabi: Is the world's fastest coaster worth it?",
+        "category": "Park Guide",
+        "tone": "debate"
+      },
+      {
+        "title": "IMG Worlds of Adventure Dubai: Everything you need to know",
+        "category": "Park Guide",
+        "tone": "informative"
+      },
+      {
+        "title": "Six Flags Mexico City: Latin America's biggest thrill park",
+        "category": "Park Guide",
+        "tone": "inspiring"
+      },
+      {
+        "title": "Hopi Hari Brazil: South America's hidden theme park gem",
+        "category": "Hidden Gems",
+        "tone": "inspiring"
+      },
+      {
+        "title": "Motiongate Dubai vs IMG Worlds: Which Dubai park wins?",
+        "category": "Comparison",
+        "tone": "debate"
+      },
+      {
+        "title": "Best theme parks in South Africa beyond Gold Reef City",
+        "category": "Top Lists",
+        "tone": "informative"
+      }
+    ]
+  },
+  "Sunday": {
+    "day": "Sunday",
+    "continent": "Oceania + Global News",
+    "color": "#06b6d4",
+    "emoji": "🌊",
+    "topics": [
+      {
+        "title": "Warner Bros Movie World vs Dreamworld: Queensland showdown",
+        "category": "Comparison",
+        "tone": "debate"
+      },
+      {
+        "title": "Luna Park Sydney: Australia's most iconic seaside attraction",
+        "category": "Park Guide",
+        "tone": "fun"
+      },
+      {
+        "title": "New roller coasters opening worldwide in 2026",
+        "category": "News",
+        "tone": "fun"
+      },
+      {
+        "title": "Top 10 most visited theme parks in the world 2025",
+        "category": "Top Lists",
+        "tone": "informative"
+      },
+      {
+        "title": "Adventure World Perth: Western Australia's best kept secret",
+        "category": "Hidden Gems",
+        "tone": "inspiring"
+      },
+      {
+        "title": "Best new theme park attractions opening in 2026",
+        "category": "News",
+        "tone": "fun"
+      }
+    ]
+  }
+}

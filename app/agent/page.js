@@ -210,8 +210,10 @@ Return ONLY a valid JSON object (no markdown, no backticks):
     "content": "full blog post 700-1000 words. Use **bold** for subheadings. Include specific real park names, attraction names, prices where relevant. Include 2 natural affiliate CTAs in body. End with ## Plan Your Visit section with 2-3 affiliate links formatted as [Link Text](URL)"
   },
   "instagram": "Instagram caption 200-350 words with emojis, strong hook, 12-15 hashtags including #funparks #themeparks, mention funparks.app",
-  "tiktok": "TikTok caption starting with viral hook (Nobody tells you... / POV: you just discovered... / This changes everything about...), 150-250 words, trending hashtags",
-  "youtube": "YouTube Shorts description max 120 words with strong CTA, mention funparks.app/blog",
+  "tiktok": "TikTok caption starting with viral hook (Nobody tells you... / POV: you just discovered... / This changes everything about...), 150-250 words, trending hashtags, always end with: Full guide at funparks.app/blog — link in bio! #funparks",
+
+  "youtube": "YouTube Shorts description max 120 words with strong CTA, always end with: Full guide at funparks.app/blog — link in bio!",
+
   "facebook": "Facebook post 150-250 words, conversational, ends with engaging question to drive comments, link to funparks.app/blog",
   "hashtags": ["funparks","themeparks","rollercoaster","themepark","coasters","disney","universalstudios","amusementpark","themepark2025","parklife","coasterlife","familytravel","traveleurope","thrillseeker","weekendtrip"]
 }`;

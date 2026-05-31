@@ -1,6 +1,6 @@
 'use client';
 import ImageCard from '../../components/ImageCard';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const PLATFORMS = [
   {id:'instagram',name:'Instagram',icon:'𸓸',bg:'linear-gradient(135deg,#f09433,#dc2743,#bc1888)',maxChars:2200,note:'Add to Stories + Reels'},

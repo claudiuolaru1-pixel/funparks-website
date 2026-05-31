@@ -876,17 +876,12 @@ if(!posts.find(p=>p.slug===newPost.slug)){
               <button onClick={openVideo} disabled={videoLoading||!blog} style={{flex:1,padding:"12px",borderRadius:"12px",border:"none",fontFamily:"inherit",fontSize:"14px",fontWeight:"800",cursor:"pointer",background:"linear-gradient(135deg,#06b6d4,#a855f7)",color:"white",opacity:!blog?0.5:1}}>
                 {videoLoading ? "Generating..." : "🎬 Preview Video (TikTok / YouTube Shorts)"}
               </button>
-                <label style={{flex:1,padding:"12px",borderRadius:"12px",fontFamily:"inherit",fontSize:"14px",fontWeight:"800",cursor:(!blog||ytUploading)?"not-allowed":"pointer",background:"linear-gradient(135deg,#FF0000,#cc0000)",color:"white",opacity:(!blog||ytUploading)?0.5:1,textAlign:"center",display:"flex",alignItems:"center",justifyContent:"center",gap:"8px"}}>
-                  {ytUploading ? "Uploading..." : ytUploaded ? "Uploaded!" : "Upload to YouTube Shorts"}
-                  <input type="file" accept="video/*" style={{display:"none"}} disabled={!blog||ytUploading} onChange={e=>e.target.files[0]&&uploadToYouTube(e.target.files[0])} />
-                </label>
+                <button onClick={copyYouTubeMeta} disabled={!blog} style={{flex:1,padding:"12px",borderRadius:"12px",border:"none",fontFamily:"inherit",fontSize:"14px",fontWeight:"800",cursor:!blog?"not-allowed":"pointer",background:"linear-gradient(135deg,#FF0000,#cc0000)",color:"white",opacity:!blog?0.5:1}}>
+                  {ytUploaded==="copied" ? "✓ Copied! Open YouTube Studio →" : "▶ Copy for YouTube Shorts"}
+                </button>
             </div>
             <div style={{marginBottom:"12px",display:"flex",gap:"10px",flexWrap:"wrap",alignItems:"center"}}>
-              <a href="/api/youtube" target="_blank" rel="noopener noreferrer" style={{padding:"8px 16px",borderRadius:"10px",background:"rgba(255,0,0,0.1)",border:"1px solid rgba(255,0,0,0.3)",color:"#ff4444",fontSize:"12px",fontWeight:"700",textDecoration:"none"}}>
-                🔗 Connect YouTube Account
-              </a>
-              {ytUploaded && <a href={ytUploaded} target="_blank" rel="noopener noreferrer" style={{padding:"8px 16px",borderRadius:"10px",background:"rgba(255,0,0,0.1)",border:"1px solid rgba(255,0,0,0.3)",color:"#ff4444",fontSize:"12px",fontWeight:"700",textDecoration:"none"}}>▶ View on YouTube</a>}
-            </div>
+              {ytUploaded==="copied" && <a href="https://studio.youtube.com" target="_blank" rel="noopener noreferrer" style={{padding:"8px 16px",borderRadius:"10px",background:"rgba(255,0,0,0.15)",border:"1px solid rgba(255,0,0,0.4)",color:"#ff4444",fontSize:"12px",fontWeight:"700",textDecoration:"none"}}>▶ Open YouTube Studio</a>}</div>
             {blog && <button onClick={publishToSite} disabled={publishing||published} style={{width:'100%',padding:'14px',borderRadius:'12px',border:'none',fontFamily:'inherit',fontSize:'15px',fontWeight:'800',cursor:'pointer',background:'linear-gradient(135deg,#FF6B2B,#f43f5e,#a855f7)',color:'white',marginBottom:'16px',opacity:publishing||published?0.7:1}}>{publishing?'Publishing...':published?'Published!':'Publish to funparks.app in 1 click'}</button>}
               {script ? (
                 <>

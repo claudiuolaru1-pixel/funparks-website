@@ -209,11 +209,7 @@ export default function AgentPage() {
       const metadata = {
         snippet: {
           title: (blog.title || "Funparks Theme Park Guide").slice(0, 100),
-          description: (posts.youtube || "") + "
-
-Full guide: https://funparks.app/blog/" + slug + "
-
-#funparks #themeparks #shorts",
+          description: (posts.youtube || "") + " Full guide: https://funparks.app/blog/" + slug + " #funparks #themeparks #shorts",
           tags: ["funparks","themeparks","themepark","rollercoaster","shorts","travel"],
           categoryId: "17"
         },

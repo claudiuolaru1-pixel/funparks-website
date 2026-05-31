@@ -220,18 +220,10 @@ export default function AgentPage() {
       const metaStr = JSON.stringify(metadata);
       const videoBuffer = await file.arrayBuffer();
       const enc = new TextEncoder();
-      const p1 = enc.encode("--" + boundary + "
-Content-Type: application/json; charset=UTF-8
-
-" + metaStr + "
-");
-      const p2 = enc.encode("--" + boundary + "
-Content-Type: " + (file.type || "video/mp4") + "
-
-");
+      const p1 = enc.encode("--" + boundary + "\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n" + metaStr + "\r\n");
+      const p2 = enc.encode("--" + boundary + "\r\nContent-Type: " + (file.type || "video/mp4") + "\r\n\r\n");
       const p3 = new Uint8Array(videoBuffer);
-      const p4 = enc.encode("
---" + boundary + "--");
+      const p4 = enc.encode("\r\n--" + boundary + "--");
       const total = new Uint8Array(p1.length + p2.length + p3.length + p4.length);
       let off = 0;
       [p1,p2,p3,p4].forEach(p=>{total.set(p,off);off+=p.length;});

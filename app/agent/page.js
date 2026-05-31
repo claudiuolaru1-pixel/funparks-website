@@ -200,6 +200,214 @@ export default function AgentPage() {
   };
   const copyYouTubeMeta = async () => {
     if (!blog) return alert("Generate content first!");
+    const ytDesc = (posts.youtube || "").replace(/\n/g, " ");
+    const ytText = (blog.title || "") + " - " + ytDesc + " Full guide: https://funparks.app/blog/" + slug + " #funparks #themeparks #themepark #rollercoaster #shorts #travel";
+    try { await navigator.clipboard.writeText(ytText); } catch(e) { const ta=document.createElement("textarea");ta.value=ytText;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta); }
+    setYtUploaded("copied");
+  };
+
+  e client';
+import ImageCard from '../../components/ImageCard';
+import { useState, useEffect } from 'react';
+
+const PLATFORMS = [
+  {id:'instagram',name:'Instagram',icon:'𸓸',bg:'linear-gradient(135deg,#f09433,#dc2743,#bc1888)',maxChars:2200,note:'Add to Stories + Reels'},
+  {id:'tiktok',name:'TikTok',icon:'𸽵',bg:'linear-gradient(135deg,#010101,#69C9D0)',maxChars:2200,note:'Hook in first line'},
+  {id:'youtube',name:'YouTube',icon:'✶️',bg:'linear-gradient(135deg,#FF0000,#cc0000)',maxChars:500,note:'Shorts caption'},
+  {id:'facebook',name:'Facebook',icon:'𸜥',bg:'linear-gradient(135deg,#1877F2,#0d5bba)',maxChars:63206,note:'End with a question'},
+];
+
+const WEEKLY_SCHEDULE = [
+  {
+    day:'Monday', continent:'Europe', color:'#06b6d4', emoji:'𸡪𸡺',
+    topics:[
+      {title:'Europa-Park vs Phantasialand: Which is Germany\'s best?', category:'Comparison', tone:'debate'},
+      {title:'Hidden secrets at Efteling most visitors never discover', category:'Hidden Gems', tone:'inspiring'},
+      {title:'How to skip the queues at Alton Towers (and save money)', category:'Tips', tone:'fun'},
+      {title:'Best value theme parks in Europe 2025 ⬝ ranked by price', category:'Comparison', tone:'informative'},
+      {title:'10 European roller coasters that beat anything in the USA', category:'Top Lists', tone:'debate'},
+      {title:'Did you know? Shocking facts about European theme parks', category:'Tips', tone:'fun'},
+    ]
+  },
+  {
+    day:'Tuesday', continent:'Asia', color:'#a855f7', emoji:'𸙏',
+    topics:[
+      {title:'Tokyo Disneyland vs Tokyo DisneySea: Which should you visit first?', category:'Comparison', tone:'debate'},
+      {title:'Universal Studios Japan hidden gems even locals don\'t know', category:'Hidden Gems', tone:'inspiring'},
+      {title:'How to skip queues at Shanghai Disneyland with Klook', category:'Tips', tone:'fun'},
+      {title:'Best theme parks in Asia ranked by thrill level', category:'Top Lists', tone:'informative'},
+      {title:'Hong Kong Disneyland vs Shanghai Disneyland: The truth', category:'Comparison', tone:'debate'},
+      {title:'Did you know? Mind-blowing facts about Asian theme parks', category:'Tips', tone:'fun'},
+    ]
+  },
+  {
+    day:'Wednesday', continent:'USA', color:'#FF6B2B', emoji:'𸡺𸡸',
+    topics:[
+      {title:'Magic Kingdom vs EPCOT: Which Disney park is worth it in 2025?', category:'Comparison', tone:'debate'},
+      {title:'Cedar Point vs Six Flags Magic Mountain: Coaster capital showdown', category:'Comparison', tone:'debate'},
+      {title:'How to beat the crowds at Universal Orlando this summer', category:'Tips', tone:'fun'},
+      {title:'Best roller coasters in the USA ranked by thrill level', category:'Top Lists', tone:'informative'},
+      {title:'Hidden secrets at Magic Kingdom Disney doesn\'t advertise', category:'Hidden Gems', tone:'inspiring'},
+      {title:'USA theme park prices 2025: Which offers best value?', category:'Comparison', tone:'informative'},
+    ]
+  },
+  {
+    day:'Thursday', continent:'Tips & Guides', color:'#f59e0b', emoji:'𸢡',
+    topics:[
+      {title:'Skip the line at any theme park ⬝ the complete 2025 guide', category:'Tips', tone:'informative'},
+      {title:'Best theme park apps you need before your next visit', category:'Tips', tone:'fun'},
+      {title:'How to visit 3 theme parks in one trip on a budget', category:'Tips', tone:'inspiring'},
+      {title:'Priority passes compared: GetYourGuide vs Viator vs Klook', category:'Comparison', tone:'informative'},
+      {title:'What to eat at the world\'s best theme parks', category:'Park Guide', tone:'fun'},
+      {title:'Theme park photography tips for Instagram-worthy shots', category:'Tips', tone:'fun'},
+    ]
+  },
+  {
+    day:'Friday', continent:'Weekend Inspiration', color:'#f43f5e', emoji:'✠️',
+    topics:[
+      {title:'Best theme park weekend breaks from major European cities', category:'Destination', tone:'inspiring'},
+      {title:'The ultimate theme park bucket list for 2025', category:'Top Lists', tone:'inspiring'},
+      {title:'Why theme parks are the perfect family weekend destination', category:'Destination', tone:'inspiring'},
+      {title:'Last-minute theme park deals: How to find them in 2025', category:'Tips', tone:'fun'},
+      {title:'Best theme parks within 2 hours of London, Paris and Amsterdam', category:'Destination', tone:'informative'},
+      {title:'How to plan the perfect theme park trip for under ⡬200', category:'Tips', tone:'informative'},
+    ]
+  },
+  {
+    day:'Saturday', continent:'Americas + Middle East + Africa', color:'#10b981', emoji:'𸙍',
+    topics:[
+      {title:'Ferrari World Abu Dhabi: Is the world\'s fastest coaster worth it?', category:'Park Guide', tone:'debate'},
+      {title:'Parque Warner Madrid vs PortAventura: Spain\'s theme park battle', category:'Comparison', tone:'debate'},
+      {title:'Gold Reef City Johannesburg: Africa\'s most underrated theme park', category:'Hidden Gems', tone:'inspiring'},
+      {title:'Best theme parks in Latin America you\'ve never heard of', category:'Hidden Gems', tone:'inspiring'},
+      {title:'IMG Worlds of Adventure Dubai: Everything you need to know', category:'Park Guide', tone:'informative'},
+      {title:'Beto Carrero World Brazil: South America\'s theme park giant', category:'Park Guide', tone:'inspiring'},
+    ]
+  },
+  {
+    day:'Sunday', continent:'Oceania + Global News', color:'#06b6d4', emoji:'𸙠',
+    topics:[
+      {title:'Dreamworld Gold Coast: Australia\'s most thrilling theme park', category:'Park Guide', tone:'fun'},
+      {title:'Warner Bros. Movie World vs Dreamworld: Queensland showdown', category:'Comparison', tone:'debate'},
+      {title:'Best theme parks in Australia for families in 2025', category:'Top Lists', tone:'informative'},
+      {title:'New roller coasters opening worldwide in 2025', category:'News', tone:'fun'},
+      {title:'Top 10 most visited theme parks in the world 2025', category:'Top Lists', tone:'informative'},
+      {title:'The world\'s most extreme theme park experiences ranked', category:'Top Lists', tone:'debate'},
+    ]
+  },
+];
+
+const AFFILIATE = {
+  gyg: 'https://www.getyourguide.com/s/?q=QUERY&filters=activity_type%3ASkip+the+Line&partner_id=GVNQTTL',
+  viator: 'https://www.viator.com/search/QUERY?pid=P00298240&mcid=42383&medium=link',
+  booking: 'https://www.booking.com/searchresults.html?aid=4347407&ss=QUERY&label=funparks-blog',
+  klook: 'https://affiliate.klook.com/redirect?aid=119449&aff_adid=&k_site=https%3A%2F%2Fwww.klook.com%2Fsearch%2F%3Fquery%3DQUERY',
+};
+
+const TODAY_DAY = new Date().getDay(); // 0=Sun, 1=Mon...
+const dayIndex = TODAY_DAY === 0 ? 6 : TODAY_DAY - 1; // Map to our 0=Mon schedule
+
+export default function AgentPage() {
+  const [topic, setTopic] = useState('');
+  const [category, setCategory] = useState(()=>{try{return sessionStorage.getItem('fp_category')||'Park Guide';}catch{return 'Park Guide';}});
+  const [tone, setTone] = useState('fun');
+  const [loading, setLoading] = useState(false);
+  const [blog, setBlog] = useState(()=>{try{const s=sessionStorage.getItem('fp_blog');return s?JSON.parse(s):null;}catch{return null;}});
+  const [posts, setPosts] = useState(()=>{try{const s=sessionStorage.getItem('fp_posts');return s?JSON.parse(s):{};}catch{return {};}});
+  const [hashtags, setHashtags] = useState(()=>{try{const s=sessionStorage.getItem('fp_hashtags');return s?JSON.parse(s):[];}catch{return [];}});
+  const [slug, setSlug] = useState(()=>{try{return sessionStorage.getItem('fp_slug')||'';}catch{return '';}});
+  const [script, setScript] = useState('');
+  const [copied, setCopied] = useState({});
+  const [publishing, setPublishing] = useState(false);
+  const [fbPosting, setFbPosting] = useState(false);
+  const [fbPosted, setFbPosted] = useState(false);
+  const [videoLoading, setVideoLoading] = useState(false);
+  const [ytUploading, setYtUploading] = useState(false);
+  const [ytUploaded, setYtUploaded] = useState(null);
+  const [published, setPublished] = useState(false);
+  const [publishError, setPublishError] = useState('');
+  const [tab, setTab] = useState('schedule');
+  const [selectedDay, setSelectedDay] = useState(dayIndex);
+  const [schedule, setSchedule] = useState(null);
+  const [topicsLoading, setTopicsLoading] = useState(false);
+
+  useEffect(() => {
+    loadTopics();
+  }, []);
+
+  const loadTopics = async () => {
+    setTopicsLoading(true);
+    try {
+      const res = await fetch("/api/topics");
+      const data = await res.json();
+      if (data.topics) {
+        const days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+        setSchedule(days.map(d => data.topics[d]));
+      }
+    } catch(e) { console.error("Failed to load topics:", e); }
+    setTopicsLoading(false);
+  };
+
+  const replaceUsedTopic = async (dayName, topicIndex, usedCategory, usedTone) => {
+    try {
+      const days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+      const dayData = schedule ? schedule[days.indexOf(dayName)] : null;
+      const existingTitles = dayData ? dayData.topics.map(t => t.title) : [];
+      const continent = dayData ? dayData.continent : "";
+
+      const genRes = await fetch("/api/newtopic", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({ category: usedCategory, tone: usedTone, day: dayName, continent, existingTitles })
+      });
+      const genData = await genRes.json();
+      if (!genData.topic) return;
+
+      const updateRes = await fetch("/api/topics", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({ day: dayName, topicIndex, newTopic: genData.topic })
+      });
+      const updateData = await updateRes.json();
+      if (updateData.topics) {
+        const days2 = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+        setSchedule(days2.map(d => updateData.topics[d]));
+      }
+    } catch(e) { console.error("Failed to replace topic:", e); }
+  };
+
+  const slugify = t => t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60);
+
+  const pickTopic = (t) => {
+    setTopic(t.title);
+    setCategory(t.category);
+    setTone(t.tone);
+    setTab('generate');
+  };
+
+  const publishToSite = async () => {
+    if (!blog) return;
+    setPublishing(true); setPublished(false); setPublishError('');
+    const emojis = {'Park Guide':'𸝺️','Comparison':'⡝️','News':'𸓰','Tips':'𸢡','Hidden Gems':'𸢽','Top Lists':'𸏠','Destination':'✠️','App Updates':'𸓱'};
+    const post = {slug,title:blog.title||'',excerpt:blog.excerpt||'',category,emoji:emojis[category]||'𸽢',date:new Date().toISOString().split('T')[0],readTime:blog.readTime||'5 min',content:blog.content||''};
+    try {
+      const res=await fetch('/api/publish',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({post})});
+      const data=await res.json();
+      if(data.success){
+        setPublished(true);
+        const days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+        const dayName=days[selectedDay];
+        const dayTopics=schedule?schedule[selectedDay]:null;
+        if(dayTopics){
+          const topicIdx=dayTopics.topics.findIndex(t=>t.title===topic);
+          if(topicIdx>=0) replaceUsedTopic(dayName, topicIdx, category, tone);
+        }
+      }else{setPublishError(data.error||"Failed");}
+    } catch(e){setPublishError(e.message);}
+    setPublishing(false);
+  };
+  const copyYouTubeMeta = async () => {
+    if (!blog) return alert("Generate content first!");
     const ytText = (blog.title || "") + "
 
 " + (posts.youtube || "") + "

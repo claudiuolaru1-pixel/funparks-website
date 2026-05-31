@@ -114,6 +114,8 @@ export default function AgentPage() {
   const [fbPosting, setFbPosting] = useState(false);
   const [fbPosted, setFbPosted] = useState(false);
   const [videoLoading, setVideoLoading] = useState(false);
+  const [ytUploading, setYtUploading] = useState(false);
+  const [ytUploaded, setYtUploaded] = useState(null);
   const [published, setPublished] = useState(false);
   const [publishError, setPublishError] = useState('');
   const [tab, setTab] = useState('schedule');
@@ -196,6 +198,23 @@ export default function AgentPage() {
     } catch(e){setPublishError(e.message);}
     setPublishing(false);
   };
+  const uploadToYouTube = async (file) => {
+    if (!blog) return alert("Generate content first!");
+    setYtUploading(true); setYtUploaded(null);
+    try {
+      const form = new FormData();
+      form.append("video", file);
+      form.append("title", blog.title || "Funparks Theme Park Guide");
+      form.append("description", (posts.youtube || "") + "\n\nFull guide: https://funparks.app/blog/" + slug);
+      form.append("tags", "themeparks,funparks,rollercoaster,themepark,shorts,travel");
+      const res = await fetch("/api/youtube/upload", { method: "POST", body: form });
+      const data = await res.json();
+      if (data.success) setYtUploaded(data.url);
+      else alert("Upload error: " + data.error);
+    } catch(e) { alert("Error: " + e.message); }
+    setYtUploading(false);
+  };
+
   const openVideo = async () => {
     if (!blog) return alert("Generate content first!");
     setVideoLoading(true);
@@ -626,6 +645,12 @@ if(!posts.find(p=>p.slug===newPost.slug)){
               <button onClick={openVideo} disabled={videoLoading||!blog} style={{flex:1,padding:"12px",borderRadius:"12px",border:"none",fontFamily:"inherit",fontSize:"14px",fontWeight:"800",cursor:"pointer",background:"linear-gradient(135deg,#06b6d4,#a855f7)",color:"white",opacity:!blog?0.5:1}}>
                 {videoLoading ? "Generating..." : "🎬 Preview Video (TikTok / YouTube Shorts)"}
               </button>
+            </div>
+            <div style={{marginBottom:"12px",display:"flex",gap:"10px",flexWrap:"wrap",alignItems:"center"}}>
+              <a href="/api/youtube" target="_blank" rel="noopener noreferrer" style={{padding:"8px 16px",borderRadius:"10px",background:"rgba(255,0,0,0.1)",border:"1px solid rgba(255,0,0,0.3)",color:"#ff4444",fontSize:"12px",fontWeight:"700",textDecoration:"none"}}>
+                🔗 Connect YouTube Account
+              </a>
+              {ytUploaded && <a href={ytUploaded} target="_blank" rel="noopener noreferrer" style={{padding:"8px 16px",borderRadius:"10px",background:"rgba(255,0,0,0.1)",border:"1px solid rgba(255,0,0,0.3)",color:"#ff4444",fontSize:"12px",fontWeight:"700",textDecoration:"none"}}>▶ View on YouTube</a>}
             </div>
             {blog && <button onClick={publishToSite} disabled={publishing||published} style={{width:'100%',padding:'14px',borderRadius:'12px',border:'none',fontFamily:'inherit',fontSize:'15px',fontWeight:'800',cursor:'pointer',background:'linear-gradient(135deg,#FF6B2B,#f43f5e,#a855f7)',color:'white',marginBottom:'16px',opacity:publishing||published?0.7:1}}>{publishing?'Publishing...':published?'Published!':'Publish to funparks.app in 1 click'}</button>}
               {script ? (

@@ -19,13 +19,13 @@ export const metadata = {
     siteName: 'Funparks',
     title: 'Funparks - Theme Park Guide & Wait Times App',
     description: 'Plan the perfect theme park day. Live wait times, maps, My Day planner for 60+ parks worldwide.',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Funparks App' }],
+    images: [{ url: 'https://funparks.app/screenshots/funparks_social.jpg', width: 1200, height: 630, alt: 'Funparks App' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Funparks - Theme Park Guide & Wait Times App',
     description: 'Plan the perfect theme park day. Live wait times, maps, My Day planner for 60+ parks worldwide.',
-    images: ['/og-image.png'],
+    images: ['https://funparks.app/screenshots/funparks_social.jpg'],
   },
 };
 

@@ -6,7 +6,7 @@ export const metadata = {
   openGraph: {
     title: "Funparks - Free Theme Park App",
     description: "Live wait times, AI assistant, My Day planner for 60+ theme parks worldwide. Free on iOS and Android.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+    images: [{ url: "https://funparks.app/screenshots/funparks_social.jpg", width: 1080, height: 1080, alt: "Funparks Theme Park App" }],
     type: "website",
     url: "https://funparks.app/promo",
   },

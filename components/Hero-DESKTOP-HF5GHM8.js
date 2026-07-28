@@ -44,9 +44,6 @@ export default function Hero() {
               </div>
             </a>
           </div>
-          <a href="https://www.producthunt.com/products/funparks-theme-park-guide?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-funparks-theme-park-guide" target="_blank" rel="noopener noreferrer" style={{display:"inline-block",marginBottom:"16px"}}>
-            <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1190158&theme=light" alt="Funparks on Product Hunt" width="250" height="54" />
-          </a>
           <p className="text-sm font-medium" style={{color:"rgba(255,255,255,0.25)"}}>Free forever · Android and iOS · No subscription</p>
         </div>
 

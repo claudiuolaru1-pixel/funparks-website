@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 const APP_STORE = "https://apps.apple.com/app/funparks-theme-park-guide/id6763944775";
 const PLAY_STORE = "https://play.google.com/store/apps/details?id=com.funparks.app";
@@ -11,6 +11,14 @@ const features = [
     gradient: "from-orange-400 to-red-400",
     color: "#FF6B2B",
     screenshot: "/screenshots/live_wait_time.jpg",
+  },
+  {
+    icon: "🔔",
+    title: "Wait Time Alerts",
+    desc: "Set a threshold on any ride and get notified the instant the wait drops below it. No more checking the app every few minutes.",
+    gradient: "from-amber-400 to-yellow-400",
+    color: "#f59e0b",
+    screenshot: "/screenshots/live_wait_time.jpg", // TEMP: reusing until real Wait Time Alerts screenshot is captured
   },
   {
     icon: "🤖",

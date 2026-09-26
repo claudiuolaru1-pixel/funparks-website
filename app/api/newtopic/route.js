@@ -4,7 +4,11 @@ export async function POST(req) {
   try {
     const { category, tone, day, continent, existingTitles } = await req.json();
 
+    const today = new Date();
+    const currentDateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const currentYear = today.getFullYear();
     const prompt = `You are a theme park content strategist for Funparks app.
+Today's date is ${currentDateStr}. If a year is needed in the title, excerpt, or content, use ${currentYear} — never a past year.
 Generate 1 fresh blog post topic for the following:
 - Day: ${day} (focus: ${continent})
 - Category: ${category}

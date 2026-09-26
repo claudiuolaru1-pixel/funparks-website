@@ -241,7 +241,11 @@ export default function AgentPage() {
       debate:'bold and debate-starting, take strong positions to provoke comments'
     }[tone];
 
+    const today = new Date();
+    const currentDateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const currentYear = today.getFullYear();
     const prompt = `You are the content team for Funparks, a free theme park app covering 64 parks across 6 continents.
+Today's date is ${currentDateStr}. If a year is needed in the title, excerpt, or content, use ${currentYear} — never a past year.
 
 Write a complete content package about: "${topic}"
 Category: ${category}

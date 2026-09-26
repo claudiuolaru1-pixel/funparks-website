@@ -16,16 +16,6 @@
         "tone": "fun"
       },
       {
-        "title": "Best value theme parks in Europe 2025 ranked by price",
-        "category": "Comparison",
-        "tone": "informative"
-      },
-      {
-        "title": "Europa-Park vs PortAventura: Which Deserves the Crown in 2025?",
-        "category": "Top Lists",
-        "tone": "debate"
-      },
-      {
         "title": "Mirabilandia Italy: The Adriatic Coast Gem You're Missing",
         "category": "Hidden Gems",
         "tone": "inspiring"
@@ -62,16 +52,6 @@
         "title": "Everland Seoul: South Korea's ultimate theme park guide",
         "category": "Park Guide",
         "tone": "informative"
-      },
-      {
-        "title": "Ocean Park Hong Kong: Is it still worth visiting in 2025?",
-        "category": "Park Guide",
-        "tone": "debate"
-      },
-      {
-        "title": "Chimelong Ocean Kingdom Zhuhai: Your Complete 2025 Visitor Guide",
-        "category": "Park Guide",
-        "tone": "informative"
       }
     ]
   },
@@ -90,11 +70,6 @@
         "title": "Hidden secrets at Magic Kingdom Disney doesn't advertise",
         "category": "Hidden Gems",
         "tone": "inspiring"
-      },
-      {
-        "title": "USA theme park prices 2025: Which offers best value?",
-        "category": "Comparison",
-        "tone": "informative"
       },
       {
         "title": "Busch Gardens Tampa vs SeaWorld Orlando: Which wins?",
@@ -173,11 +148,6 @@
         "tone": "inspiring"
       },
       {
-        "title": "Last-minute theme park deals: How to find them in 2025",
-        "category": "Tips",
-        "tone": "fun"
-      },
-      {
         "title": "Best theme parks within 2 hours of London Paris and Amsterdam",
         "category": "Destination",
         "tone": "informative"
@@ -244,24 +214,9 @@
         "tone": "fun"
       },
       {
-        "title": "Sea World Australia Announces Exciting New Attraction for 2025",
-        "category": "News",
-        "tone": "fun"
-      },
-      {
-        "title": "7 Best Family-Friendly Theme Parks Across New Zealand 2025",
-        "category": "Top Lists",
-        "tone": "informative"
-      },
-      {
         "title": "Adventure World Perth: Western Australia's best kept secret",
         "category": "Hidden Gems",
         "tone": "inspiring"
-      },
-      {
-        "title": "Luna Park Sydney Unveils Surprise 2025 Ride Lineup Details",
-        "category": "News",
-        "tone": "fun"
       }
     ]
   }

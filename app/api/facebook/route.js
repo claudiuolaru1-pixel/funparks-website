@@ -5,7 +5,8 @@ export async function POST(req) {
     const { caption, link } = await req.json();
     if (!caption) return NextResponse.json({ error: "Missing caption" }, { status: 400 });
 
-    const webhookUrl = "https://hook.eu1.make.com/c5kra8d35ftl9w2zu9c4bp2yhulx9jjk";
+    const webhookUrl = process.env.MAKE_FB_WEBHOOK;
+    if (!webhookUrl) return NextResponse.json({ error: "Webhook not configured" }, { status: 500 });
 
     const res = await fetch(webhookUrl, {
       method: "POST",

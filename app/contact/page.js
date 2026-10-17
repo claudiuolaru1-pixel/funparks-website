@@ -10,10 +10,10 @@ export default function ContactPage(){
   };
   const socials=[
     {icon:"📧",label:"Email",value:"funparksfun@gmail.com",href:"mailto:funparksfun@gmail.com"},
-    {icon:"📸",label:"Instagram",value:"@funparksapp",href:"https://instagram.com/funparksapp"},
-    {icon:"🎵",label:"TikTok",value:"@funparksapp",href:"https://tiktok.com/@funparksapp"},
-    {icon:"▶️",label:"YouTube",value:"@funparksapp",href:"https://youtube.com/@funparksapp"},
-    {icon:"👍",label:"Facebook",value:"Funparks",href:"https://facebook.com/funparksapp"},
+    {icon:"📸",label:"Instagram",value:"@funparksworld",href:"https://www.instagram.com/funparksworld/"},
+    {icon:"🎵",label:"TikTok",value:"@funparks",href:"https://www.tiktok.com/@funparks"},
+    {icon:"▶️",label:"YouTube",value:"@Funparks-u7k",href:"https://www.youtube.com/@Funparks-u7k"},
+    {icon:"👍",label:"Facebook",value:"Funparks",href:"https://www.facebook.com/profile.php?id=61590468092447"},
   ];
   return(
     <div className="min-h-screen pt-32 pb-24">

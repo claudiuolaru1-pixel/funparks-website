@@ -8,7 +8,7 @@ export default function Footer(){
     {icon:"📸",href:"https://www.instagram.com/funparksworld/",label:"Instagram",bg:"linear-gradient(135deg,#f09433,#dc2743,#bc1888)"},
     {icon:"🎵",href:"https://www.tiktok.com/@funparks",label:"TikTok",bg:"linear-gradient(135deg,#010101,#69C9D0)"},
     {icon:"▶️",href:"https://www.youtube.com/@Funparks-u7k",label:"YouTube",bg:"linear-gradient(135deg,#FF0000,#cc0000)"},
-    {icon:"👥",href:"https://www.facebook.com/share/17T2h2NwmT/",label:"Facebook",bg:"linear-gradient(135deg,#1877F2,#0d5bba)"},
+    {icon:"👥",href:"https://www.facebook.com/profile.php?id=61590468092447",label:"Facebook",bg:"linear-gradient(135deg,#1877F2,#0d5bba)"},
   ];
   const nav=[{label:"Home",href:"/"},{label:"Parks",href:"/parks"},{label:"Blog",href:"/blog"},{label:"About",href:"/about"},{label:"Contact",href:"/contact"}];
   return (

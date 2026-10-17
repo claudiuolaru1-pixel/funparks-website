@@ -7,7 +7,7 @@ export default function SocialStrip() {
     {icon:<IG/>,name:'Instagram',handle:'@funparksworld',desc:'Park photos & reels',href:'https://www.instagram.com/funparksworld/',color:'#E1306C',bg:'linear-gradient(135deg,#f09433,#dc2743,#bc1888)'},
     {icon:<TT/>,name:'TikTok',handle:'@funparks',desc:'Ride POVs & tips',href:'https://www.tiktok.com/@funparks',color:'#010101',bg:'linear-gradient(135deg,#010101,#69C9D0)'},
     {icon:<YT/>,name:'YouTube',handle:'@Funparks-u7k',desc:'Park guides & reviews',href:'https://www.youtube.com/@Funparks-u7k',color:'#FF0000',bg:'linear-gradient(135deg,#FF0000,#cc0000)'},
-    {icon:<FB/>,name:'Facebook',handle:'Funparks',desc:'Community & updates',href:'https://www.facebook.com/share/17T2h2NwmT/',color:'#1877F2',bg:'linear-gradient(135deg,#1877F2,#0d5bba)'},
+    {icon:<FB/>,name:'Facebook',handle:'Funparks',desc:'Community & updates',href:'https://www.facebook.com/profile.php?id=61590468092447',color:'#1877F2',bg:'linear-gradient(135deg,#1877F2,#0d5bba)'},
   ];
   return (
     <section className='py-24 bg-white'>

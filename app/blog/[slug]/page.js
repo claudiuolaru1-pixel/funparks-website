@@ -24,9 +24,9 @@ export async function generateMetadata({ params }) {
       title: post.title,
       description: post.excerpt,
       publishedTime: `${post.date}T00:00:00.000Z`,
-      images: [{ url: '/og-image.png', width: 1200, height: 630, alt: post.title }],
+      images: [{ url: post.image || '/og-image.png', width: 1200, height: 630, alt: post.title }],
     },
-    twitter: { card: 'summary_large_image', title: post.title, description: post.excerpt, images: ['/og-image.png'] },
+    twitter: { card: 'summary_large_image', title: post.title, description: post.excerpt, images: [post.image || '/og-image.png'] },
     alternates: { canonical: url },
   };
 }
@@ -106,7 +106,7 @@ export default function BlogPost({ params }) {
             <h3 className="text-2xl font-black text-white mb-2" style={{ fontFamily: 'Syne,sans-serif' }}>Plan smarter with Funparks</h3>
             <p className="text-blue-200 mb-6">Live wait times, My Day planner, maps and guides for 60+ parks worldwide. Free on iOS and Android.</p>
             <div className="flex flex-wrap gap-3 justify-center">
-              <a href="https://apps.apple.com/app/funparks/id6744030777" className="px-6 py-3 rounded-2xl font-bold text-sm hover:scale-105 transition-transform" style={{ background: '#fff', color: '#051d52' }}>App Store</a>
+              <a href="https://apps.apple.com/app/funparks/id6763944775" className="px-6 py-3 rounded-2xl font-bold text-sm hover:scale-105 transition-transform" style={{ background: '#fff', color: '#051d52' }}>App Store</a>
               <a href="https://play.google.com/store/apps/details?id=com.funparks.app" className="px-6 py-3 rounded-2xl font-bold text-sm hover:scale-105 transition-transform" style={{ background: '#FF6B2B', color: '#fff' }}>Google Play</a>
             </div>
           </div>

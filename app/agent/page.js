@@ -259,7 +259,7 @@ IMPORTANT MONETIZATION RULES:
 - For hotels: use URL https://www.booking.com/searchresults.html?aid=4347407&ss=CITY+PARKNAME replacing CITY and PARKNAME
 - CTAs should feel natural, not salesy. Example: "You can book skip-the-line tickets on GetYourGuide here"
 - End blog post with a clear CTA section with 2-3 affiliate links
-- Mention the Funparks app (free on Android at funparks.app) as the best way to plan visits
+- Mention the Funparks app (free on iOS and Android at funparks.app) as the best way to plan visits
 
 Return ONLY a valid JSON object (no markdown, no backticks):
 {

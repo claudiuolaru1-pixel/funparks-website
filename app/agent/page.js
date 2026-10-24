@@ -9,84 +9,12 @@ const PLATFORMS = [
   {id:'facebook',name:'Facebook',icon:'𸜥',bg:'linear-gradient(135deg,#1877F2,#0d5bba)',maxChars:63206,note:'End with a question'},
 ];
 
+const DAYS = ['Monday','Wednesday','Friday'];
+// Labels only. The topics themselves come from public/topics.json.
 const WEEKLY_SCHEDULE = [
-  {
-    day:'Monday', continent:'Europe', color:'#06b6d4', emoji:'𸡪𸡺',
-    topics:[
-      {title:'Europa-Park vs Phantasialand: Which is Germany\'s best?', category:'Comparison', tone:'debate'},
-      {title:'Hidden secrets at Efteling most visitors never discover', category:'Hidden Gems', tone:'inspiring'},
-      {title:'How to skip the queues at Alton Towers (and save money)', category:'Tips', tone:'fun'},
-      {title:'Best value theme parks in Europe 2025 ⬝ ranked by price', category:'Comparison', tone:'informative'},
-      {title:'10 European roller coasters that beat anything in the USA', category:'Top Lists', tone:'debate'},
-      {title:'Did you know? Shocking facts about European theme parks', category:'Tips', tone:'fun'},
-    ]
-  },
-  {
-    day:'Tuesday', continent:'Asia', color:'#a855f7', emoji:'𸙏',
-    topics:[
-      {title:'Tokyo Disneyland vs Tokyo DisneySea: Which should you visit first?', category:'Comparison', tone:'debate'},
-      {title:'Universal Studios Japan hidden gems even locals don\'t know', category:'Hidden Gems', tone:'inspiring'},
-      {title:'How to skip queues at Shanghai Disneyland with Klook', category:'Tips', tone:'fun'},
-      {title:'Best theme parks in Asia ranked by thrill level', category:'Top Lists', tone:'informative'},
-      {title:'Hong Kong Disneyland vs Shanghai Disneyland: The truth', category:'Comparison', tone:'debate'},
-      {title:'Did you know? Mind-blowing facts about Asian theme parks', category:'Tips', tone:'fun'},
-    ]
-  },
-  {
-    day:'Wednesday', continent:'USA', color:'#FF6B2B', emoji:'𸡺𸡸',
-    topics:[
-      {title:'Magic Kingdom vs EPCOT: Which Disney park is worth it in 2025?', category:'Comparison', tone:'debate'},
-      {title:'Cedar Point vs Six Flags Magic Mountain: Coaster capital showdown', category:'Comparison', tone:'debate'},
-      {title:'How to beat the crowds at Universal Orlando this summer', category:'Tips', tone:'fun'},
-      {title:'Best roller coasters in the USA ranked by thrill level', category:'Top Lists', tone:'informative'},
-      {title:'Hidden secrets at Magic Kingdom Disney doesn\'t advertise', category:'Hidden Gems', tone:'inspiring'},
-      {title:'USA theme park prices 2025: Which offers best value?', category:'Comparison', tone:'informative'},
-    ]
-  },
-  {
-    day:'Thursday', continent:'Tips & Guides', color:'#f59e0b', emoji:'𸢡',
-    topics:[
-      {title:'Skip the line at any theme park ⬝ the complete 2025 guide', category:'Tips', tone:'informative'},
-      {title:'Best theme park apps you need before your next visit', category:'Tips', tone:'fun'},
-      {title:'How to visit 3 theme parks in one trip on a budget', category:'Tips', tone:'inspiring'},
-      {title:'Priority passes compared: GetYourGuide vs Viator vs Klook', category:'Comparison', tone:'informative'},
-      {title:'What to eat at the world\'s best theme parks', category:'Park Guide', tone:'fun'},
-      {title:'Theme park photography tips for Instagram-worthy shots', category:'Tips', tone:'fun'},
-    ]
-  },
-  {
-    day:'Friday', continent:'Weekend Inspiration', color:'#f43f5e', emoji:'✠️',
-    topics:[
-      {title:'Best theme park weekend breaks from major European cities', category:'Destination', tone:'inspiring'},
-      {title:'The ultimate theme park bucket list for 2025', category:'Top Lists', tone:'inspiring'},
-      {title:'Why theme parks are the perfect family weekend destination', category:'Destination', tone:'inspiring'},
-      {title:'Last-minute theme park deals: How to find them in 2025', category:'Tips', tone:'fun'},
-      {title:'Best theme parks within 2 hours of London, Paris and Amsterdam', category:'Destination', tone:'informative'},
-      {title:'How to plan the perfect theme park trip for under ⡬200', category:'Tips', tone:'informative'},
-    ]
-  },
-  {
-    day:'Saturday', continent:'Americas + Middle East + Africa', color:'#10b981', emoji:'𸙍',
-    topics:[
-      {title:'Ferrari World Abu Dhabi: Is the world\'s fastest coaster worth it?', category:'Park Guide', tone:'debate'},
-      {title:'Parque Warner Madrid vs PortAventura: Spain\'s theme park battle', category:'Comparison', tone:'debate'},
-      {title:'Gold Reef City Johannesburg: Africa\'s most underrated theme park', category:'Hidden Gems', tone:'inspiring'},
-      {title:'Best theme parks in Latin America you\'ve never heard of', category:'Hidden Gems', tone:'inspiring'},
-      {title:'IMG Worlds of Adventure Dubai: Everything you need to know', category:'Park Guide', tone:'informative'},
-      {title:'Beto Carrero World Brazil: South America\'s theme park giant', category:'Park Guide', tone:'inspiring'},
-    ]
-  },
-  {
-    day:'Sunday', continent:'Oceania + Global News', color:'#06b6d4', emoji:'𸙠',
-    topics:[
-      {title:'Dreamworld Gold Coast: Australia\'s most thrilling theme park', category:'Park Guide', tone:'fun'},
-      {title:'Warner Bros. Movie World vs Dreamworld: Queensland showdown', category:'Comparison', tone:'debate'},
-      {title:'Best theme parks in Australia for families in 2025', category:'Top Lists', tone:'informative'},
-      {title:'New roller coasters opening worldwide in 2025', category:'News', tone:'fun'},
-      {title:'Top 10 most visited theme parks in the world 2025', category:'Top Lists', tone:'informative'},
-      {title:'The world\'s most extreme theme park experiences ranked', category:'Top Lists', tone:'debate'},
-    ]
-  },
+  {day:'Monday', continent:'Europe', color:'#06b6d4', emoji:'\u{1F1EA}\u{1F1FA}'},
+  {day:'Wednesday', continent:'Worldwide: USA, Asia, Americas, Middle East, Africa & Oceania', color:'#FF6B2B', emoji:'\u{1F30D}'},
+  {day:'Friday', continent:'Tips, Guides & Weekend Inspiration', color:'#f43f5e', emoji:'\u2708\uFE0F'},
 ];
 
 const AFFILIATE = {
@@ -97,7 +25,9 @@ const AFFILIATE = {
 };
 
 const TODAY_DAY = new Date().getDay(); // 0=Sun, 1=Mon...
-const dayIndex = TODAY_DAY === 0 ? 6 : TODAY_DAY - 1; // Map to our 0=Mon schedule
+// Publishing days: Monday (0), Wednesday (1), Friday (2). Other days point to the next publishing day.
+const dayIndex = {0:0,1:0,2:1,3:1,4:2,5:2,6:0}[TODAY_DAY];
+const isPublishDay = [1,3,5].includes(TODAY_DAY);
 
 export default function AgentPage() {
   const [topic, setTopic] = useState('');
@@ -131,24 +61,23 @@ export default function AgentPage() {
       const res = await fetch("/api/topics");
       const data = await res.json();
       if (data.topics) {
-        const days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
-        setSchedule(days.map(d => data.topics[d]));
+        setSchedule(DAYS.map(d => data.topics[d]));
       }
     } catch(e) { console.error("Failed to load topics:", e); }
     setTopicsLoading(false);
   };
 
-  const replaceUsedTopic = async (dayName, topicIndex, usedCategory, usedTone) => {
+  const replaceUsedTopic = async (dayName, topicIndex, usedCategory, usedTone, usedFocus) => {
     try {
-      const days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
-      const dayData = schedule ? schedule[days.indexOf(dayName)] : null;
-      const existingTitles = dayData ? dayData.topics.map(t => t.title) : [];
+      const dayData = schedule ? schedule[DAYS.indexOf(dayName)] : null;
       const continent = dayData ? dayData.continent : "";
+      // Avoid repeating any title that is already used or waiting on any day
+      const existingTitles = schedule ? schedule.filter(Boolean).flatMap(d => d.topics.map(t => t.title)) : [];
 
       const genRes = await fetch("/api/newtopic", {
         method: "POST",
         headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({ category: usedCategory, tone: usedTone, day: dayName, continent, existingTitles })
+        body: JSON.stringify({ category: usedCategory, tone: usedTone, day: dayName, continent, focus: usedFocus || continent, existingTitles })
       });
       const genData = await genRes.json();
       if (!genData.topic) return;
@@ -160,8 +89,7 @@ export default function AgentPage() {
       });
       const updateData = await updateRes.json();
       if (updateData.topics) {
-        const days2 = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
-        setSchedule(days2.map(d => updateData.topics[d]));
+        setSchedule(DAYS.map(d => updateData.topics[d]));
       }
     } catch(e) { console.error("Failed to replace topic:", e); }
   };
@@ -185,12 +113,14 @@ export default function AgentPage() {
       const data=await res.json();
       if(data.success){
         setPublished(true);
-        const days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
-        const dayName=days[selectedDay];
+        const dayName=DAYS[selectedDay];
         const dayTopics=schedule?schedule[selectedDay]:null;
         if(dayTopics){
           const topicIdx=dayTopics.topics.findIndex(t=>t.title===topic);
-          if(topicIdx>=0) replaceUsedTopic(dayName, topicIdx, category, tone);
+          if(topicIdx>=0){
+            const used=dayTopics.topics[topicIdx];
+            replaceUsedTopic(dayName, topicIdx, used.category, used.tone, used.focus);
+          }
         }
       }else{setPublishError(data.error||"Failed");}
     } catch(e){setPublishError(e.message);}
@@ -244,7 +174,7 @@ export default function AgentPage() {
     const today = new Date();
     const currentDateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     const currentYear = today.getFullYear();
-    const prompt = `You are the content team for Funparks, a free theme park app covering 64 parks across 6 continents.
+    const prompt = `You are the content team for Funparks, a free theme park app covering 66 parks across 6 continents.
 Today's date is ${currentDateStr}. If a year is needed in the title, excerpt, or content, use ${currentYear} — never a past year.
 
 Write a complete content package about: "${topic}"
@@ -373,7 +303,7 @@ if(!posts.find(p=>p.slug===newPost.slug)){
           <span style={{color:'rgba(255,255,255,0.6)',fontSize:'14px',fontWeight:'600',marginLeft:'12px'}}>Content Pipeline 𸽢</span>
         </div>
         <div style={{display:'flex',gap:'8px',alignItems:'center'}}>
-          <div style={{background:'rgba(255,255,255,0.1)',border:'1px solid rgba(255,255,255,0.2)',color:'rgba(255,255,255,0.7)',padding:'5px 12px',borderRadius:'20px',fontSize:'11px',fontWeight:'700'}}>64 PARKS ⬢ 6 CONTINENTS</div>
+          <div style={{background:'rgba(255,255,255,0.1)',border:'1px solid rgba(255,255,255,0.2)',color:'rgba(255,255,255,0.7)',padding:'5px 12px',borderRadius:'20px',fontSize:'11px',fontWeight:'700'}}>66 PARKS ⬢ 6 CONTINENTS</div>
         </div>
       </div>
 
@@ -400,7 +330,7 @@ if(!posts.find(p=>p.slug===newPost.slug)){
           <div>
             <div style={{marginBottom:'20px'}}>
               <h2 style={{fontFamily:'Syne,sans-serif',fontSize:'18px',fontWeight:'900',color:'#1a1a2e',marginBottom:'6px'}}>𸓦 Weekly Content Calendar</h2>
-              <p style={{color:'#6b7280',fontSize:'14px'}}>Each day targets a different continent. Click any topic to pre-fill and generate.</p>
+              <p style={{color:'#6b7280',fontSize:'14px'}}>Three publishing days a week, each with its own theme. Click any topic to pre-fill and generate.</p>
             </div>
 
             {/* Day selector */}
@@ -414,7 +344,7 @@ if(!posts.find(p=>p.slug===newPost.slug)){
                     border: selectedDay===i ? 'none' : '2px solid #f0f0f8',
                   }}>
                   {d.emoji} {d.day}
-                  {i===dayIndex && <span style={{marginLeft:'6px',fontSize:'10px',opacity:0.8}}>TODAY</span>}
+                  {i===dayIndex && <span style={{marginLeft:'6px',fontSize:'10px',opacity:0.8}}>{isPublishDay ? 'TODAY' : 'NEXT'}</span>}
                 </button>
               ))}
             </div>
@@ -425,7 +355,7 @@ if(!posts.find(p=>p.slug===newPost.slug)){
                 <span style={{fontSize:'32px'}}>{currentSchedule.emoji}</span>
                 <div>
                   <h3 style={{fontFamily:'Syne,sans-serif',fontSize:'18px',fontWeight:'900',color:'#1a1a2e',margin:0}}>{currentSchedule.day} ⬝ {currentSchedule.continent}</h3>
-                  <p style={{color:'#9ca3af',fontSize:'13px',margin:'4px 0 0'}}>6 ready-to-use topic ideas</p>
+                  <p style={{color:'#9ca3af',fontSize:'13px',margin:'4px 0 0'}}>{currentSchedule.topics.length} ready-to-use topic ideas</p>
                 </div>
               </div>
               <div style={{display:'grid',gap:'10px'}}>
@@ -436,6 +366,7 @@ if(!posts.find(p=>p.slug===newPost.slug)){
                       <p style={{fontWeight:'700',color:'#1a1a2e',fontSize:'14px',margin:'0 0 4px'}}>{t.title}</p>
                       <div style={{display:'flex',gap:'8px'}}>
                         <span style={{fontSize:'11px',fontWeight:'700',padding:'2px 8px',borderRadius:'999px',background:currentSchedule.color+'20',color:currentSchedule.color}}>{t.category}</span>
+                        {t.focus && <span style={{fontSize:'11px',fontWeight:'600',color:'#6b7280',padding:'2px 8px',borderRadius:'999px',background:'#f3f4f6'}}>{t.focus}</span>}
                         <span style={{fontSize:'11px',fontWeight:'600',color:'#9ca3af',padding:'2px 8px',borderRadius:'999px',background:'#f3f4f6'}}>
                           {{fun:'𸽰 Fun',informative:'𸓡 Info',inspiring:'✨ Inspiring',debate:'𸝥 Debate'}[t.tone]}
                         </span>

@@ -8,215 +8,216 @@
       {
         "title": "Phantasialand vs Toverland: Germany or Netherlands in 2026?",
         "category": "Comparison",
-        "tone": "debate"
+        "tone": "debate",
+        "focus": "Europe"
       },
       {
         "title": "How to skip the queues at Alton Towers and save money",
         "category": "Tips",
-        "tone": "fun"
+        "tone": "fun",
+        "focus": "Europe"
       },
       {
         "title": "Mirabilandia Italy: The Adriatic Coast Gem You're Missing",
         "category": "Hidden Gems",
-        "tone": "inspiring"
+        "tone": "inspiring",
+        "focus": "Europe"
       },
       {
         "title": "Gardaland Italy: Everything you need to know before visiting",
         "category": "Park Guide",
-        "tone": "informative"
-      }
-    ]
-  },
-  "Tuesday": {
-    "day": "Tuesday",
-    "continent": "Asia",
-    "color": "#a855f7",
-    "emoji": "🌏",
-    "topics": [
-      {
-        "title": "Universal Studios Japan hidden gems even locals don't know",
-        "category": "Hidden Gems",
-        "tone": "inspiring"
-      },
-      {
-        "title": "How to skip queues at Shanghai Disneyland with Klook",
-        "category": "Tips",
-        "tone": "fun"
-      },
-      {
-        "title": "Tokyo Disneyland vs DisneySea: Which Park Deserves Your Day?",
-        "category": "Comparison",
-        "tone": "debate"
-      },
-      {
-        "title": "Lotte World Seoul: Ultimate Indoor-Outdoor Park Guide 2026",
-        "category": "Park Guide",
-        "tone": "informative"
+        "tone": "informative",
+        "focus": "Europe"
       }
     ]
   },
   "Wednesday": {
     "day": "Wednesday",
-    "continent": "USA",
+    "continent": "Worldwide: USA, Asia, Americas, Middle East, Africa & Oceania",
     "color": "#FF6B2B",
-    "emoji": "🇺🇸",
+    "emoji": "🌍",
     "topics": [
       {
         "title": "Skip the Rookie Mistakes: Pro Tips for First-Time Six Flags Visitors",
         "category": "Tips",
-        "tone": "fun"
+        "tone": "fun",
+        "focus": "USA"
       },
       {
         "title": "Hidden secrets at Magic Kingdom Disney doesn't advertise",
         "category": "Hidden Gems",
-        "tone": "inspiring"
+        "tone": "inspiring",
+        "focus": "USA"
       },
       {
         "title": "Busch Gardens Tampa vs SeaWorld Orlando: Which wins?",
         "category": "Comparison",
-        "tone": "debate"
+        "tone": "debate",
+        "focus": "USA"
       },
       {
         "title": "Secret Spots: Overlooked Corners of Universal Orlando Worth Finding",
         "category": "Hidden Gems",
-        "tone": "inspiring"
+        "tone": "inspiring",
+        "focus": "USA"
       },
       {
         "title": "Dollywood Tennessee: Why it beats Disney for many visitors",
         "category": "Park Guide",
-        "tone": "debate"
-      }
-    ]
-  },
-  "Thursday": {
-    "day": "Thursday",
-    "continent": "Tips & Guides",
-    "color": "#f59e0b",
-    "emoji": "💡",
-    "topics": [
-      {
-        "title": "Secret Theme Park Hacks Only Cast Members Know About",
-        "category": "Tips",
-        "tone": "fun"
+        "tone": "debate",
+        "focus": "USA"
       },
       {
-        "title": "Transform Your First Solo Theme Park Visit Into Magic",
-        "category": "Tips",
-        "tone": "inspiring"
+        "title": "Universal Studios Japan hidden gems even locals don't know",
+        "category": "Hidden Gems",
+        "tone": "inspiring",
+        "focus": "Asia"
       },
       {
-        "title": "Priority passes compared: GetYourGuide vs Viator vs Klook",
+        "title": "How to skip queues at Shanghai Disneyland with Klook",
+        "category": "Tips",
+        "tone": "fun",
+        "focus": "Asia"
+      },
+      {
+        "title": "Tokyo Disneyland vs DisneySea: Which Park Deserves Your Day?",
         "category": "Comparison",
-        "tone": "informative"
+        "tone": "debate",
+        "focus": "Asia"
       },
       {
-        "title": "The Ultimate Theme Park Bag Checklist You'll Actually Use",
+        "title": "Lotte World Seoul: Ultimate Indoor-Outdoor Park Guide 2026",
         "category": "Park Guide",
-        "tone": "fun"
+        "tone": "informative",
+        "focus": "Asia"
       },
       {
-        "title": "Theme park photography tips for Instagram-worthy shots",
-        "category": "Tips",
-        "tone": "fun"
+        "title": "Ferrari World Abu Dhabi: Is the world's fastest coaster worth it?",
+        "category": "Park Guide",
+        "tone": "debate",
+        "focus": "Americas, Middle East & Africa"
       },
       {
-        "title": "How to Plan the Perfect Theme Park Day for Every Age Group",
-        "category": "Tips",
-        "tone": "inspiring"
+        "title": "Beto Carrero World Brazil: Complete First-Timer's Guide 2024",
+        "category": "Park Guide",
+        "tone": "informative",
+        "focus": "Americas, Middle East & Africa"
+      },
+      {
+        "title": "IMG Worlds of Adventure Dubai: Your Ultimate 2026 Guide",
+        "category": "Park Guide",
+        "tone": "inspiring",
+        "focus": "Americas, Middle East & Africa"
+      },
+      {
+        "title": "Hopi Hari Brazil: South America's hidden theme park gem",
+        "category": "Hidden Gems",
+        "tone": "inspiring",
+        "focus": "Americas, Middle East & Africa"
+      },
+      {
+        "title": "Six Flags Mexico vs Xcaret Park: Which Deserves Your Vacation?",
+        "category": "Comparison",
+        "tone": "debate",
+        "focus": "Americas, Middle East & Africa"
+      },
+      {
+        "title": "Best theme parks in South Africa beyond Gold Reef City",
+        "category": "Top Lists",
+        "tone": "informative",
+        "focus": "Americas, Middle East & Africa"
+      },
+      {
+        "title": "Rainbow's End Auckland: Your Ultimate Kiwi Thrill Guide",
+        "category": "Park Guide",
+        "tone": "fun",
+        "focus": "Oceania & Global News"
+      },
+      {
+        "title": "Dreamworld vs Movie World: Which Gold Coast Park Wins?",
+        "category": "Park Guide",
+        "tone": "fun",
+        "focus": "Oceania & Global News"
+      },
+      {
+        "title": "Adventure World Perth: Western Australia's best kept secret",
+        "category": "Hidden Gems",
+        "tone": "inspiring",
+        "focus": "Oceania & Global News"
       }
     ]
   },
   "Friday": {
     "day": "Friday",
-    "continent": "Weekend Inspiration",
+    "continent": "Tips, Guides & Weekend Inspiration",
     "color": "#f43f5e",
     "emoji": "✈️",
     "topics": [
       {
+        "title": "Secret Theme Park Hacks Only Cast Members Know About",
+        "category": "Tips",
+        "tone": "fun",
+        "focus": "Tips & Guides"
+      },
+      {
+        "title": "Transform Your First Solo Theme Park Visit Into Magic",
+        "category": "Tips",
+        "tone": "inspiring",
+        "focus": "Tips & Guides"
+      },
+      {
+        "title": "Priority passes compared: GetYourGuide vs Viator vs Klook",
+        "category": "Comparison",
+        "tone": "informative",
+        "focus": "Tips & Guides"
+      },
+      {
+        "title": "The Ultimate Theme Park Bag Checklist You'll Actually Use",
+        "category": "Park Guide",
+        "tone": "fun",
+        "focus": "Tips & Guides"
+      },
+      {
+        "title": "Theme park photography tips for Instagram-worthy shots",
+        "category": "Tips",
+        "tone": "fun",
+        "focus": "Tips & Guides"
+      },
+      {
+        "title": "How to Plan the Perfect Theme Park Day for Every Age Group",
+        "category": "Tips",
+        "tone": "inspiring",
+        "focus": "Tips & Guides"
+      },
+      {
         "title": "Coastal Theme Parks: Where Thrilling Rides Meet Ocean Views",
         "category": "Destination",
-        "tone": "inspiring"
+        "tone": "inspiring",
+        "focus": "Weekend Inspiration"
       },
       {
         "title": "10 Hidden Gem Theme Parks Worth Your Weekend Adventure",
         "category": "Top Lists",
-        "tone": "inspiring"
+        "tone": "inspiring",
+        "focus": "Weekend Inspiration"
       },
       {
         "title": "Why theme parks are the perfect family weekend destination",
         "category": "Destination",
-        "tone": "inspiring"
+        "tone": "inspiring",
+        "focus": "Weekend Inspiration"
       },
       {
         "title": "Best theme parks within 2 hours of London Paris and Amsterdam",
         "category": "Destination",
-        "tone": "informative"
+        "tone": "informative",
+        "focus": "Weekend Inspiration"
       },
       {
         "title": "How to plan the perfect theme park trip for under 200 euros",
         "category": "Tips",
-        "tone": "informative"
-      }
-    ]
-  },
-  "Saturday": {
-    "day": "Saturday",
-    "continent": "Americas + Middle East + Africa",
-    "color": "#10b981",
-    "emoji": "🌍",
-    "topics": [
-      {
-        "title": "Ferrari World Abu Dhabi: Is the world's fastest coaster worth it?",
-        "category": "Park Guide",
-        "tone": "debate"
-      },
-      {
-        "title": "Beto Carrero World Brazil: Complete First-Timer's Guide 2024",
-        "category": "Park Guide",
-        "tone": "informative"
-      },
-      {
-        "title": "IMG Worlds of Adventure Dubai: Your Ultimate 2026 Guide",
-        "category": "Park Guide",
-        "tone": "inspiring"
-      },
-      {
-        "title": "Hopi Hari Brazil: South America's hidden theme park gem",
-        "category": "Hidden Gems",
-        "tone": "inspiring"
-      },
-      {
-        "title": "Six Flags Mexico vs Xcaret Park: Which Deserves Your Vacation?",
-        "category": "Comparison",
-        "tone": "debate"
-      },
-      {
-        "title": "Best theme parks in South Africa beyond Gold Reef City",
-        "category": "Top Lists",
-        "tone": "informative"
-      }
-    ]
-  },
-  "Sunday": {
-    "day": "Sunday",
-    "continent": "Oceania + Global News",
-    "color": "#06b6d4",
-    "emoji": "🌊",
-    "topics": [
-      {
-        "title": "Rainbow's End Auckland: Your Ultimate Kiwi Thrill Guide",
-        "category": "Park Guide",
-        "tone": "fun"
-      },
-      {
-        "title": "Dreamworld vs Movie World: Which Gold Coast Park Wins?",
-        "category": "Park Guide",
-        "tone": "fun"
-      },
-      {
-        "title": "Adventure World Perth: Western Australia's best kept secret",
-        "category": "Hidden Gems",
-        "tone": "inspiring"
+        "tone": "informative",
+        "focus": "Weekend Inspiration"
       }
     ]
   }

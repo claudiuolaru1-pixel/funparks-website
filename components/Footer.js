@@ -22,7 +22,7 @@ export default function Footer(){
               </div>
               <span className="font-black text-xl text-white" style={{fontFamily:"Syne,sans-serif"}}>fun<span className="gradient-text">parks</span></span>
             </div>
-            <p className="text-sm leading-relaxed max-w-xs mb-6 font-medium" style={{color:"rgba(255,255,255,0.4)"}}>The world's theme parks in your pocket. 64+ parks across 6 continents — free forever.</p>
+            <p className="text-sm leading-relaxed max-w-xs mb-6 font-medium" style={{color:"rgba(255,255,255,0.4)"}}>The world's theme parks in your pocket. 82+ parks across 6 continents — free forever.</p>
             <div className="flex items-center gap-3">
               {socials.map(s => (
                 <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} className="w-9 h-9 rounded-xl flex items-center justify-center text-base hover:scale-110 transition-transform shadow-lg" style={{background:s.bg}}>

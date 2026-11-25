@@ -18,7 +18,7 @@ export default function Hero() {
         <div>
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold mb-8" style={{background:"rgba(255,255,255,0.07)",border:"1px solid rgba(255,255,255,0.12)",color:"rgba(255,255,255,0.8)"}}>
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            Live · 64+ Parks Worldwide
+            Live · 82+ Parks Worldwide
           </div>
           <h1 className="text-5xl lg:text-7xl font-black leading-none mb-6 tracking-tight" style={{fontFamily:"Syne,sans-serif",color:"#f0f4ff"}}>
             Every<br />

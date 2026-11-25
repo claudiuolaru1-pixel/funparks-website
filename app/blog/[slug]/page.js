@@ -104,7 +104,7 @@ export default function BlogPost({ params }) {
           <div className="mt-10 rounded-3xl p-8 text-center" style={{ background: 'linear-gradient(135deg, #051d52, #0d4fa0)' }}>
             <div className="text-4xl mb-3">🎢</div>
             <h3 className="text-2xl font-black text-white mb-2" style={{ fontFamily: 'Syne,sans-serif' }}>Plan smarter with Funparks</h3>
-            <p className="text-blue-200 mb-6">Live wait times, My Day planner, maps and guides for 60+ parks worldwide. Free on iOS and Android.</p>
+            <p className="text-blue-200 mb-6">Live wait times, My Day planner, maps and guides for 80+ parks worldwide. Free on iOS and Android.</p>
             <div className="flex flex-wrap gap-3 justify-center">
               <a href="https://apps.apple.com/app/funparks/id6763944775" className="px-6 py-3 rounded-2xl font-bold text-sm hover:scale-105 transition-transform" style={{ background: '#fff', color: '#051d52' }}>App Store</a>
               <a href="https://play.google.com/store/apps/details?id=com.funparks.app" className="px-6 py-3 rounded-2xl font-bold text-sm hover:scale-105 transition-transform" style={{ background: '#FF6B2B', color: '#fff' }}>Google Play</a>

@@ -2,15 +2,15 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Funparks - Free Theme Park App",
-  description: "Live wait times, AI assistant, My Day planner for 60+ theme parks worldwide. Free on iOS and Android.",
+  description: "Live wait times, AI assistant, My Day planner for 80+ theme parks worldwide. Free on iOS and Android.",
   openGraph: {
     title: "Funparks - Free Theme Park App",
-    description: "Live wait times, AI assistant, My Day planner for 60+ theme parks worldwide. Free on iOS and Android.",
+    description: "Live wait times, AI assistant, My Day planner for 80+ theme parks worldwide. Free on iOS and Android.",
     images: [{ url: "https://funparks.app/screenshots/funparks_social.jpg", width: 1080, height: 1080, alt: "Funparks Theme Park App" }],
     type: "website",
     url: "https://funparks.app/promo",
   },
-  twitter: { card: "summary_large_image", title: "Funparks - Free Theme Park App", description: "Live wait times, AI assistant, My Day planner for 60+ theme parks worldwide." },
+  twitter: { card: "summary_large_image", title: "Funparks - Free Theme Park App", description: "Live wait times, AI assistant, My Day planner for 80+ theme parks worldwide." },
 };
 
 const APP_STORE = "https://apps.apple.com/app/funparks-theme-park-guide/id6763944775";
@@ -23,7 +23,7 @@ const features = [
 ];
 
 const stats = [
-  { v: "60+", l: "Parks Worldwide", color: "#FF6B2B" },
+  { v: "80+", l: "Parks Worldwide", color: "#FF6B2B" },
   { v: "1,000+", l: "Attractions", color: "#f43f5e" },
   { v: "10", l: "Languages", color: "#a855f7" },
   { v: "Free", l: "Forever", color: "#10b981" },
@@ -76,7 +76,7 @@ export default function PromoPage() {
             </span>
           </h1>
           <p style={{ fontSize: 18, color: "rgba(255,255,255,0.55)", lineHeight: 1.7, maxWidth: 520, margin: "0 auto 36px" }}>
-            Live wait times, AI park assistant and My Day planner for 60+ theme parks worldwide. Plan smarter. Wait less. Enjoy more.
+            Live wait times, AI park assistant and My Day planner for 80+ theme parks worldwide. Plan smarter. Wait less. Enjoy more.
           </p>
           <DownloadButtons size="lg" />
           <p style={{ marginTop: 16, fontSize: 13, color: "rgba(255,255,255,0.25)" }}>Free forever · No subscription · No ads</p>

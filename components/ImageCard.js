@@ -112,7 +112,7 @@ export default function ImageCard({ post, category }) {
     ctx.font='bold 30px Arial'; ctx.textAlign='center';
     ctx.fillText('funparks.app',W/2,H-48);
     ctx.font='20px Arial'; ctx.fillStyle='rgba(255,255,255,0.7)';
-    ctx.fillText('Free theme park app  |  64 parks worldwide',W/2,H-18);
+    ctx.fillText('Free theme park app  |  82 parks worldwide',W/2,H-18);
     ctx.textAlign='left';
 
     setDataUrl(canvas.toDataURL('image/jpeg',0.95));

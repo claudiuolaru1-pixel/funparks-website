@@ -55,7 +55,7 @@ const features = [
   {
     icon: "🌍",
     title: "Global Coverage",
-    desc: "From Walt Disney World to Tokyo DisneySea — 60+ parks across 6 continents, all in one app.",
+    desc: "From Walt Disney World to Tokyo DisneySea — 80+ parks across 6 continents, all in one app.",
     gradient: "from-emerald-400 to-teal-400",
     color: "#10b981",
     screenshot: "/screenshots/overview.jpg",

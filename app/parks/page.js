@@ -1,4 +1,4 @@
-export const metadata={title:'Parks - Funparks',description:'All 64 theme parks in the Funparks app across 6 continents.'};
+export const metadata={title:'Parks - Funparks',description:'All 82 theme parks in the Funparks app across 6 continents.'};
 
 const parks=[
   {name:'Magic Kingdom',location:'Orlando, USA',continent:'Americas',emoji:'🏰'},
@@ -70,7 +70,7 @@ export default function ParksPage(){
         <div className="mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm border border-purple-100 text-purple-600 text-sm font-bold mb-6">🌍 All Parks</div>
           <h1 className="text-5xl lg:text-6xl font-black text-gray-900 mb-4" style={{fontFamily:'Syne,sans-serif'}}>
-            64 Parks.<br/><span style={{background:'linear-gradient(135deg,#FF6B2B,#f43f5e,#a855f7)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>6 Continents.</span>
+            82 Parks.<br/><span style={{background:'linear-gradient(135deg,#FF6B2B,#f43f5e,#a855f7)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>6 Continents.</span>
           </h1>
           <p className="text-gray-500 text-lg max-w-lg">Every park in the Funparks app — detailed guides, attraction lists, food and hotels.</p>
         </div>

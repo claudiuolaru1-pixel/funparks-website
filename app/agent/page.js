@@ -174,7 +174,7 @@ export default function AgentPage() {
     const today = new Date();
     const currentDateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     const currentYear = today.getFullYear();
-    const prompt = `You are the content team for Funparks, a free theme park app covering 66 parks across 6 continents.
+    const prompt = `You are the content team for Funparks, a free theme park app covering 82 parks across 6 continents.
 Today's date is ${currentDateStr}. If a year is needed in the title, excerpt, or content, use ${currentYear} — never a past year.
 
 Write a complete content package about: "${topic}"
@@ -303,7 +303,7 @@ if(!posts.find(p=>p.slug===newPost.slug)){
           <span style={{color:'rgba(255,255,255,0.6)',fontSize:'14px',fontWeight:'600',marginLeft:'12px'}}>Content Pipeline 𸽢</span>
         </div>
         <div style={{display:'flex',gap:'8px',alignItems:'center'}}>
-          <div style={{background:'rgba(255,255,255,0.1)',border:'1px solid rgba(255,255,255,0.2)',color:'rgba(255,255,255,0.7)',padding:'5px 12px',borderRadius:'20px',fontSize:'11px',fontWeight:'700'}}>66 PARKS ⬢ 6 CONTINENTS</div>
+          <div style={{background:'rgba(255,255,255,0.1)',border:'1px solid rgba(255,255,255,0.2)',color:'rgba(255,255,255,0.7)',padding:'5px 12px',borderRadius:'20px',fontSize:'11px',fontWeight:'700'}}>82 PARKS ⬢ 6 CONTINENTS</div>
         </div>
       </div>
 
